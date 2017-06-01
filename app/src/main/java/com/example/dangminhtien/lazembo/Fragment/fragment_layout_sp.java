@@ -352,9 +352,7 @@ public class fragment_layout_sp extends Fragment implements get_set_sanpham.noti
         styledString.setSpan(new ForegroundColorSpan(Color.BLUE), 27 + 118 + 18 + 53, 27 + 118 + 18 + 53 + 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
     }
-        public void add(Bitmap bitmap, Context context) {
 
-        }
 
     @Override
     public void notifi(Bitmap bitmap) {
