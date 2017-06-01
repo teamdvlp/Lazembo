@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#e53935</color>
+    <color name="colorPrimaryDark">#e53935</color>
+    <color name="colorAccent">#fafafa</color>
+    <color name="Test">#e0e0e0</color>
+    <color name="colorBackgroundGridView">#9e9e9e</color>
+    <color name="button_tra_gop">#304ffe</color>
+    <color name="button_without_plugin">#81d4fa</color>
+    <color name="button_pay">#ffb74d</color>
+    <color name="RecyclerViewBackGround">#e0e0e0</color>
+    <color name="TEXT_COLOR">#424242</color>
+    <color name="Recycler">#616161</color>
+    <color name="editcolor">#e7e5e5</color>
+</resources>
