@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="bold">1651432</integer>
+    <integer name="normal">132456</integer>
+    <integer name="italic">135452</integer>
+    <integer name="color">357885</integer>
+    <integer name="left">675626</integer>
+    <integer name="right">735835</integer>
+    <integer name="center">134165</integer>
+    <integer name="increase_size">968579</integer>
+    <integer name="decrease_size">757920</integer>
+</resources>
