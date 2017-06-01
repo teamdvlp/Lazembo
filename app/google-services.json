@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "88008187117",
+    "firebase_url": "https://lazembo-796b4.firebaseio.com",
+    "project_id": "lazembo-796b4",
+    "storage_bucket": "lazembo-796b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88008187117:android:8e1e794d2a2e43c7",
+        "android_client_info": {
+          "package_name": "com.example.dangminhtien.lazembo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "88008187117-7c3jqqg5h8iodvjv2gjrforjthqfoj8o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5SX6H_jnVu1L60ItQcWM1Vws2BxBPtwE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

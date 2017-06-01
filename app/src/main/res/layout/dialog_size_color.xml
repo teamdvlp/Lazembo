@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+    <EditText
+        android:layout_width="match_parent"
+        android:padding="16dp"
+        android:height="200dp"
+        android:layout_height="wrap_content"
+        android:hint="Nhập vào size của sản phẩm theo định dạng sau:
+                size1
+                size2
+                size3
+                size4
+                ........."
+        android:id="@+id/txtSizeColor"
+        />
+
+    <Button
+        android:id="@+id/btnXacnhan_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Xác nhận" />
+</LinearLayout>
