@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.dangminhtien.lazembo.activity.Main_Lazembo;
+import com.example.dangminhtien.lazembo.activity.activity_phan_loai_sp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,7 +46,7 @@ public class Danhmucsp {
                         strings.add(str);
                     }
                 }
-                datachanged mainLazembo = (Main_Lazembo) context;
+                datachanged mainLazembo = (activity_phan_loai_sp) context;
                 mainLazembo.onDatachanged(strings, context, sp);
             }
 
@@ -81,7 +81,7 @@ public class Danhmucsp {
         }
 
     public interface datachanged {
-        public void onDatachanged(ArrayList<String> arr, Context context, Spinner sp);
+        void onDatachanged(ArrayList<String> arr, Context context, Spinner sp);
     }
 
 }
