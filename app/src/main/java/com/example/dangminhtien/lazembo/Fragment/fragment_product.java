@@ -134,7 +134,7 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
         btn_browse_gallary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                xulyHienthiPagerHinhSp();
+                xuly_hienthi_pager_hinh_sp();
             }
         });
 
@@ -149,11 +149,11 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
             @Override
             public void onClick(View v) {
                 if (FLAG_DIALOG == 0) {
-                    source_mausac.addAll(getArrayDialog());
-                    xulyHienthiSpMausac(source_mausac);
+                    source_mausac.addAll(get_array_dialog());
+                    xuly_hienthi_sp_mausac(source_mausac);
                 } else if (FLAG_DIALOG == 1) {
-                    source_kichthuoc.addAll(getArrayDialog());
-                    xulyHienthiSpKichco(source_kichthuoc);
+                    source_kichthuoc.addAll(get_array_dialog());
+                    xuly_hienthi_sp_kichthuoc(source_kichthuoc);
                 }
                 alert_dialog.dismiss();
             }
@@ -190,12 +190,27 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
     }
 
     private void xacnhanUptoFirebase() {
-        if (checkPagerHinhsp() && checkSpMausac() && checkPagerHinhsp() && checkTxtGiasp() && checkTxtGiaspTruocKhiGiam() && checkTxtTensp()) {
-            uptoFirebase();
+//        if (check_pager_hinh_sp() && check_sp_mausac() && check_sp_kichthuoc() && check_txt_gia_sp() && check_txt_gia_truoc_khi_giam() && check_txt_ten_sp()) {
+//            upto_firebase();
+//        }
+        boolean contiue = false;
+        contiue = check_txt_gia_truoc_khi_giam();
+
+        contiue = check_txt_gia_sp();
+
+        contiue = check_txt_ten_sp();
+
+        contiue = check_sp_kichthuoc();
+
+        contiue = check_pager_hinh_sp();
+
+        contiue = check_sp_mausac();
+
+        if(contiue) {
+            upto_firebase();
         }
     }
-
-    private boolean checkTxtTensp () {
+    private boolean check_txt_ten_sp () {
         if (!txt_ten_sp.getText().toString().equals("") && null != txt_ten_sp.toString()) {
             return true;
         } else {
@@ -204,34 +219,35 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
         }
     }
 
-    private void uptoFirebase() {
+    private void upto_firebase() {
         get_set_sanpham uploadSanpham = new get_set_sanpham(getContext());
         UUID uuid = new UUID(100000,1);
         String masp = uuid.toString();
-        String path_image = uploadSanpham.upLoadImage(bitmaps_hinh_sp.get(0), "Sản phẩm/" + getDateAndTime());
+        String path_image = uploadSanpham.upLoadImage(bitmaps_hinh_sp.get(0), "Sản phẩm/" + get_date_and_time());
         path_hinh_sp.add(path_image);
         Sanpham sanpham = new Sanpham("hahaha", source_kichthuoc, source_mausac, rb_rating.getRating(), Long.valueOf(txt_gia.getText().toString()), "San pham xam nach", path_hinh_sp,Float.valueOf(txt_giap_truoc_khi_giam.getText().toString()), masp);
         uploadSanpham.upLoadSanpham(sanpham, masp);
     }
 
-    private ArrayList<String> getArrayDialog () {
+    private ArrayList<String> get_array_dialog () {
         String[] size_color = txt_size_color.getText().toString().split("\n");
         ArrayList<String> size_colors = new ArrayList<>();
         size_colors.addAll(Arrays.asList(size_color));
         return size_colors;
     }
 
-    private boolean checkTxtGiasp () {
+    private boolean check_txt_gia_sp () {
 
         if (!txt_gia.getText().toString().equals("") | null == txt_gia.toString()) {
             return true;
         } else {
             txt_gia.requestFocus();
+            txt_gia.setError("Your text is invalid or empty");
             return false;
         }
     }
 
-    private String getDateAndTime () {
+    private String get_date_and_time () {
         Calendar calendar = Calendar.getInstance();
         String dateFormat = "ddmmyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
@@ -239,12 +255,13 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
         return simpleDateFormat.format(date) + date.getTime();
     }
 
-    private boolean checkTxtGiaspTruocKhiGiam () {
+    private boolean check_txt_gia_truoc_khi_giam () {
 
         if (!txt_giap_truoc_khi_giam.getText().toString().equals("") | null == txt_giap_truoc_khi_giam.toString()) {
             return true;
         } else {
             txt_giap_truoc_khi_giam.requestFocus();
+            txt_giap_truoc_khi_giam.setError("Your text is invalid or empty");
             return false;
         }
 
@@ -254,7 +271,7 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
 
     }
 
-    private boolean checkSpMausac () {
+    private boolean check_sp_mausac () {
         if (source_mausac.isEmpty()) {
             sp_mausac.requestFocus();
             return false;
@@ -263,7 +280,7 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
         }
     }
 
-    private boolean checkSpKichco () {
+    private boolean check_sp_kichthuoc () {
         if (source_kichthuoc.isEmpty() ){
             sp_kichthuoc.requestFocus();
             return false;
@@ -272,7 +289,7 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
         }
     }
 
-    private boolean checkPagerHinhsp () {
+    private boolean check_pager_hinh_sp () {
         if (bitmaps_hinh_sp.isEmpty()) {
             pager_hinh_sp.requestFocus();
             return false;
@@ -281,21 +298,21 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
         }
     }
 
-    private void xulyHienthiSpKichco (ArrayList<String> SourceKichco) {
+    private void xuly_hienthi_sp_kichthuoc (ArrayList<String> SourceKichco) {
         this.source_kichthuoc = new ArrayList<>();
         this.source_kichthuoc.addAll(SourceKichco);
         adapter_sp_kichthuoc = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, this.source_kichthuoc);
         sp_kichthuoc.setAdapter(adapter_sp_kichthuoc);
     }
 
-    private void xulyHienthiSpMausac (ArrayList<String> SourceMausac) {
+    private void xuly_hienthi_sp_mausac (ArrayList<String> SourceMausac) {
         this.source_mausac = new ArrayList<>();
         this.source_mausac.addAll(SourceMausac);
         adapter_sp_mausac = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, this.source_mausac);
         sp_mausac.setAdapter(adapter_sp_mausac);
     }
 
-    private void xulyHienthiPagerHinhSp () {
+    private void xuly_hienthi_pager_hinh_sp () {
             Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(galleryIntent, RESULT_GALLARY);
     }
