@@ -229,7 +229,7 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
         Sanpham.getInstance().setIdsp(masp);
         Sanpham.getInstance().setKichco(source_kichthuoc);
         Sanpham.getInstance().setMausac(source_mausac);
-        Sanpham.getInstance().setMotachitietsp(text);
+//        Sanpham.getInstance().setMotachitietsp(text);
     }
 
     private ArrayList<String> get_array_dialog () {
