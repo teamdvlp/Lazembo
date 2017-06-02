@@ -24,16 +24,17 @@ import java.util.ArrayList;
 
 import jp.wasabeef.richeditor.RichEditor;
 
-public class fragment_motasp extends Fragment {
+public class fragment_motasp extends Fragment implements fragment_product.trasnfer_motasp {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     static int text_size = 3;
+    // Phải để là static để tránh lỗi null pointer exception
+    private static RichEditor txt_motachitiet;
     private final ArrayList<Integer> size = new ArrayList<Integer>(7);
     private ImageButton btn_align_left, btn_align_right, btn_align_center, btn_bold,
             btn_italic, btn_underline, btn_text_color, btn_text_size_decrease,
             btn_text_size_increase, btn_confirm;
     private Spinner sp_text_size;
-    private RichEditor txt_motachitiet;
     private ColorPicker picker;
     private SVBar svBar;
     private OpacityBar opacityBar;
@@ -44,6 +45,7 @@ public class fragment_motasp extends Fragment {
     public fragment_motasp() {
         // Required empty public constructor
     }
+
 
     public static fragment_motasp newInstance(String param1, String param2) {
         fragment_motasp fragment = new fragment_motasp();
@@ -218,4 +220,10 @@ public class fragment_motasp extends Fragment {
         });
     }
 
+
+    @Override
+    public String transfer_text() {
+        return txt_motachitiet.getHtml();
+
+    }
 }

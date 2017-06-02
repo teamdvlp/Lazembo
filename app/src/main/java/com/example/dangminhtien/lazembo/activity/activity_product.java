@@ -12,11 +12,11 @@ public class activity_product extends AppCompatActivity {
 
     ViewPager pagerCustomsp;
     TabLayout tabTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_seller);
-        setTheme(R.style.Theme_AppCompat_Light_NoActionBar);
         addControls();
     }
 

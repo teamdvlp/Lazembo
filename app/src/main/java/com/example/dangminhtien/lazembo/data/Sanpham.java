@@ -4,17 +4,18 @@ import java.util.ArrayList;
 
 public class Sanpham {
 
+    private static Sanpham sanpham = new Sanpham();
     private String tensp;
     private ArrayList<String> kichco;
     private ArrayList<String> mausac;
-    private float rating;
-    private long giasp;
+    private double rating;
+    private double giasp;
     private String motachitietsp;
     private ArrayList<String> hinh;
-    private float giaTruocKhiGiam;
+    private double giaTruocKhiGiam;
     private String idsp;
 
-    public Sanpham(String tensp, ArrayList<String> kichco, ArrayList<String> mausac, float rating, long giasp, String motachitietsp, ArrayList<String> hinh, float giaTruocKhiGiam, String idsp) {
+    public Sanpham(String tensp, ArrayList<String> kichco, ArrayList<String> mausac, double rating, double giasp, String motachitietsp, ArrayList<String> hinh, double giaTruocKhiGiam, String idsp) {
         this.tensp = tensp;
         this.kichco = kichco;
         this.mausac = mausac;
@@ -28,6 +29,10 @@ public class Sanpham {
 
     public Sanpham () {
 
+    }
+
+    public static Sanpham getInstance() {
+        return Sanpham.sanpham;
     }
 
     public String getTensp() {
@@ -54,19 +59,19 @@ public class Sanpham {
         this.mausac = mausac;
     }
 
-    public float getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(float rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
-    public long getGiasp() {
+    public double getGiasp() {
         return giasp;
     }
 
-    public void setGiasp(long giasp) {
+    public void setGiasp(double giasp) {
         this.giasp = giasp;
     }
 
@@ -86,11 +91,11 @@ public class Sanpham {
         this.hinh = hinh;
     }
 
-    public float getGiaTruocKhiGiam() {
+    public double getGiaTruocKhiGiam() {
         return giaTruocKhiGiam;
     }
 
-    public void setGiaTruocKhiGiam(float giaTruocKhiGiam) {
+    public void setGiaTruocKhiGiam(double giaTruocKhiGiam) {
         this.giaTruocKhiGiam = giaTruocKhiGiam;
     }
 

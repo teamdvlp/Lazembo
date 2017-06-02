@@ -187,18 +187,18 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
     }
 
     private void xacnhanUptoFirebase() {
-        boolean contiue = false;
-        contiue = check_txt_gia_truoc_khi_giam();
+        boolean contiue = true;
+//        contiue = check_txt_gia_truoc_khi_giam();
 
-        contiue = check_txt_gia_sp();
-
-        contiue = check_txt_ten_sp();
-
-        contiue = check_sp_kichthuoc();
-
-        contiue = check_pager_hinh_sp();
-
-        contiue = check_sp_mausac();
+//        contiue = check_txt_gia_sp();
+//
+//        contiue = check_txt_ten_sp();
+//
+//        contiue = check_sp_kichthuoc();
+//
+//        contiue = check_pager_hinh_sp();
+//
+//        contiue = check_sp_mausac();
 
         if(contiue) {
             upto_firebase();
@@ -220,8 +220,17 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
         String masp = uuid.toString();
         String path_image = uploadSanpham.upLoadImage(bitmaps_hinh_sp.get(0), "Sản phẩm/" + get_date_and_time());
         path_hinh_sp.add(path_image);
-        Sanpham sanpham = new Sanpham(txt_ten_sp.getText().toString(), source_kichthuoc, source_mausac, rb_rating.getRating(), Long.valueOf(txt_gia.getText().toString()), "San pham xam nach", path_hinh_sp, Float.valueOf(txt_giap_truoc_khi_giam.getText().toString()), masp);
-        uploadSanpham.upLoadSanpham(sanpham, masp);
+        trasnfer_motasp fragment_motasp = new fragment_motasp();
+        String text = fragment_motasp.transfer_text();
+        Sanpham sanpham = new Sanpham(txt_ten_sp.getText().toString(), source_kichthuoc, source_mausac, rb_rating.getRating(), Long.valueOf(txt_gia.getText().toString()), text, path_hinh_sp, Float.valueOf(txt_giap_truoc_khi_giam.getText().toString()), masp);
+        Sanpham.getInstance().setGiasp(Double.parseDouble(txt_gia.getText().toString()));
+        Sanpham.getInstance().setGiaTruocKhiGiam(Double.parseDouble(txt_giap_truoc_khi_giam.getText().toString()));
+        Sanpham.getInstance().setHinh(path_hinh_sp);
+        Sanpham.getInstance().setIdsp(masp);
+        Sanpham.getInstance().setKichco(source_kichthuoc);
+        Sanpham.getInstance().setMausac(source_mausac);
+        Sanpham.getInstance().setMotachitietsp(text);
+//            Sanpham.getInstance().
     }
 
     private ArrayList<String> get_array_dialog () {
@@ -357,5 +366,9 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
     @Override
     public void notifi(Bitmap bitmap) {
 
+    }
+
+    public interface trasnfer_motasp {
+        String transfer_text();
     }
 }

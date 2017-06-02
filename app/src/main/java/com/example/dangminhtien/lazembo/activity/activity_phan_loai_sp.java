@@ -91,8 +91,6 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
                 sp4th.setAdapter(new ArrayAdapter<String>(activity_phan_loai_sp.this, android.R.layout.simple_spinner_item, arrayList));
                 cache[2] = parent.getSelectedItem().toString();
                 danhmucsp.getChild(new String[]{cache[0],cache[1],cache[2]});
-
-
             }
 
             @Override
@@ -100,6 +98,7 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
 
             }
         });
+
         btnGallary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
