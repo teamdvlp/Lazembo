@@ -26,9 +26,9 @@ public class ListOfProduct extends MainActivity{
     GridView gridv_list_goods;
     GridviewAdapter gridv_adapter;
 
-    Spinner sp_tieu_chi;
-    ArrayList<String> list_tieu_chi;
-    ArrayAdapter<String> adapter_tieu_chi;
+    Spinner sp_tieu_chi,sp_price;
+    ArrayList<String> list_tieu_chi,list_price;
+    ArrayAdapter<String> adapter_tieu_chi,adapter_price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +54,14 @@ public class ListOfProduct extends MainActivity{
         gridv_adapter = new GridviewAdapter(gridv_arrayList_model,this);
         gridv_list_goods.setAdapter(gridv_adapter);
 
+        list_price = new ArrayList<>();
         list_tieu_chi = new ArrayList<>();
         prepareDataforSpinner();
+
+        sp_price = (Spinner) findViewById(R.id.sp_price);
+        adapter_price = new ArrayAdapter<>(ListOfProduct.this,android.R.layout.simple_spinner_dropdown_item,list_price);
+        sp_price.setAdapter(adapter_price);
+
         sp_tieu_chi = (Spinner) findViewById(R.id.sp_tieu_chi);
         adapter_tieu_chi = new ArrayAdapter<>(ListOfProduct.this,android.R.layout.simple_spinner_dropdown_item,list_tieu_chi);
         sp_tieu_chi.setAdapter(adapter_tieu_chi);
@@ -112,12 +118,12 @@ public class ListOfProduct extends MainActivity{
         list_tieu_chi.add("Giá từ cao đến thấp");
         list_tieu_chi.add("Giá từ thấp đến cao");
         list_tieu_chi.add("Lượt yêu thích");
-        list_tieu_chi.add("100k - 500k");
-        list_tieu_chi.add("500k - 2 triệu");
-        list_tieu_chi.add("2 triệu - 5 triệu");
-        list_tieu_chi.add("5 triệu - 10 triệu");
-        list_tieu_chi.add("10 triệu - 30 triệu");
-        list_tieu_chi.add("Hơn 30 triệu");
+        list_price.add("100k - 500k");
+        list_price.add("500k - 2 triệu");
+        list_price.add("2 triệu - 5 triệu");
+        list_price.add("5 triệu - 10 triệu");
+        list_price.add("10 triệu - 30 triệu");
+        list_price.add("Hơn 30 triệu");
 
     }
 

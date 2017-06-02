@@ -52,10 +52,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         final CartModel model = list.get(position);
         holder.txt_price_product.setText("   Giá: "+String.valueOf(Integer.parseInt(model.getPrice_product())*model.getCount_product()) +" vnđ");
-        holder.txt_name_product.setText("   " + model.getName_product());
+        holder.txt_name_product.setText("  " + model.getName_product());
         holder.img_image_product.setImageResource(model.getImage_product());
-        holder.edt_count_product.setText("   Số lượng: "+String.valueOf(model.getCount_product())+ " sản phẩm");
-        holder.txt_choose.setText(position+"");
+        holder.edt_count_product.setText(String.valueOf(model.getCount_product()));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
