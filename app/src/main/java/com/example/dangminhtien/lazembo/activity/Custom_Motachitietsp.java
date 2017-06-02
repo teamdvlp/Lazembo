@@ -40,7 +40,7 @@ public class Custom_Motachitietsp extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_custom__motachitietsp);
+        setContentView(R.layout.fragment_mota_chitiet_sp);
         addControls();
         addEvents();
 

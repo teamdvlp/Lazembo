@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.dangminhtien.lazembo.Fragment.fragment_product;
+
 /**
  * Created by dangminhtien on 5/30/17.
  */
@@ -16,7 +18,7 @@ public class AdapterSeller extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
             if (position == 0) {
-                return com.example.dangminhtien.lazembo.Fragment.fragment_layout_sp.newInstance(1);
+                return fragment_product.newInstance(1);
 
             } else if (position == 1) {
                 return com.example.dangminhtien.lazembo.Fragment.fragment_motasp.newInstance("", "");

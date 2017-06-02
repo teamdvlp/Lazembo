@@ -30,6 +30,7 @@
                 android:layout_width="50dp"
                 android:layout_height="45dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginRight="159dp"
                 android:layout_marginTop="8dp"
                 android:background="@android:color/background_light"
                 android:gravity="center"
@@ -37,12 +38,12 @@
                 android:textColor="@color/TEXT_COLOR"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintHorizontal_bias="0.051"
-                app:layout_constraintLeft_toRightOf="@+id/editText2"
+                app:layout_constraintBottom_toTopOf="@+id/rb_rating"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintLeft_toRightOf="@+id/txt_gia_truoc_khi_giam"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.86"
-                app:layout_constraintBottom_toTopOf="@+id/ratingBar" />
+                app:layout_constraintVertical_bias="0.835" />
 
             <TextView
                 android:id="@+id/textView19"
@@ -58,28 +59,29 @@
                 android:textColor="@color/TEXT_COLOR"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/btn_submit"
                 app:layout_constraintHorizontal_bias="0.06"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.819"
-                app:layout_constraintBottom_toTopOf="@+id/btn" />
+                app:layout_constraintVertical_bias="0.835" />
 
             <android.support.v4.view.ViewPager
-                android:id="@+id/viewPager"
+                android:id="@+id/pager_hinh_sp"
                 android:layout_width="368dp"
                 android:layout_height="225dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginRight="7dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/spinner2"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.913"
                 android:layout_marginEnd="7dp"
                 android:layout_marginLeft="8dp"
+                android:layout_marginRight="7dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/sp_mau_sac"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginStart="8dp"></android.support.v4.view.ViewPager>
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.913"></android.support.v4.view.ViewPager>
+
             <TextView
                 android:id="@+id/textView26"
                 android:layout_width="wrap_content"
@@ -94,12 +96,12 @@
                 android:textColor="@color/TEXT_COLOR"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/textView19"
                 app:layout_constraintHorizontal_bias="0.056"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintVertical_bias="0.971"
-                app:layout_constraintBottom_toTopOf="@+id/textView19"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.971" />
 
             <TextView
                 android:id="@+id/textView24"
@@ -109,22 +111,23 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:text="Ảnh sản phẩm"
                 android:textColor="@color/TEXT_COLOR"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/pager_hinh_sp"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/viewPager"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="8dp"
                 app:layout_constraintVertical_bias="0.975" />
 
             <TextView
                 android:id="@+id/textView23"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
@@ -134,12 +137,11 @@
                 android:textColor="@color/TEXT_COLOR"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/rb_rating"
                 app:layout_constraintHorizontal_bias="0.057"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/ratingBar"
                 app:layout_constraintVertical_bias="0.984" />
 
             <TextView
@@ -156,23 +158,22 @@
                 android:textColor="@color/TEXT_COLOR"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/txt_gia_truoc_khi_giam"
                 app:layout_constraintHorizontal_bias="0.049"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.923"
-                app:layout_constraintBottom_toTopOf="@+id/editText4" />
+                app:layout_constraintVertical_bias="0.923" />
 
             <TextView
                 android:id="@+id/textView18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="25dp"
                 android:text="Tên sản phẩm"
                 android:textColor="@color/TEXT_COLOR"
                 android:textSize="18sp"
@@ -181,58 +182,39 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.333"
-                app:layout_constraintBottom_toTopOf="@+id/editText" />
-
-            <EditText
-                android:id="@+id/editText2"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@android:color/background_light"
-                android:hint="   Trước khi giảm"
-                android:inputType="number"
-                android:minWidth="150dp"
-                android:textSize="16sp"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
-                app:layout_constraintBottom_toTopOf="@+id/textView23" />
+                app:layout_constraintBottom_toTopOf="@+id/txt_ten_sp" />
 
             <EditText
-                android:id="@+id/editText4"
+                android:id="@+id/txt_gia"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="112dp"
                 android:background="@android:color/background_light"
-                android:hint="   Trước khi giảm"
+                android:hint="Giá trước khi giảm"
                 android:inputType="number"
                 android:minWidth="150dp"
-                android:textSize="16sp"
-                app:layout_constraintHorizontal_bias="0.0"
+                android:textSize="26sp"
+                app:layout_constraintBottom_toTopOf="@+id/txt_gia_truoc_khi_giam"
+                app:layout_constraintHorizontal_bias="0.036"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.93"
-                app:layout_constraintBottom_toTopOf="@+id/editText2" />
+                app:layout_constraintVertical_bias="0.555" />
 
             <TextView
                 android:id="@+id/textView21"
                 android:layout_width="50dp"
                 android:layout_height="45dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="152dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="125dp"
                 android:background="@android:color/background_light"
                 android:gravity="center"
@@ -240,18 +222,15 @@
                 android:textColor="@color/TEXT_COLOR"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/textView20"
+                app:layout_constraintHorizontal_bias="0.006"
+                app:layout_constraintLeft_toRightOf="@+id/txt_gia"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintLeft_toRightOf="@+id/editText4"
-                app:layout_constraintHorizontal_bias="0.006"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/textView20"
-                app:layout_constraintVertical_bias="0.911" />
+                app:layout_constraintVertical_bias="1.0" />
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/txt_ten_sp"
                 android:layout_width="397dp"
                 android:layout_height="45dp"
                 android:layout_marginBottom="8dp"
@@ -263,15 +242,15 @@
                 android:background="@android:color/background_light"
                 android:hint="    ..."
                 android:inputType="text"
+                app:layout_constraintBottom_toTopOf="@+id/textView22"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.666"
-                app:layout_constraintBottom_toTopOf="@+id/textView22" />
+                app:layout_constraintVertical_bias="0.554" />
 
             <RatingBar
-                android:id="@+id/ratingBar"
+                android:id="@+id/rb_rating"
                 android:layout_width="277dp"
                 android:layout_height="57dp"
                 android:layout_marginBottom="8dp"
@@ -280,15 +259,15 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/textView24"
                 app:layout_constraintHorizontal_bias="0.087"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.966"
-                app:layout_constraintBottom_toTopOf="@+id/textView24" />
+                app:layout_constraintVertical_bias="0.966" />
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/btn_browse_gallary"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="8dp"
@@ -298,52 +277,52 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="78dp"
                 android:background="@drawable/choose_picture"
+                app:layout_constraintBottom_toTopOf="@+id/pager_hinh_sp"
                 app:layout_constraintHorizontal_bias="0.975"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
-                app:layout_constraintBottom_toTopOf="@+id/viewPager" />
+                app:layout_constraintVertical_bias="1.0" />
 
             <Spinner
-                android:id="@+id/spinner3"
+                android:id="@+id/sp_kich_thuoc"
                 android:layout_width="200dp"
                 android:layout_height="30dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="502dp"
+                app:layout_constraintBottom_toTopOf="@+id/btn_submit"
                 app:layout_constraintHorizontal_bias="0.952"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintVertical_bias="0.563"
-                app:layout_constraintBottom_toTopOf="@+id/btn"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp">
+                app:layout_constraintVertical_bias="0.563">
 
             </Spinner>
 
             <Spinner
-                android:id="@+id/spinner2"
+                android:id="@+id/sp_mau_sac"
                 android:layout_width="200dp"
                 android:layout_height="30dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/sp_kich_thuoc"
                 app:layout_constraintHorizontal_bias="0.952"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/spinner3"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintVertical_bias="0.986"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.986">
 
             </Spinner>
 
-            <Button
-                android:id="@+id/btn"
+            <ImageButton
+                android:id="@+id/btn_submit"
                 android:layout_width="81dp"
                 android:layout_height="76dp"
                 android:layout_marginBottom="0dp"
@@ -355,6 +334,28 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
+
+            <EditText
+                android:id="@+id/txt_gia_truoc_khi_giam"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/background_light"
+                android:hint="   Trước khi giảm"
+                android:inputType="number"
+                android:minWidth="150dp"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/textView23"
+                app:layout_constraintHorizontal_bias="0.036"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
 
         </android.support.constraint.ConstraintLayout>
 

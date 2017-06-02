@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
-import com.example.dangminhtien.lazembo.Fragment.fragment_layout_sp;
+import com.example.dangminhtien.lazembo.Fragment.fragment_product;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
@@ -110,7 +110,7 @@ StorageReference storageReference;
                 public void onSuccess(byte[] bytes) {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                     bitmaps.add(bitmap);
-                    fragment_layout_sp fragment_layout_sp = new fragment_layout_sp();
+                    fragment_product fragment_layout_sp = new fragment_product();
 //                    fragment_layout_sp.add(bitmaps);
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -135,7 +135,7 @@ StorageReference storageReference;
                 bitmap[0] = BitmapFactory.decodeFile(localFile.getAbsolutePath());
                 Toast.makeText(context, "Success", Toast.LENGTH_LONG).show();
                 localFile.delete();
-                notifiDataChange fragment_layout_sp = new fragment_layout_sp();
+                notifiDataChange fragment_layout_sp = new fragment_product();
                 fragment_layout_sp.notifi(bitmap[0]);
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -179,6 +179,6 @@ StorageReference storageReference;
     }
 
     public interface notifiDataChange {
-        public void notifi (Bitmap bitmap);
+        void notifi(Bitmap bitmap);
     }
 }

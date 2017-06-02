@@ -8,12 +8,9 @@ import com.example.dangminhtien.lazembo.R;
 
 public class Product extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product);
-        //aa
+        setContentView(R.layout.fragment_product);
     }
 }

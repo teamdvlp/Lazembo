@@ -36,7 +36,7 @@ public class Main_Lazembo extends AppCompatActivity implements Danhmucsp.datacha
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        setContentView(R.layout.activity_main__lazembo);
+        setContentView(R.layout.activity_phan_loai_sp);
         addControls();
         addEvents();
         ClickableSpan clickableSpan = new ClickableSpan() {
@@ -112,7 +112,7 @@ public class Main_Lazembo extends AppCompatActivity implements Danhmucsp.datacha
     private void addControls() {
         txtGia = (EditText) findViewById(R.id.txtGia);
         txtMota = (EditText) findViewById(R.id.txtMota);
-        txtTensp = (EditText) findViewById(R.id.txtTensp);
+        txtTensp = (EditText) findViewById(R.id.txt_ten_sp);
         sp1st = (Spinner) findViewById(R.id.sp1st);
         sp2nd = (Spinner) findViewById(R.id.sp2nd);
         sp3th = (Spinner) findViewById(R.id.sp3th);

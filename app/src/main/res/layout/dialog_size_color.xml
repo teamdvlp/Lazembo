@@ -16,11 +16,11 @@
                 size3
                 size4
                 ........."
-        android:id="@+id/txtSizeColor"
+        android:id="@+id/txt_size_color"
         />
 
     <Button
-        android:id="@+id/btnXacnhan_dialog"
+        android:id="@+id/btn_submit_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

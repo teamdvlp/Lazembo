@@ -51,7 +51,7 @@ public class fragment_hinhsp extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         imgHinhsp = (ImageView) view.findViewById(R.id.imghinhsp);
-        imgHinhsp.setImageBitmap(fragment_layout_sp.bitmaps.get(position));
+        imgHinhsp.setImageBitmap(fragment_product.bitmaps_hinh_sp.get(position));
 
     }
 }

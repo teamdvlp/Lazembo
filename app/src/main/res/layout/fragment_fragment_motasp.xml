@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context="com.example.dangminhtien.lazembo.Custom_Motachitietsp">
+    tools:context="com.example.dangminhtien.lazembo.activity.Custom_Motachitietsp">
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

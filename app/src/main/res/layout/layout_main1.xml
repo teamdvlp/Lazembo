@@ -131,7 +131,7 @@
         app:layout_constraintVertical_bias="0.137" />
 
     <EditText
-        android:id="@+id/txtTensp"
+        android:id="@+id/txt_ten_sp"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
