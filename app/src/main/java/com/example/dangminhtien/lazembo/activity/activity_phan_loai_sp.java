@@ -18,7 +18,6 @@ import android.widget.Spinner;
 
 import com.example.dangminhtien.lazembo.R;
 import com.example.dangminhtien.lazembo.data.Danhmucsp;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -35,7 +34,6 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         setContentView(R.layout.activity_phan_loai_sp);
         addControls();
         addEvents();

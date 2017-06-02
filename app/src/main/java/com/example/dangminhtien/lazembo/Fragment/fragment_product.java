@@ -28,6 +28,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.dangminhtien.lazembo.R;
+import com.example.dangminhtien.lazembo.activity.activity_phan_loai_sp;
 import com.example.dangminhtien.lazembo.adapter.AdapterHinhSp;
 import com.example.dangminhtien.lazembo.data.Sanpham;
 import com.example.dangminhtien.lazembo.data.get_set_sanpham;
@@ -187,22 +188,27 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
     }
 
     private void xacnhanUptoFirebase() {
-        boolean contiue = true;
+        boolean contiue = false;
+
 //        contiue = check_txt_gia_truoc_khi_giam();
-
-//        contiue = check_txt_gia_sp();
-//
-//        contiue = check_txt_ten_sp();
-//
-//        contiue = check_sp_kichthuoc();
-//
-//        contiue = check_pager_hinh_sp();
-//
-//        contiue = check_sp_mausac();
-
-        if(contiue) {
-            upto_firebase();
-        }
+//        if (contiue) {
+//            contiue = check_txt_gia_sp();
+//        }
+//        if (contiue) {
+//            contiue = check_txt_ten_sp();
+//        }
+//        if (contiue) {
+//            contiue = check_sp_kichthuoc();
+//        }
+//        if (contiue) {
+//            contiue = check_pager_hinh_sp();
+//        }
+//        if (contiue) {
+//            contiue = check_sp_mausac();
+//        }
+//        if(contiue) {
+        transfer_and_move_phanloai_sp();
+//        }
     }
     private boolean check_txt_ten_sp () {
         if (!txt_ten_sp.getText().toString().equals("") && null != txt_ten_sp.toString()) {
@@ -214,7 +220,7 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
         }
     }
 
-    private void upto_firebase() {
+    private void transfer_and_move_phanloai_sp() {
         get_set_sanpham uploadSanpham = new get_set_sanpham(getContext());
         UUID uuid = new UUID(100000,1);
         String masp = uuid.toString();
@@ -222,14 +228,17 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
         path_hinh_sp.add(path_image);
         trasnfer_motasp fragment_motasp = new fragment_motasp();
         String text = fragment_motasp.transfer_text();
-        Sanpham sanpham = new Sanpham(txt_ten_sp.getText().toString(), source_kichthuoc, source_mausac, rb_rating.getRating(), Long.valueOf(txt_gia.getText().toString()), text, path_hinh_sp, Float.valueOf(txt_giap_truoc_khi_giam.getText().toString()), masp);
         Sanpham.getInstance().setGiasp(Double.parseDouble(txt_gia.getText().toString()));
         Sanpham.getInstance().setGiaTruocKhiGiam(Double.parseDouble(txt_giap_truoc_khi_giam.getText().toString()));
         Sanpham.getInstance().setHinh(path_hinh_sp);
         Sanpham.getInstance().setIdsp(masp);
         Sanpham.getInstance().setKichco(source_kichthuoc);
         Sanpham.getInstance().setMausac(source_mausac);
-//        Sanpham.getInstance().setMotachitietsp(text);
+        Sanpham.getInstance().setMotachitietsp(text);
+        Sanpham.getInstance().setRating(rb_rating.getRating());
+        Sanpham.getInstance().setTensp(txt_ten_sp.getText().toString());
+        Intent intent = new Intent(getActivity(), activity_phan_loai_sp.class);
+        startActivity(intent);
     }
 
     private ArrayList<String> get_array_dialog () {
