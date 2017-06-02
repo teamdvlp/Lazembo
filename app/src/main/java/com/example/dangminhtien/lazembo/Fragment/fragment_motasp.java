@@ -1,27 +1,45 @@
 package com.example.dangminhtien.lazembo.Fragment;
 
-import android.graphics.Color;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Layout;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.style.AlignmentSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.Spinner;
 
 import com.example.dangminhtien.lazembo.R;
+import com.larswerkman.holocolorpicker.ColorPicker;
+import com.larswerkman.holocolorpicker.OpacityBar;
+import com.larswerkman.holocolorpicker.SVBar;
+import com.larswerkman.holocolorpicker.SaturationBar;
+import com.larswerkman.holocolorpicker.ValueBar;
+
+import java.util.ArrayList;
+
+import jp.wasabeef.richeditor.RichEditor;
 
 public class fragment_motasp extends Fragment {
-
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
+    static int text_size = 3;
+    private final ArrayList<Integer> size = new ArrayList<Integer>(7);
+    private ImageButton btn_align_left, btn_align_right, btn_align_center, btn_bold,
+            btn_italic, btn_underline, btn_text_color, btn_text_size_decrease,
+            btn_text_size_increase, btn_confirm;
+    private Spinner sp_text_size;
+    private RichEditor txt_motachitiet;
+    private ColorPicker picker;
+    private SVBar svBar;
+    private OpacityBar opacityBar;
+    private SaturationBar saturationBar;
+    private ValueBar valueBar;
+    private AlertDialog dialog_choose_picker;
 
     public fragment_motasp() {
         // Required empty public constructor
@@ -39,10 +57,6 @@ public class fragment_motasp extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -52,112 +66,156 @@ public class fragment_motasp extends Fragment {
         return inflater.inflate(R.layout.fragment_fragment_motasp, container, false);
     }
 
-    private void xulyTxtGiasp () {
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        addControls(view);
+        addEvents();
+    }
+
+    private void addControls(View view) {
+        txt_motachitiet = (RichEditor) view.findViewById(R.id.txt_motachitiet);
+        btn_align_center = (ImageButton) view.findViewById(R.id.btn_align_Center);
+        btn_align_left = (ImageButton) view.findViewById(R.id.btn_align_Left);
+        btn_align_right = (ImageButton) view.findViewById(R.id.btn_align_Right);
+        btn_bold = (ImageButton) view.findViewById(R.id.btn_bold);
+        btn_italic = (ImageButton) view.findViewById(R.id.btn_italic);
+        btn_underline = (ImageButton) view.findViewById(R.id.btn_underline);
+        btn_text_color = (ImageButton) view.findViewById(R.id.btn_text_color);
+        btn_text_size_decrease = (ImageButton) view.findViewById(R.id.btn_text_size_decrease);
+        btn_text_size_increase = (ImageButton) view.findViewById(R.id.btn_text_size_increase);
+        sp_text_size = (Spinner) view.findViewById(R.id.sp_text_size);
+        createDialog();
+        addSize();
+        sp_text_size.setAdapter(new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, size));
+        txt_motachitiet.setPlaceholder("Nhập nội dung vào đây");
+    }
+
+    private void createDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View view = inflater.inflate(R.layout.dialog_choose_color, null);
+        picker = (ColorPicker) view.findViewById(R.id.picker);
+        svBar = (SVBar) view.findViewById(R.id.svbar);
+        valueBar = (ValueBar) view.findViewById(R.id.valuebar);
+        saturationBar = (SaturationBar) view.findViewById(R.id.saturationbar);
+        opacityBar = (OpacityBar) view.findViewById(R.id.opacitybar);
+        picker.addOpacityBar(opacityBar);
+        picker.addSaturationBar(saturationBar);
+        picker.addValueBar(valueBar);
+        picker.addSVBar(svBar);
+        builder.setView(view);
+        dialog_choose_picker = builder.create();
+        dialog_choose_picker.setCanceledOnTouchOutside(true);
+        btn_confirm = (ImageButton) view.findViewById(R.id.btn_confirm);
 
     }
 
-    private void xulyTxtGiaspTruocKhiGiam () {
-
+    private void addSize() {
+        size.add(1);
+        size.add(2);
+        size.add(3);
+        size.add(4);
+        size.add(5);
+        size.add(6);
+        size.add(7);
     }
 
-    private void xylyTxtCamKet () {
+    private void addEvents() {
 
+        btn_underline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txt_motachitiet.setUnderline();
+            }
+        });
+
+        btn_italic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txt_motachitiet.setItalic();
+            }
+        });
+
+        btn_bold.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txt_motachitiet.setBold();
+            }
+        });
+
+        btn_align_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txt_motachitiet.setAlignRight();
+            }
+        });
+
+        btn_align_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txt_motachitiet.setAlignLeft();
+            }
+        });
+
+        btn_align_center.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txt_motachitiet.setAlignCenter();
+            }
+        });
+
+        btn_text_size_decrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                text_size -= 1;
+                txt_motachitiet.setFontSize(text_size);
+            }
+        });
+
+        btn_text_size_increase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                text_size += 1;
+                txt_motachitiet.setFontSize(text_size);
+
+            }
+        });
+
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txt_motachitiet.setTextColor(picker.getColor());
+                dialog_choose_picker.dismiss();
+            }
+        });
+
+        btn_text_color.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog_choose_picker.show();
+            }
+        });
+
+        dialog_choose_picker.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                String hexColor = String.format("%06X", (0xFFFFFF & picker.getColor()));
+                txt_motachitiet.setTextColor(Integer.parseInt(hexColor, 16));
+            }
+        });
+
+        sp_text_size.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                txt_motachitiet.setFontSize(position + 1);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
-    private void xulySpMausac () {
-
-    }
-
-    private void xulySpKichco () {
-
-    }
-
-    private void xulyRbRating () {
-
-    }
-
-    private void xulyPagerHinhsp () {
-
-    }
-
-    private void xulyHienthiSpKichco () {
-
-    }
-
-    private void xylyHienthiSpMausac () {
-
-    }
-
-    private void xulyHienthinRbRating () {
-
-    }
-
-    private void xulyHienthiPagerHinhsp () {
-
-    }
-
-    private void setTextHinhthucgiaohang () {
-
-        SpannableStringBuilder styledString
-                = new SpannableStringBuilder(
-                "Hình thức vận chuyển\n\n" // 22
-                        + "COD: " // 5
-                        + "Hình thức vận chuyển tận nhà. Do bưu điện Viettel vận chuyển, có tính phí vận chuyển đối với đơn hàng dưới 300 nghìn\n\n" // 118
-                        + "VISA/MASTER CARD: " // 18
-                        + "Miễn phí vận chuyển, Do bưu điện Viettel vận chuyển \n\n" // 53
-                        + "Chuyển khoảng: " // 15
-                        + "Miễn phí vận chuyển, Vietcombank: 19802948123, Ngân hàng quân đội: 12948192893, Ngân hàng Đông Á: 19382838192" // 109
-        );
-
-        styledString.setSpan(new RelativeSizeSpan(1.7f), 0, 22 - 1, 0);
-
-        styledString.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, 22 - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        styledString.setSpan(new ForegroundColorSpan(Color.RED), 0, 22 - 1  ,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        styledString.setSpan(new ForegroundColorSpan(Color.BLUE), 22, 22 + 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        styledString.setSpan(new ForegroundColorSpan(Color.BLUE), 27 + 118, 27 + 118 + 18, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        styledString.setSpan(new ForegroundColorSpan(Color.BLUE), 27 + 118 + 18 + 53, 27 + 118 + 18 + 53 + 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-    }
-    // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
-
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mListener = null;
-//    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-//    public interface OnFragmentInteractionListener {
-//         TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
 }

@@ -10,8 +10,8 @@ import com.example.dangminhtien.lazembo.Fragment.fragment_product;
  * Created by dangminhtien on 5/30/17.
  */
 
-public class AdapterSeller extends FragmentPagerAdapter {
-    public AdapterSeller(FragmentManager fm) {
+public class adapter_product extends FragmentPagerAdapter {
+    public adapter_product(FragmentManager fm) {
         super(fm);
     }
 

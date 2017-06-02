@@ -13,14 +13,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.Custom_Seller">
+        <activity android:name=".activity.activity_product">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.Main_Lazembo" />
-        <activity android:name=".activity.Custom_Motachitietsp" />
+        <activity android:name=".activity.activity_phan_loai_sp" />
         <activity android:name=".activity.Cart"/>
         <activity android:name=".activity.ListOfProduct"/>
         <activity android:name=".activity.MainActivity"/>

@@ -43,6 +43,10 @@ import java.util.Date;
 import java.util.UUID;
 
 public class fragment_product extends Fragment implements get_set_sanpham.notifiDataChange {
+    private static final String KEY_AUTHENTICATION = "authentication";
+    private final static int RESULT_GALLARY = 69;
+    public static ArrayList<Bitmap> bitmaps_hinh_sp;
+    private static int FLAG_DIALOG = 1;
     private EditText txt_gia, txt_giap_truoc_khi_giam, txt_size_color, txt_ten_sp;
     private ImageButton btn_browse_gallary, btn_submit;
     private Button btn_submit_dialog;
@@ -51,20 +55,13 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
     private RatingBar rb_rating;
     private AlertDialog alert_dialog;
     private Spinner sp_mausac, sp_kichthuoc;
-
     private ArrayList<String> source_mausac;
     private ArrayList<String> source_kichthuoc;
     private ArrayList<String> path_hinh_sp;
-    public static ArrayList<Bitmap> bitmaps_hinh_sp;
-
     // 0: color, 1: size
     private ArrayAdapter adapter_sp_kichthuoc;
     private ArrayAdapter adapter_sp_mausac;
     private AdapterHinhSp adapter_hinh_sp;
-
-    private static final String KEY_AUTHENTICATION = "authentication";
-    private final static int RESULT_GALLARY = 69;
-    private static int FLAG_DIALOG = 1;
     // 1: Người bán 0: Người mua
     private int AUTHENTICATION;
 
@@ -190,9 +187,6 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
     }
 
     private void xacnhanUptoFirebase() {
-//        if (check_pager_hinh_sp() && check_sp_mausac() && check_sp_kichthuoc() && check_txt_gia_sp() && check_txt_gia_truoc_khi_giam() && check_txt_ten_sp()) {
-//            upto_firebase();
-//        }
         boolean contiue = false;
         contiue = check_txt_gia_truoc_khi_giam();
 
@@ -215,6 +209,7 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
             return true;
         } else {
             txt_ten_sp.requestFocus();
+            txt_ten_sp.setError("Your text is invalid or empty");
             return false;
         }
     }
@@ -225,7 +220,7 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
         String masp = uuid.toString();
         String path_image = uploadSanpham.upLoadImage(bitmaps_hinh_sp.get(0), "Sản phẩm/" + get_date_and_time());
         path_hinh_sp.add(path_image);
-        Sanpham sanpham = new Sanpham("hahaha", source_kichthuoc, source_mausac, rb_rating.getRating(), Long.valueOf(txt_gia.getText().toString()), "San pham xam nach", path_hinh_sp,Float.valueOf(txt_giap_truoc_khi_giam.getText().toString()), masp);
+        Sanpham sanpham = new Sanpham(txt_ten_sp.getText().toString(), source_kichthuoc, source_mausac, rb_rating.getRating(), Long.valueOf(txt_gia.getText().toString()), "San pham xam nach", path_hinh_sp, Float.valueOf(txt_giap_truoc_khi_giam.getText().toString()), masp);
         uploadSanpham.upLoadSanpham(sanpham, masp);
     }
 
@@ -238,7 +233,7 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
 
     private boolean check_txt_gia_sp () {
 
-        if (!txt_gia.getText().toString().equals("") | null == txt_gia.toString()) {
+        if (!txt_gia.getText().toString().equals("") && null == txt_gia.toString()) {
             return true;
         } else {
             txt_gia.requestFocus();
@@ -257,7 +252,7 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
 
     private boolean check_txt_gia_truoc_khi_giam () {
 
-        if (!txt_giap_truoc_khi_giam.getText().toString().equals("") | null == txt_giap_truoc_khi_giam.toString()) {
+        if (!txt_giap_truoc_khi_giam.getText().toString().equals("") && null != txt_giap_truoc_khi_giam.toString()) {
             return true;
         } else {
             txt_giap_truoc_khi_giam.requestFocus();

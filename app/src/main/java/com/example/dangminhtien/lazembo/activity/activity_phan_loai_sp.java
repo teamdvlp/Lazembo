@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class Main_Lazembo extends AppCompatActivity implements Danhmucsp.datachanged{
+public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucsp.datachanged {
     final static int RESULT_GALLARY = 69;
     private Danhmucsp danhmucsp;
     private EditText txtTensp, txtGia, txtMota;
@@ -54,10 +54,10 @@ public class Main_Lazembo extends AppCompatActivity implements Danhmucsp.datacha
         sp1st.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Danhmucsp danhmucsp = new Danhmucsp(Main_Lazembo.this, sp2nd);
-                sp2nd.setAdapter(new ArrayAdapter<String>(Main_Lazembo.this,android.R.layout.simple_spinner_item,arrayList));
-                sp3th.setAdapter(new ArrayAdapter<String>(Main_Lazembo.this,android.R.layout.simple_spinner_item,arrayList));
-                sp4th.setAdapter(new ArrayAdapter<String>(Main_Lazembo.this,android.R.layout.simple_spinner_item,arrayList));
+                Danhmucsp danhmucsp = new Danhmucsp(activity_phan_loai_sp.this, sp2nd);
+                sp2nd.setAdapter(new ArrayAdapter<String>(activity_phan_loai_sp.this, android.R.layout.simple_spinner_item, arrayList));
+                sp3th.setAdapter(new ArrayAdapter<String>(activity_phan_loai_sp.this, android.R.layout.simple_spinner_item, arrayList));
+                sp4th.setAdapter(new ArrayAdapter<String>(activity_phan_loai_sp.this, android.R.layout.simple_spinner_item, arrayList));
                 cache[0] = parent.getSelectedItem().toString();
                 danhmucsp.getChild(new String[]{cache[0]});
             }
@@ -71,9 +71,9 @@ public class Main_Lazembo extends AppCompatActivity implements Danhmucsp.datacha
         sp2nd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Danhmucsp danhmucsp = new Danhmucsp(Main_Lazembo.this, sp3th);
-                sp3th.setAdapter(new ArrayAdapter<String>(Main_Lazembo.this,android.R.layout.simple_spinner_item,arrayList));
-                sp4th.setAdapter(new ArrayAdapter<String>(Main_Lazembo.this,android.R.layout.simple_spinner_item,arrayList));
+                Danhmucsp danhmucsp = new Danhmucsp(activity_phan_loai_sp.this, sp3th);
+                sp3th.setAdapter(new ArrayAdapter<String>(activity_phan_loai_sp.this, android.R.layout.simple_spinner_item, arrayList));
+                sp4th.setAdapter(new ArrayAdapter<String>(activity_phan_loai_sp.this, android.R.layout.simple_spinner_item, arrayList));
                 cache[1] = parent.getSelectedItem().toString();
                 danhmucsp.getChild(new String[]{cache[0],cache[1]});
             }
@@ -87,8 +87,8 @@ public class Main_Lazembo extends AppCompatActivity implements Danhmucsp.datacha
         sp3th.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Danhmucsp danhmucsp = new Danhmucsp(Main_Lazembo.this, sp4th);
-                sp4th.setAdapter(new ArrayAdapter<String>(Main_Lazembo.this,android.R.layout.simple_spinner_item,arrayList));
+                Danhmucsp danhmucsp = new Danhmucsp(activity_phan_loai_sp.this, sp4th);
+                sp4th.setAdapter(new ArrayAdapter<String>(activity_phan_loai_sp.this, android.R.layout.simple_spinner_item, arrayList));
                 cache[2] = parent.getSelectedItem().toString();
                 danhmucsp.getChild(new String[]{cache[0],cache[1],cache[2]});
 
@@ -124,12 +124,12 @@ public class Main_Lazembo extends AppCompatActivity implements Danhmucsp.datacha
         imgSp4 = (ImageView) findViewById(R.id.imgSp4);
         Button btnDang = (Button) findViewById(R.id.btnDang);
 
-        danhmucsp = new Danhmucsp(Main_Lazembo.this, sp1st);
+        danhmucsp = new Danhmucsp(activity_phan_loai_sp.this, sp1st);
         danhmucsp.getChild(new String[]{});
     }
 
     private void xulySp(ArrayList<String> arrayList, Context context, Spinner sp) {
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Main_Lazembo.this,android.R.layout.simple_spinner_item,arrayList);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(activity_phan_loai_sp.this, android.R.layout.simple_spinner_item, arrayList);
         sp.setAdapter(arrayAdapter);
     }
     @Override
