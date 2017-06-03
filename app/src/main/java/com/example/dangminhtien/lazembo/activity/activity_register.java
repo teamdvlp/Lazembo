@@ -23,14 +23,15 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.ArrayList;
 
 public class activity_register extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     // UI references.
-    private AutoCompleteTextView txt_email;
-    private EditText txt_password, txt_password_again, txt_HovaTen, txt_sdt;
+    private AutoCompleteTextView txt_email_register;
+    private EditText txt_password_register, txt_password_again_register, txt_HovaTen_register, txt_sdt_register, txt_displayname_register;
     private View mProgressView;
     private Button btn_register, btn_signin_register;
 
@@ -43,13 +44,14 @@ public class activity_register extends AppCompatActivity {
     }
 
     private void addControls() {
-        txt_password_again = (EditText) findViewById(R.id.txt_password_again_register);
-        txt_email = (AutoCompleteTextView) findViewById(R.id.txt_email_register);
+        txt_displayname_register = (EditText) findViewById(R.id.txt_display_name_register);
+        txt_password_again_register = (EditText) findViewById(R.id.txt_password_again_register);
+        txt_email_register = (AutoCompleteTextView) findViewById(R.id.txt_email_register);
         btn_signin_register = (Button) findViewById(R.id.btn_Singin_register);
-        txt_password = (EditText) findViewById(R.id.txt_password_register);
-        txt_HovaTen = (EditText) findViewById(R.id.txt_HovaTen);
-        txt_sdt = (EditText) findViewById(R.id.txt_sdt);
-        txt_password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        txt_password_register = (EditText) findViewById(R.id.txt_password_register);
+        txt_HovaTen_register = (EditText) findViewById(R.id.txt_HovaTen_register);
+        txt_sdt_register = (EditText) findViewById(R.id.txt_sdt_register);
+        txt_password_register.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
@@ -79,75 +81,74 @@ public class activity_register extends AppCompatActivity {
     private void attemptLogin() {
 
         // Reset errors.
-        txt_email.setError(null);
-        txt_password.setError(null);
-        txt_password_again.setError(null);
-        txt_sdt.setError(null);
-        txt_HovaTen.setError(null);
+        txt_email_register.setError(null);
+        txt_password_register.setError(null);
+        txt_password_again_register.setError(null);
+        txt_sdt_register.setError(null);
+        txt_HovaTen_register.setError(null);
         // Store values at the time of the login attempt.
-        String email = txt_email.getText().toString();
-        String password = txt_password.getText().toString();
 
         boolean Continue = true;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            txt_password.setError("Your password is empty");
-            focusView = txt_password;
+        if (TextUtils.isEmpty(txt_password_register.getText().toString()) || !isPasswordValid(txt_password_again_register.getText().toString())) {
+            txt_password_register.setError("Your password is empty");
+            focusView = txt_password_register;
             Continue = !true;
         }
 
         // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            txt_email.setError("Your email is empty");
-            focusView = txt_email;
+        if (TextUtils.isEmpty(txt_email_register.getText().toString())) {
+            txt_email_register.setError("Your email is empty");
+            focusView = txt_email_register;
             Continue = !true;
-        } else if (!isEmailValid(email)) {
-            txt_email.setError("Your email is invalid");
-            focusView = txt_email;
+        } else if (!isEmailValid(txt_email_register.getText().toString())) {
+            txt_email_register.setError("Your email is invalid");
+            focusView = txt_email_register;
             Continue = !true;
         }
 
         // check password again
-        if (!txt_password_again.getText().toString().equals(txt_password.getText().toString())) {
-            txt_password_again.setError("Your password is not match");
+        if (!txt_password_again_register.getText().toString().equals(txt_password_register.getText().toString())) {
+            txt_password_again_register.setError("Your password is not match");
             Continue = !true;
         }
 
-        if (TextUtils.isEmpty(txt_HovaTen.getText().toString())) {
-            txt_HovaTen.setError("Your text is empty");
+        if (TextUtils.isEmpty(txt_HovaTen_register.getText().toString())) {
+            txt_HovaTen_register.setError("Your text is empty");
             Continue = !true;
         }
 
-        if (TextUtils.isEmpty(txt_sdt.getText())) {
-            txt_sdt.setError("Your text is empty");
+        if (TextUtils.isEmpty(txt_sdt_register.getText())) {
+            txt_sdt_register.setError("Your text is empty");
+        }
+
+        if (TextUtils.isEmpty(txt_displayname_register.getText())) {
+            txt_displayname_register.setError("Your text is empty");
         }
 
         if (Continue == false) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
             process_Register();
             showProgress(true);
         }
     }
 
     private void process_Register() {
-        firebaseAuth.createUserWithEmailAndPassword(txt_email.getText().toString(), txt_password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+        firebaseAuth.createUserWithEmailAndPassword(txt_email_register.getText().toString(), txt_password_register.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
                 // do somethings
-                mProgressView.setVisibility(View.INVISIBLE);
-                Toast.makeText(getApplicationContext(), "Đăng ký thành công", Toast.LENGTH_LONG).show();
-                String uid = "";
-                uid = authResult.getUser().getUid();
-                Khachhang khachhang = new Khachhang(txt_HovaTen.getText().toString(), txt_email.getText().toString(), txt_sdt.getText().toString(), false, new ArrayList<String>(), uid);
+                UserProfileChangeRequest changeRequest = new UserProfileChangeRequest.Builder().setDisplayName(txt_displayname_register.getText().toString()).build();
+                authResult.getUser().updateProfile(changeRequest);
+                String uid = authResult.getUser().getUid();
+                Khachhang khachhang = new Khachhang(txt_HovaTen_register.getText().toString(), txt_email_register.getText().toString(), txt_sdt_register.getText().toString(), false, new ArrayList<String>(), uid);
                 get_set_Khachhang get_set_khachhang = new get_set_Khachhang(activity_register.this);
                 get_set_khachhang.set_khachhang(khachhang);
+                mProgressView.setVisibility(View.INVISIBLE);
+                Toast.makeText(getApplicationContext(), "Đăng ký thành công", Toast.LENGTH_LONG).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

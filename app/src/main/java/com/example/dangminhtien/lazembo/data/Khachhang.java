@@ -10,6 +10,7 @@ public class Khachhang {
     private ArrayList<String> sanphams;
     private boolean nguoiban;
 
+
     public Khachhang(String HOVATEN, String email, String sdt, boolean nguoiban, ArrayList<String> sanphams, String uid) {
         this.uid = uid;
         this.HOVATEN = HOVATEN;

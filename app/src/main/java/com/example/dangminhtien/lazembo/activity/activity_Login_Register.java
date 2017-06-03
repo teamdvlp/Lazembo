@@ -146,6 +146,9 @@ public class activity_Login_Register extends AppCompatActivity {
                 // do somethings
                 mProgressView.setVisibility(View.INVISIBLE);
                 Toast.makeText(getApplicationContext(), "Đăng nhập thành công", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), firebaseAuth.getCurrentUser().getProviderId() + "\n" +
+                                firebaseAuth.getCurrentUser().getEmail() + "\n" + firebaseAuth.getCurrentUser().getDisplayName()
+                        , Toast.LENGTH_LONG).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
