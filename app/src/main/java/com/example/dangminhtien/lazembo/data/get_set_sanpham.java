@@ -19,16 +19,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class get_set_sanpham {
 Context context;
@@ -176,6 +170,15 @@ StorageReference storageReference;
             }
         });
         return sanphams;
+    }
+
+    public void write_by_path(String objects, String[] path) {
+        String nameDM = "Danh mục sản phẩm/";
+        for (int i = 0; i < path.length - 1; i++) {
+            nameDM += "/" + path[i];
+        }
+        databaseReference = database.getReference(nameDM);
+        databaseReference.child(path[path.length - 1]).setValue(objects);
     }
 
     public interface notifiDataChange {
