@@ -44,6 +44,7 @@ public class ListOfProduct extends MainActivity{
         Bundle bundle = getIntent().getExtras();
         String loaiMatHang = (String) bundle.get("LoaiMatHang");
         txt_type_of_goods.setText(loaiMatHang);
+
     }
     private void addsControls() {
         txt_type_of_goods = (TextView) findViewById(R.id.txt_type_of_goods);

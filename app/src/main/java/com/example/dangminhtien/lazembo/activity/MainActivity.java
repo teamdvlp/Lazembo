@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 
 
 import com.example.dangminhtien.lazembo.R;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
     static boolean continues = true;
 
+    ImageView img_introView;
     Toolbar toolbar;
     DrawerLayout drawer_container;
     NavigationView nav_list_goods;
@@ -39,10 +41,13 @@ public class MainActivity extends AppCompatActivity {
             addEvents();
 
             if(continues){
-            changes(MainActivity.this, Cart.class);
+            changes(MainActivity.this, SecondMainAcitivty.class);
             continues = false;
-            finish();
             }
+
+            img_introView.setVisibility(View.GONE);
+
+
 
     }
 
@@ -66,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         drawer_container = (DrawerLayout) findViewById(R.id.drawer_container);
         nav_list_goods = (NavigationView) findViewById(R.id.nav_list_goods);
+        img_introView = (ImageView) findViewById(R.id.img_introView);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
                 drawer_container,
                 toolbar,
