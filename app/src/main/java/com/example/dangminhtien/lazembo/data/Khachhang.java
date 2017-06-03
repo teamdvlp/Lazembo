@@ -1,44 +1,42 @@
 package com.example.dangminhtien.lazembo.data;
 
-public class Khachhang {
-    private String id;
-    private String pass;
-    private String HOVATEN;
-    private String email;
-    private String sdt;
-    private Giohang giohang;
-    private boolean nguoiban;
-    private byte gioitinh;
+import java.util.ArrayList;
 
-    public Khachhang(String id, String pass, String HOVATEN, String email, String sdt, Giohang giohang, boolean nguoiban, byte gioitinh) {
-        this.id = id;
-        this.pass = pass;
+public class Khachhang {
+    private String email;
+    private String uid;
+    private String HOVATEN;
+    private String sdt;
+    private ArrayList<String> sanphams;
+    private boolean nguoiban;
+
+    public Khachhang(String HOVATEN, String email, String sdt, boolean nguoiban, ArrayList<String> sanphams, String uid) {
+        this.uid = uid;
         this.HOVATEN = HOVATEN;
         this.email = email;
         this.sdt = sdt;
-        this.giohang = giohang;
         this.nguoiban = nguoiban;
-        this.gioitinh = gioitinh;
+        this.sanphams = sanphams;
     }
 
     public Khachhang () {
 
     }
 
-    public String getId() {
-        return id;
+    public ArrayList<String> getSanphams() {
+        return sanphams;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setSanphams(ArrayList<String> sanphams) {
+        this.sanphams = sanphams;
     }
 
-    public String getPass() {
-        return pass;
+    public String getUid() {
+        return uid;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getHOVATEN() {
@@ -65,14 +63,6 @@ public class Khachhang {
         this.sdt = sdt;
     }
 
-    public Giohang getGiohang() {
-        return giohang;
-    }
-
-    public void setGiohang(Giohang giohang) {
-        this.giohang = giohang;
-    }
-
     public boolean isNguoiban() {
         return nguoiban;
     }
@@ -81,11 +71,4 @@ public class Khachhang {
         this.nguoiban = nguoiban;
     }
 
-    public byte getGioitinh() {
-        return gioitinh;
-    }
-
-    public void setGioitinh(byte gioitinh) {
-        this.gioitinh = gioitinh;
-    }
 }

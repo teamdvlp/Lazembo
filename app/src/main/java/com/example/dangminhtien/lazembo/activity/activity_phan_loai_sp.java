@@ -117,12 +117,13 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
                         break;
                     }
                 }
+
                 for (int i = 0; i < cache.length; i++) {
                     Toast.makeText(getApplicationContext(), cache[i], Toast.LENGTH_SHORT).show();
                 }
                 get_set_sanpham get_set_sanpham = new get_set_sanpham(activity_phan_loai_sp.this);
                 get_set_sanpham.upLoadSanpham(sanpham, sanpham.getIdsp());
-                get_set_sanpham.write_by_path(sanpham.getIdsp(), cache);
+                get_set_sanpham.write_path_by_path(sanpham.getIdsp(), cache);
             }
         });
     }

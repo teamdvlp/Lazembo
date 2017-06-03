@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="410dp"
     android:layout_height="100dp"
     android:background="@color/Test">
@@ -85,7 +84,6 @@
         android:layout_marginBottom="1dp"
         android:layout_marginLeft="0dp"
         android:layout_marginStart="3dp"
-        android:background="@drawable/plus"
         android:gravity="center"
         android:textColor="?attr/editTextColor"
         android:textSize="20sp"
@@ -104,7 +102,6 @@
         android:layout_marginBottom="1dp"
         android:layout_marginLeft="0dp"
         android:layout_marginStart="3dp"
-        android:background="@drawable/subtract2"
         android:gravity="center"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -166,7 +163,6 @@
         android:layout_marginLeft="2dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="0dp"
-        android:background="@drawable/delete"
         android:gravity="center"
         android:textColor="@color/TEXT_COLOR"
         android:textSize="14sp"

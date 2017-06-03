@@ -5,6 +5,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -13,17 +17,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.activity_Login_Register">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.activity_phan_loai_sp" />
-        <activity android:name=".activity.Cart"/>
-        <activity android:name=".activity.ListOfProduct"/>
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.Cart" />
+        <activity android:name=".activity.ListOfProduct" />
         <activity android:name=".activity.SecondMainAcitivty" />
-        <activity android:name=".activity.activity_product"/>
+        <activity android:name=".activity.activity_product" />
+        <activity
+            android:name=".activity.activity_phan_loai_sp"
+            android:label="@string/title_activity__login__register" />
+        <activity android:name=".activity.activity_register"></activity>
     </application>
 
 </manifest>

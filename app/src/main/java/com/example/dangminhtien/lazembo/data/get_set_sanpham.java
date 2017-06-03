@@ -172,13 +172,13 @@ StorageReference storageReference;
         return sanphams;
     }
 
-    public void write_by_path(String objects, String[] path) {
+    public void write_path_by_path(String path, String[] paths) {
         String nameDM = "Danh mục sản phẩm/";
-        for (int i = 0; i < path.length - 1; i++) {
-            nameDM += "/" + path[i];
+        for (int i = 0; i < paths.length - 1; i++) {
+            nameDM += "/" + paths[i];
         }
         databaseReference = database.getReference(nameDM);
-        databaseReference.child(path[path.length - 1]).setValue(objects);
+        databaseReference.child(paths[paths.length - 1]).setValue(path);
     }
 
     public interface notifiDataChange {

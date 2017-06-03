@@ -59,7 +59,7 @@ public class ListOfProduct extends MainActivity{
         list_tieu_chi = new ArrayList<>();
         prepareDataforSpinner();
 
-        sp_price = (Spinner) findViewById(R.id.sp_price);
+//        sp_price = (Spinner) findViewById(R.id.sp);
         adapter_price = new ArrayAdapter<>(ListOfProduct.this,android.R.layout.simple_spinner_dropdown_item,list_price);
         sp_price.setAdapter(adapter_price);
 
