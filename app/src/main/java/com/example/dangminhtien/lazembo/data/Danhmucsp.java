@@ -65,7 +65,7 @@ public class Danhmucsp {
                 nameDm += "/" +link[i];
             }
             databaseReference = database.getReference(nameDm);
-            databaseReference.addValueEventListener(new ValueEventListener() {
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     haschild[1] = dataSnapshot.hasChildren();

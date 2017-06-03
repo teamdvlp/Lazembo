@@ -1,36 +1,32 @@
 package com.example.dangminhtien.lazembo.activity;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.dangminhtien.lazembo.R;
 import com.example.dangminhtien.lazembo.data.Danhmucsp;
+import com.example.dangminhtien.lazembo.data.Sanpham;
+import com.example.dangminhtien.lazembo.data.get_set_sanpham;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucsp.datachanged {
     final static int RESULT_GALLARY = 69;
+    final static String[] cache = new String[6];
+    static String path_spinner;
+    static int a = 0;
     private Danhmucsp danhmucsp;
-    private EditText txtTensp, txtGia, txtMota;
     private Spinner sp1st, sp2nd, sp3th, sp4th;
-    private Button btnGallary;
-    private ImageView imgSp1,imgSp2,imgSp3,imgSp4;
+    private ImageButton btn_submit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +43,6 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
 
 
     private void addEvents() {
-        final String[] cache = new String[4];
         final ArrayList arrayList = new ArrayList();
         sp1st.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -97,30 +92,48 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
             }
         });
 
-        btnGallary.setOnClickListener(new View.OnClickListener() {
+        sp4th.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if (!parent.getSelectedItem().toString().equals("")) {
+                cache[3] = parent.getSelectedItem().toString();
+//                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, RESULT_GALLARY);
+                Sanpham sanpham = Sanpham.getInstance();
+                for (int i = 0; i < cache.length; i++) {
+                    if (cache[i] == null) {
+                        cache[i] = "Sản phẩm";
+                        cache[i + 1] = sanpham.getIdsp();
+                        break;
+                    }
+                }
+                for (int i = 0; i < cache.length; i++) {
+                    Toast.makeText(getApplicationContext(), cache[i], Toast.LENGTH_SHORT).show();
+                }
+                get_set_sanpham get_set_sanpham = new get_set_sanpham(activity_phan_loai_sp.this);
+                get_set_sanpham.upLoadSanpham(sanpham, sanpham.getIdsp());
+                get_set_sanpham.write_by_path(sanpham.getIdsp(), cache);
             }
         });
     }
 
+
     private void addControls() {
-        txtGia = (EditText) findViewById(R.id.txtGia);
-        txtMota = (EditText) findViewById(R.id.txtMota);
-        txtTensp = (EditText) findViewById(R.id.txt_ten_sp);
         sp1st = (Spinner) findViewById(R.id.sp1st);
         sp2nd = (Spinner) findViewById(R.id.sp2nd);
         sp3th = (Spinner) findViewById(R.id.sp3th);
         sp4th = (Spinner) findViewById(R.id.sp4th);
-        btnGallary = (Button) findViewById(R.id.btnGallary);
-        imgSp1 = (ImageView) findViewById(R.id.imgSp1);
-        imgSp2 = (ImageView) findViewById(R.id.imgSp2);
-        imgSp3 = (ImageView) findViewById(R.id.imgSp3);
-        imgSp4 = (ImageView) findViewById(R.id.imgSp4);
-        Button btnDang = (Button) findViewById(R.id.btnDang);
-
+        btn_submit = (ImageButton) findViewById(R.id.btn_submit);
         danhmucsp = new Danhmucsp(activity_phan_loai_sp.this, sp1st);
         danhmucsp.getChild(new String[]{});
     }
@@ -128,40 +141,6 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
     private void xulySp(ArrayList<String> arrayList, Context context, Spinner sp) {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(activity_phan_loai_sp.this, android.R.layout.simple_spinner_item, arrayList);
         sp.setAdapter(arrayAdapter);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK & null != data & requestCode == RESULT_GALLARY) {
-            try {
-                final Uri imageUri = data.getData();
-                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                byte[] b = new byte[2048];
-                int i = -1;
-                while ((i = imageStream.read()) != -1) {
-
-                }
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-
-                if ( null == imgSp1.getDrawable()) {
-                    imgSp1.setImageBitmap(selectedImage);
-                } else if (null == imgSp2.getDrawable() ) {
-                    imgSp2.setImageBitmap(selectedImage);
-                } else if (null == imgSp3.getDrawable()) {
-                    imgSp3.setImageBitmap(selectedImage);
-                } else if (null == imgSp4.getDrawable()) {
-                    imgSp4.setImageBitmap(selectedImage);
-                }
-        } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }}
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
     }
 
     @Override
