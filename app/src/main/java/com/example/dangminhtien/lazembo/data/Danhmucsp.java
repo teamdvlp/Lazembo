@@ -28,6 +28,7 @@ public class Danhmucsp {
     }
 
     public ArrayList<String>  getChild (String[] link) {
+        // Nối đường dẫn
         String nameDM = "Danh mục sản phẩm";
             for (int i = 0; i < link.length; i++) {
                   nameDM += "/" +link[i];
@@ -57,7 +58,6 @@ public class Danhmucsp {
         });
         return strings;
     }
-
         public boolean haschild (String[] link) {
             final boolean haschild[] = new boolean[2];
             String nameDm = "Danh mục sản phẩm";

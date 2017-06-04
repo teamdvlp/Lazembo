@@ -23,27 +23,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-/**
- * A login screen that offers login via email/password.
- */
 public class activity_Login_Register extends AppCompatActivity {
 
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
-    private static final int REQUEST_READ_CONTACTS = 0;
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
     FirebaseAuth firebaseAuth;
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
 
     // UI references.
     private AutoCompleteTextView txt_email;
@@ -161,12 +144,23 @@ public class activity_Login_Register extends AppCompatActivity {
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@") && email.contains(".");
+        return email.contains("@") && email.contains(".") && email.length() >= 5;
+    }
+
+    private boolean check_contain_digit(String str) {
+        String[] strs = str.split("");
+        for (int i = 0; i < strs.length; i++) {
+            Toast.makeText(getApplicationContext(), strs[i], Toast.LENGTH_SHORT).show();
+            if (TextUtils.isDigitsOnly(strs[i])) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() >= 6;
+        return password.length() >= 6 && check_contain_digit(password);
     }
 
     /**
