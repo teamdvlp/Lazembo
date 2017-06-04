@@ -121,12 +121,12 @@ public class SecondMainAcitivty extends MainActivity {
 
     }
 
-    private View getView(int i){
+    private View getView(int position){
         View view = getLayoutInflater().inflate(R.layout.tab_custom,null);
         ImageView img_icon = (ImageView) view.findViewById(R.id.imgv_icon);
-        if(i == 0){
+        if(position == 0){
             img_icon.setImageResource(R.drawable.icon_cart_2);
-        } else if( i == 1){
+        } else if( position == 1){
             img_icon.setImageResource(R.drawable.icon_account_2);
         }
         return view;
