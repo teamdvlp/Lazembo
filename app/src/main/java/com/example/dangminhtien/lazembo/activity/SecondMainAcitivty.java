@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 
 import com.example.dangminhtien.lazembo.R;
 import com.example.dangminhtien.lazembo.adapter.ViewPagerBottomSheetAdapter;
@@ -64,15 +65,15 @@ public class SecondMainAcitivty extends MainActivity {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                }
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });
 
@@ -91,6 +92,8 @@ public class SecondMainAcitivty extends MainActivity {
 
             }
         });
+
+
     }
 
     private void addControlss() {
@@ -111,5 +114,21 @@ public class SecondMainAcitivty extends MainActivity {
         vpg_bottom_sheet.setAdapter(adapter_bottom_sheet);
         tbl_bottom_sheet.setupWithViewPager(vpg_bottom_sheet);
 
+        TabLayout.Tab tab = tbl_bottom_sheet.getTabAt(0);
+        tab.setCustomView(getView(0));
+        TabLayout.Tab tab2 = tbl_bottom_sheet.getTabAt(1);
+        tab2.setCustomView(getView(1));
+
+    }
+
+    private View getView(int i){
+        View view = getLayoutInflater().inflate(R.layout.tab_custom,null);
+        ImageView img_icon = (ImageView) view.findViewById(R.id.imgv_icon);
+        if(i == 0){
+            img_icon.setImageResource(R.drawable.icon_cart_2);
+        } else if( i == 1){
+            img_icon.setImageResource(R.drawable.icon_account_2);
+        }
+        return view;
     }
 }
