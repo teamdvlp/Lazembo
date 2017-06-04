@@ -158,6 +158,15 @@ public class activity_register extends AppCompatActivity {
             }
         });
     }
+    private boolean check_contain_digit(String str) {
+        char[] chars = str.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            if (TextUtils.isDigitsOnly(Character.toString(chars[i]))) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {

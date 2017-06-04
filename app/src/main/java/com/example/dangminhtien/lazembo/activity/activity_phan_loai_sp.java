@@ -125,8 +125,6 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
 
     }
 
-
-
     private void addControls() {
         sp1st = (Spinner) findViewById(R.id.sp1st);
         sp2nd = (Spinner) findViewById(R.id.sp2nd);

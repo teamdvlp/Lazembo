@@ -147,20 +147,11 @@ public class activity_Login_Register extends AppCompatActivity {
         return email.contains("@") && email.contains(".") && email.length() >= 5;
     }
 
-    private boolean check_contain_digit(String str) {
-        String[] strs = str.split("");
-        for (int i = 0; i < strs.length; i++) {
-            Toast.makeText(getApplicationContext(), strs[i], Toast.LENGTH_SHORT).show();
-            if (TextUtils.isDigitsOnly(strs[i])) {
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() >= 6 && check_contain_digit(password);
+        return password.length() >= 8;
     }
 
     /**
