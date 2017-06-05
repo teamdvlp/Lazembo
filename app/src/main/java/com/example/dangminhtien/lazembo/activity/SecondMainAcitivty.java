@@ -1,8 +1,11 @@
 package com.example.dangminhtien.lazembo.activity;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -11,12 +14,17 @@ import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.dangminhtien.lazembo.Model.xu_ly_bottom_sheet;
 import com.example.dangminhtien.lazembo.R;
 import com.example.dangminhtien.lazembo.adapter.ViewPagerBottomSheetAdapter;
 import com.example.dangminhtien.lazembo.adapter.ViewpagerAdapter;
+
+import java.net.MalformedURLException;
 
 public class SecondMainAcitivty extends MainActivity {
     ViewPager vpg_container,vpg_bottom_sheet;
@@ -27,6 +35,7 @@ public class SecondMainAcitivty extends MainActivity {
     NestedScrollView bottomSheet;
     BottomSheetBehavior bottomSheetBehavior;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +52,8 @@ public class SecondMainAcitivty extends MainActivity {
         addEventss();
     }
 
+
+
     private void addEventss() {
         explv_list.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
@@ -54,50 +65,20 @@ public class SecondMainAcitivty extends MainActivity {
                 return false;
             }
         });
-
-        tbl_bottom_sheet.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                }
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            }
-        });
-
-        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED){
-                    bottomSheetBehavior.setPeekHeight(140);
-                }else if(newState == BottomSheetBehavior.STATE_EXPANDED){
-                    bottomSheetBehavior.setPeekHeight(140);
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-            }
-        });
+        xu_ly_bottom_sheet xu_ly_bottom_sheet = new xu_ly_bottom_sheet( bottomSheet, getSupportFragmentManager(),SecondMainAcitivty.this );
+        try {
+            xu_ly_bottom_sheet.xuly();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
 
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void addControlss() {
-        bottomSheet = (NestedScrollView) findViewById(R.id.bottom_sheet);
+        bottomSheet = (NestedScrollView) findViewById(R.id.nestedSrollView);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
 
         vpg_container = (ViewPager) findViewById(R.id.vpg_container);
@@ -106,18 +87,20 @@ public class SecondMainAcitivty extends MainActivity {
         adapter = new ViewpagerAdapter(fragmentManager);
         vpg_container.setAdapter(adapter);
         tbl_list.setupWithViewPager(vpg_container);
-
-        vpg_bottom_sheet = (ViewPager) findViewById(R.id.vpg_bottom_sheet);
-        tbl_bottom_sheet = (TabLayout) findViewById(R.id.tbl_bottom_sheet);
-        FragmentManager fragmentManager2 = getSupportFragmentManager();
-        adapter_bottom_sheet = new ViewPagerBottomSheetAdapter(fragmentManager2);
-        vpg_bottom_sheet.setAdapter(adapter_bottom_sheet);
-        tbl_bottom_sheet.setupWithViewPager(vpg_bottom_sheet);
-
-        TabLayout.Tab tab = tbl_bottom_sheet.getTabAt(0);
-        tab.setCustomView(getView(0));
-        TabLayout.Tab tab2 = tbl_bottom_sheet.getTabAt(1);
-        tab2.setCustomView(getView(1));
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+//        View view = layoutInflater.inflate(R.layout.layout_bottom_sheet, null);
+//        vpg_bottom_sheet = (ViewPager) findViewById(R.id.vpg_bottom_sheet);
+//        tbl_bottom_sheet = (TabLayout) findViewById(R.id.tbl_bottom_sheet);
+//        tbl_bottom_sheet.getOverlay();
+//        FragmentManager fragmentManager2 = getSupportFragmentManager();
+//        adapter_bottom_sheet = new ViewPagerBottomSheetAdapter(fragmentManager2);
+//        vpg_bottom_sheet.setAdapter(adapter_bottom_sheet);
+//        tbl_bottom_sheet.setupWithViewPager(vpg_bottom_sheet);
+//
+//        TabLayout.Tab tab = tbl_bottom_sheet.getTabAt(0);
+//        tab.setCustomView(getView(0));
+//        TabLayout.Tab tab2 = tbl_bottom_sheet.getTabAt(1);
+//        tab2.setCustomView(getView(1));
 
     }
 

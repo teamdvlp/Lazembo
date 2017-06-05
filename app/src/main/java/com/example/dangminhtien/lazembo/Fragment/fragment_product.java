@@ -32,6 +32,7 @@ import com.example.dangminhtien.lazembo.activity.activity_phan_loai_sp;
 import com.example.dangminhtien.lazembo.adapter.AdapterHinhSp;
 import com.example.dangminhtien.lazembo.data.Sanpham;
 import com.example.dangminhtien.lazembo.data.get_set_sanpham;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -63,6 +64,7 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
     private ArrayAdapter adapter_sp_kichthuoc;
     private ArrayAdapter adapter_sp_mausac;
     private AdapterHinhSp adapter_hinh_sp;
+    private FirebaseAuth firebaseAuth;
     // 1: Người bán 0: Người mua
     private int AUTHENTICATION;
 
@@ -231,7 +233,8 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
         Sanpham.getInstance().setGiasp(Double.parseDouble(txt_gia.getText().toString()));
         Sanpham.getInstance().setGiaTruocKhiGiam(Double.parseDouble(txt_giap_truoc_khi_giam.getText().toString()));
         Sanpham.getInstance().setHinh(path_hinh_sp);
-        Sanpham.getInstance().setIdsp(masp);
+
+        Sanpham.getInstance().setIdsp(getActivity().getIntent().getStringExtra("uid")+ "+" + new Date().getTime());
         Sanpham.getInstance().setKichco(source_kichthuoc);
         Sanpham.getInstance().setMausac(source_mausac);
         Sanpham.getInstance().setMotachitietsp(text);

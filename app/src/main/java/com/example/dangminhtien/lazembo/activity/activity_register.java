@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class activity_register extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
@@ -129,7 +130,7 @@ public class activity_register extends AppCompatActivity {
         }
 
         if (Continue == false) {
-            focusView.requestFocus();
+//            focusView.requestFocus();
         } else {
             process_Register();
             showProgress(true);
@@ -144,7 +145,9 @@ public class activity_register extends AppCompatActivity {
                 UserProfileChangeRequest changeRequest = new UserProfileChangeRequest.Builder().setDisplayName(txt_displayname_register.getText().toString()).build();
                 authResult.getUser().updateProfile(changeRequest);
                 String uid = authResult.getUser().getUid();
-                Khachhang khachhang = new Khachhang(txt_HovaTen_register.getText().toString(), txt_email_register.getText().toString(), txt_sdt_register.getText().toString(), false, new ArrayList<String>(), uid);
+                HashMap<String,String> strings = new HashMap<String, String>();
+                strings.put("safe_ket", "0");
+                Khachhang khachhang = new Khachhang(txt_HovaTen_register.getText().toString(), txt_email_register.getText().toString(), txt_sdt_register.getText().toString(), false,strings, uid);
                 get_set_Khachhang get_set_khachhang = new get_set_Khachhang(activity_register.this);
                 get_set_khachhang.set_khachhang(khachhang);
                 mProgressView.setVisibility(View.INVISIBLE);

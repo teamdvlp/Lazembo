@@ -1,17 +1,17 @@
 package com.example.dangminhtien.lazembo.data;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Khachhang {
     private String email;
     private String uid;
     private String HOVATEN;
     private String sdt;
-    private ArrayList<String> sanphams;
+    private HashMap<String,String> sanphams;
     private boolean nguoiban;
 
 
-    public Khachhang(String HOVATEN, String email, String sdt, boolean nguoiban, ArrayList<String> sanphams, String uid) {
+    public Khachhang(String HOVATEN, String email, String sdt, boolean nguoiban, HashMap<String,String> sanphams, String uid) {
         this.uid = uid;
         this.HOVATEN = HOVATEN;
         this.email = email;
@@ -24,11 +24,11 @@ public class Khachhang {
 
     }
 
-    public ArrayList<String> getSanphams() {
+    public HashMap<String, String> getSanphams() {
         return sanphams;
     }
 
-    public void setSanphams(ArrayList<String> sanphams) {
+    public void setSanphams(HashMap<String, String> sanphams) {
         this.sanphams = sanphams;
     }
 

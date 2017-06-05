@@ -8,11 +8,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.dangminhtien.lazembo.R;
 import com.example.dangminhtien.lazembo.data.Danhmucsp;
 import com.example.dangminhtien.lazembo.data.Sanpham;
+import com.example.dangminhtien.lazembo.data.get_set_Khachhang;
 import com.example.dangminhtien.lazembo.data.get_set_sanpham;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -21,11 +24,13 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
     private Danhmucsp danhmucsp;
     private Spinner sp1st, sp2nd, sp3th, sp4th;
     private ImageButton btn_submit;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phan_loai_sp);
+        firebaseAuth = FirebaseAuth.getInstance();
         addControls();
         addEvents();
     }
@@ -37,6 +42,7 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
             @Override
             public void onClick(View v) {
                 get_path_up_to_firebase();
+                Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -55,6 +61,9 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
         get_set_sanpham get_set_sanpham = new get_set_sanpham(activity_phan_loai_sp.this);
         get_set_sanpham.upLoadSanpham(sanpham, sanpham.getIdsp());
         get_set_sanpham.write_path_by_path(sanpham.getIdsp(), cache);
+        get_set_Khachhang get_set_khachhang = new get_set_Khachhang(getApplicationContext());
+        get_set_khachhang.up_sp_to_khachhang(sanpham.getIdsp(),firebaseAuth.getCurrentUser().getUid());
+
     }
 
     private void process_spinner() {

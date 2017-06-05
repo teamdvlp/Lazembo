@@ -17,11 +17,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dangminhtien.lazembo.Fragment.Account_Fragment;
+import com.example.dangminhtien.lazembo.Model.refresh;
 import com.example.dangminhtien.lazembo.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import static com.example.dangminhtien.lazembo.R.layout.fragment_account;
 
 public class activity_Login_Register extends AppCompatActivity {
 
@@ -126,17 +130,14 @@ public class activity_Login_Register extends AppCompatActivity {
         firebaseAuth.signInWithEmailAndPassword(txt_email.getText().toString(), txt_password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                // do somethings
                 mProgressView.setVisibility(View.INVISIBLE);
+                Account_Fragment.refresh = 1;
                 Toast.makeText(getApplicationContext(), "Đăng nhập thành công", Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(), firebaseAuth.getCurrentUser().getProviderId() + "\n" +
-                                firebaseAuth.getCurrentUser().getEmail() + "\n" + firebaseAuth.getCurrentUser().getDisplayName()
-                        , Toast.LENGTH_LONG).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Email hoặc mật khẩu không đúng", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Email hoặc mật khẩu không đúng" + e, Toast.LENGTH_LONG).show();
                 mProgressView.setVisibility(View.INVISIBLE);
             }
         });
