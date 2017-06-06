@@ -3,11 +3,13 @@ package com.example.dangminhtien.lazembo.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.dangminhtien.lazembo.Model.refresh;
 import com.example.dangminhtien.lazembo.activity.*;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.TintContextWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dangminhtien.lazembo.R;
+import com.example.dangminhtien.lazembo.adapter.adapter_product;
+import com.example.dangminhtien.lazembo.adapter.adapter_sp_account;
 import com.example.dangminhtien.lazembo.data.Khachhang;
 import com.example.dangminhtien.lazembo.data.Sanpham;
 import com.example.dangminhtien.lazembo.data.get_set_Khachhang;
@@ -25,6 +29,10 @@ import com.example.dangminhtien.lazembo.data.get_set_sanpham;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by phamf on 04-Jun-17.
@@ -50,6 +58,9 @@ public class Account_Fragment extends Fragment {
     private Khachhang khachhang;
     private Sanpham sanpham;
     private ArrayList<String> paths;
+    private RecyclerView recycle_sp_account;
+    private adapter_product adapter_product;
+    private static int Continue = 0;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -84,24 +95,6 @@ public class Account_Fragment extends Fragment {
            get_data();
            refresh = 0;
         }
-    }
-
-    public void refresh_data () {
-        refresh refresh = new refresh();
-        refresh.setOnData_refresh(new refresh.refresh_data() {
-            @Override
-            public void onrefresh_data() {
-                if (firebaseAuth.getCurrentUser() != null) {
-                    visible_layout_when_not_sign_in(true);
-                    pb_account.setVisibility(View.VISIBLE);
-                    get_khachhang_from_firebase();
-                    get_sanpham_from_firebase();
-                    pb_account.setVisibility(View.GONE);
-                } else {
-                    visible_layout_when_not_sign_in(false);
-                }
-            }
-        });
     }
 
     private void addEvents() {
@@ -157,6 +150,50 @@ public class Account_Fragment extends Fragment {
         btn_sign_in_account = (Button) view.findViewById(R.id.btn_sign_in_account);
         pb_account = (ProgressBar) view.findViewById(R.id.pb_account);
         btn_add_account = (ImageButton) view.findViewById(R.id.btn_add_account);
+        recycle_sp_account = (RecyclerView) view.findViewById(R.id.recycle_sp_account);
+
+    }
+//    private ArrayList<Sanpham> get_ds_sp_kh (ArrayList<String> path_sp) {
+//        Iterator iterator = path_sp.iterator();
+//        ArrayList<Sanpham> sanphams;
+//        sanphams = new ArrayList<Sanpham>();
+//        get_set_sanpham get_set_sanpham = new get_set_sanpham(getContext());
+//        while (iterator.hasNext()) {
+//            String masp = (String) iterator.next();
+//            if (masp != "0") {
+//            sanphams.add(get_set_sanpham.getSanpham((String) iterator.next()));
+//            Toast.makeText(getContext(),get_set_sanpham.getSanpham((String) iterator.next()).getTensp(), Toast.LENGTH_SHORT ).show();
+//        }}
+//    return sanphams;
+//    }
+    private void add_adapter_to_recycle_sp_account() {
+        HashMap hashMap = Account_Fragment.this.khachhang.getSanphams();
+        Set set = hashMap.entrySet();
+        Iterator iterator = set.iterator();
+        ArrayList<String> maps = new ArrayList<>();
+        get_set_sanpham get_set_sanpham = new get_set_sanpham(getContext());
+        while (iterator.hasNext()) {
+            Map.Entry<String,String> entry = (Map.Entry<String, String>) iterator.next();
+                if (entry.getValue() != "") {
+            maps.add(entry.getValue());
+                }
+        }
+            get_set_sanpham.get_sanphams(maps);
+            get_set_sanpham.on_getsanphams(new get_set_sanpham.get_sanphams() {
+                @Override
+                public void on_get_sanphams(ArrayList<Sanpham> sanphams) {
+                    adapter_sp_account recyclerViewAdapter = new adapter_sp_account(getContext(), sanphams);
+//                    Toast.makeText(getContext(), recyclerViewAdapter.getItemCount() + "", Toast.LENGTH_SHORT).show();
+                        if(Continue == 0) {
+                    recycle_sp_account.setAdapter(recyclerViewAdapter);
+                        Continue = 1;} else {
+                            recyclerViewAdapter.notifyDataSetChanged();
+                        }
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                    recycle_sp_account.setLayoutManager(linearLayoutManager);
+                }
+            });
+
     }
 
     public static Account_Fragment newInstance() {
@@ -167,15 +204,14 @@ public class Account_Fragment extends Fragment {
     public void get_khachhang_from_firebase() {
         get_set_Khachhang get_set_khachhang = new get_set_Khachhang(getContext());
         get_set_khachhang.get_khachhang(firebaseAuth.getCurrentUser().getUid());
-        get_set_khachhang.setOnDataChange(new get_set_Khachhang.ondatachange() {
+        get_set_khachhang.set_on_get_khachhang(new get_set_Khachhang.get_khachhang() {
             @Override
-            public void ondatachange(Khachhang khachhang) {
+            public void on_get_khachhang(Khachhang khachhang) {
                 Account_Fragment.this.khachhang = khachhang;
                 txt_ten_account.setText(khachhang.getHOVATEN());
                 txt_sdt_account.setText(khachhang.getSdt());
                 txt_email_account.setText(khachhang.getEmail());
-//                Account_Fragment.this.paths = khachhang.getSanphams();
-//                get_sanpham_from_firebase();
+                add_adapter_to_recycle_sp_account();
             }
         });
     }

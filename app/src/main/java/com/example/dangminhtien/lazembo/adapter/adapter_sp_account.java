@@ -11,41 +11,48 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dangminhtien.lazembo.R;
+import com.example.dangminhtien.lazembo.data.Sanpham;
+import com.example.dangminhtien.lazembo.data.get_set_sanpham;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by tiend on 6/5/2017.
  */
 
 public class adapter_sp_account extends RecyclerView.Adapter<adapter_sp_account.view_holder> {
-    private ArrayList<String> urls;
-    private ArrayList<String> giasp;
-    private ArrayList<String> tensp;
+    private ArrayList<String> path_sp;
     private Context context;
-    public adapter_sp_account(Context context,ArrayList<String> url, ArrayList<String> giasp, ArrayList<String> tensp) {
-        this.urls = url;
-        this.giasp = giasp;
-        this.tensp = tensp;
+    private ArrayList<Sanpham> sanphams;
+
+    public adapter_sp_account(Context context, ArrayList<Sanpham> sanphams) {
         this.context = context;
+        this.sanphams = sanphams;
+
     }
+
+
 
     @Override
     public view_holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.childview_item_recycle_account, parent);
+        View view = LayoutInflater.from(context).inflate(R.layout.childview_item_recycle_account, parent, false);
         return new view_holder(view);
     }
 
     @Override
     public void onBindViewHolder(view_holder holder, int position) {
-            holder.txt_ten_sp_account.setText(tensp.get(position));
-            holder.txt_gia_sp_account.setText(giasp.get(position));
+            holder.txt_ten_sp_account.setText(sanphams.get(position).getTensp());
+        DecimalFormat decimalFormat = new DecimalFormat("###################.###################");
+            holder.txt_gia_sp_account.setText(decimalFormat.format(sanphams.get(position).getGiasp()));
         try {
             Bitmap bitmap = xuly_hinhanh(position);
             holder.img_hinhsp_account.setImageBitmap(bitmap);
@@ -57,7 +64,7 @@ public class adapter_sp_account extends RecyclerView.Adapter<adapter_sp_account.
     }
 
     private Bitmap xuly_hinhanh(int position) throws IOException {
-        URL url = new URL(urls.get(position));
+        URL url = new URL(sanphams.get(position).getHinh().get(0));
         InputStream read_image_from_firebase = url.openStream();
         Bitmap bitmap = BitmapFactory.decodeStream(read_image_from_firebase);
         return bitmap;
@@ -65,7 +72,7 @@ public class adapter_sp_account extends RecyclerView.Adapter<adapter_sp_account.
 
     @Override
     public int getItemCount() {
-        return tensp.size() ;
+        return sanphams.size() ;
     }
 
     class view_holder extends RecyclerView.ViewHolder {

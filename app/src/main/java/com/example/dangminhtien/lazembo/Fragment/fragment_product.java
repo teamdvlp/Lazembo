@@ -44,7 +44,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-public class fragment_product extends Fragment implements get_set_sanpham.notifiDataChange {
+public class fragment_product extends Fragment implements get_set_sanpham.get_sanpham {
     private static final String KEY_AUTHENTICATION = "authentication";
     private final static int RESULT_GALLARY = 69;
     public static ArrayList<Bitmap> bitmaps_hinh_sp;
@@ -374,8 +374,10 @@ public class fragment_product extends Fragment implements get_set_sanpham.notifi
 
     }
 
+
+
     @Override
-    public void notifi(Bitmap bitmap) {
+    public void on_get_sanpham(Sanpham sanpham) {
 
     }
 

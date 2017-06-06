@@ -14,6 +14,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -23,6 +24,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class get_set_sanpham {
 Context context;
@@ -30,6 +32,10 @@ FirebaseDatabase database;
 DatabaseReference databaseReference;
 FirebaseStorage firebaseStorage;
 StorageReference storageReference;
+    get_image get_image;
+    get_set_Khachhang get_set_khachhang;
+    get_sanpham get_sanpham;
+    get_sanphams get_sanphams;
     public get_set_sanpham(Context context) {
         this.context = context;
         database = FirebaseDatabase.getInstance();
@@ -63,38 +69,42 @@ StorageReference storageReference;
         return storageReference2.getPath();
     }
 
-    public Sanpham getSanpham (String masp) {
+    public void getSanpham (final String masp) {
 
         final Sanpham[] sanpham = new Sanpham[1];
-
-        databaseReference.addChildEventListener(new ChildEventListener() {
+        if (masp != "") {
+        databaseReference.child(masp).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                sanpham[0] = dataSnapshot.getValue(Sanpham.class);
-            }
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                    sanpham[0] = dataSnapshot.getValue(Sanpham.class);
+                    get_sanpham.on_get_sanpham(sanpham[0]);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
-            return sanpham[0];
+        });}
+
     }
+
+    public void get_sanphams (final ArrayList<String> masp) {
+        Iterator<String> iterator = masp.iterator();
+        final int[] count = {0};
+        final ArrayList <Sanpham> sanphams = new ArrayList<Sanpham>();
+        while (iterator.hasNext()) {
+        getSanpham(iterator.next());
+            set_on_get_sanpham(new get_sanpham() {
+                @Override
+                public void on_get_sanpham(Sanpham sanpham) {
+                    count[0]++;
+                    sanphams.add(sanpham);
+                        if (count[0] == masp.size()) {
+                    get_sanphams.on_get_sanphams(sanphams);
+                }}
+            });
+        }}
 
     public ArrayList<Bitmap> getImages (String[] path) {
         final ArrayList<Bitmap> bitmaps = new ArrayList<Bitmap>();
@@ -119,6 +129,10 @@ StorageReference storageReference;
         return bitmaps;
     }
 
+    public void set_on_get_sanpham (get_sanpham get_sanpham) {
+        this.get_sanpham = get_sanpham;
+    }
+
     public Bitmap getImage (String path) throws IOException {
         final File localFile = File.createTempFile("images", "jpg");
         final Bitmap[] bitmap = new Bitmap[1];
@@ -129,8 +143,7 @@ StorageReference storageReference;
                 bitmap[0] = BitmapFactory.decodeFile(localFile.getAbsolutePath());
                 Toast.makeText(context, "Success", Toast.LENGTH_LONG).show();
                 localFile.delete();
-                notifiDataChange fragment_layout_sp = new fragment_product();
-                fragment_layout_sp.notifi(bitmap[0]);
+                get_image.on_get_image(bitmap[0]);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -141,47 +154,33 @@ StorageReference storageReference;
         return bitmap[0];
     }
 
-    public ArrayList<Sanpham> getSanphams (String maDm) {
-        final ArrayList<Sanpham> sanphams = new ArrayList<Sanpham>();
-        databaseReference.child(maDm).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                sanphams.add(dataSnapshot.getValue(Sanpham.class));
-            }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        return sanphams;
-    }
-
-    public void write_path_by_path(String path, String[] paths) {
+    public void write_path_by_path(String path, String[] paths, int count) {
         String nameDM = "Danh mục sản phẩm/";
-        for (int i = 0; i < paths.length - 1; i++) {
+        for (int i = 0; i < count; i++) {
             nameDM += "/" + paths[i];
         }
         databaseReference = database.getReference(nameDM);
-        databaseReference.child(paths[paths.length - 1]).setValue(path);
+        databaseReference.child(path).setValue(path);
     }
 
-    public interface notifiDataChange {
-        void notifi(Bitmap bitmap);
+    public void on_get_image (get_image get_image) {
+        this.get_image = get_image;
+    }
+
+    public void on_getsanphams (get_sanphams get_sanphams) {
+        this.get_sanphams = get_sanphams;
+    }
+
+    public interface get_image {
+       public void on_get_image (Bitmap bitmap);
+    }
+
+    public interface get_sanpham {
+        public void on_get_sanpham (Sanpham sanpham);
+    }
+
+    public interface get_sanphams {
+        public void on_get_sanphams (ArrayList<Sanpham> sanphams);
     }
 }

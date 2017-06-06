@@ -50,17 +50,19 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
     private void get_path_up_to_firebase() {
         Sanpham sanpham = Sanpham.getInstance();
         // vì sản phầm được ghi trong mục idsp nằm bên trong mục sản phẩm nên cần phải add vô thêm
+        int count = 0;
         for (int i = 0; i < cache.length; i++) {
             if (null == cache[i]) {
                 cache[i] = "Sản phẩm";
                 cache[i + 1] = sanpham.getIdsp();
+                count = i + 1;
                 break;
             }
         }
 
         get_set_sanpham get_set_sanpham = new get_set_sanpham(activity_phan_loai_sp.this);
         get_set_sanpham.upLoadSanpham(sanpham, sanpham.getIdsp());
-        get_set_sanpham.write_path_by_path(sanpham.getIdsp(), cache);
+        get_set_sanpham.write_path_by_path(sanpham.getIdsp(), cache, count);
         get_set_Khachhang get_set_khachhang = new get_set_Khachhang(getApplicationContext());
         get_set_khachhang.up_sp_to_khachhang(sanpham.getIdsp(),firebaseAuth.getCurrentUser().getUid());
 
@@ -81,6 +83,11 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
                 cache[0] = parent.getSelectedItem().toString();
                 // Lấy đồng thời set dữ liệu cho spinner bên dưới
                 danhmucsp.getChild(new String[]{cache[0]});
+                cache[1] = null;
+                cache[2] = null;
+                cache[3] = null;
+                cache[4] = null;
+                cache[5] = null;
             }
 
             @Override
@@ -97,6 +104,10 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
                 sp4th.setAdapter(delete_item);
                 cache[1] = parent.getSelectedItem().toString();
                 danhmucsp.getChild(new String[]{cache[0],cache[1]});
+                cache[2] = null;
+                cache[3] = null;
+                cache[4] = null;
+                cache[5] = null;
             }
 
             @Override
@@ -112,6 +123,9 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
                 sp4th.setAdapter(delete_item);
                 cache[2] = parent.getSelectedItem().toString();
                 danhmucsp.getChild(new String[]{cache[0],cache[1],cache[2]});
+                cache[3] = null;
+                cache[4] = null;
+                cache[5] = null;
             }
 
             @Override
@@ -124,6 +138,8 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cache[3] = parent.getSelectedItem().toString();
+                cache[4] = null;
+                cache[5] = null;
             }
 
             @Override

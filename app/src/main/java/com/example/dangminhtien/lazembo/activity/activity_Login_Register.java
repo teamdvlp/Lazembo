@@ -18,14 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dangminhtien.lazembo.Fragment.Account_Fragment;
-import com.example.dangminhtien.lazembo.Model.refresh;
 import com.example.dangminhtien.lazembo.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
-import static com.example.dangminhtien.lazembo.R.layout.fragment_account;
 
 public class activity_Login_Register extends AppCompatActivity {
 
