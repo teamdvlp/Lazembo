@@ -79,10 +79,9 @@ public class Account_Fragment extends Fragment {
         private void get_data() {
         if (firebaseAuth.getCurrentUser() != null) {
             visible_layout_when_not_sign_in(true);
-            pb_account.setVisibility(View.VISIBLE);
+//            pb_account.setVisibility(View.VISIBLE);
             get_khachhang_from_firebase();
             get_sanpham_from_firebase();
-            pb_account.setVisibility(View.GONE);
         } else {
             visible_layout_when_not_sign_in(false);
         }
@@ -131,6 +130,7 @@ public class Account_Fragment extends Fragment {
         if (invisible) {
             txt_hidden_account.setVisibility(View.GONE);
             btn_sign_in_account.setVisibility(View.GONE);
+            pb_account.setVisibility(View.VISIBLE);
             layout_parent_account.setVisibility(View.VISIBLE);
 
         } else {
@@ -153,19 +153,7 @@ public class Account_Fragment extends Fragment {
         recycle_sp_account = (RecyclerView) view.findViewById(R.id.recycle_sp_account);
 
     }
-//    private ArrayList<Sanpham> get_ds_sp_kh (ArrayList<String> path_sp) {
-//        Iterator iterator = path_sp.iterator();
-//        ArrayList<Sanpham> sanphams;
-//        sanphams = new ArrayList<Sanpham>();
-//        get_set_sanpham get_set_sanpham = new get_set_sanpham(getContext());
-//        while (iterator.hasNext()) {
-//            String masp = (String) iterator.next();
-//            if (masp != "0") {
-//            sanphams.add(get_set_sanpham.getSanpham((String) iterator.next()));
-//            Toast.makeText(getContext(),get_set_sanpham.getSanpham((String) iterator.next()).getTensp(), Toast.LENGTH_SHORT ).show();
-//        }}
-//    return sanphams;
-//    }
+
     private void add_adapter_to_recycle_sp_account() {
         HashMap hashMap = Account_Fragment.this.khachhang.getSanphams();
         Set set = hashMap.entrySet();
@@ -174,7 +162,7 @@ public class Account_Fragment extends Fragment {
         get_set_sanpham get_set_sanpham = new get_set_sanpham(getContext());
         while (iterator.hasNext()) {
             Map.Entry<String,String> entry = (Map.Entry<String, String>) iterator.next();
-                if (entry.getValue() != "") {
+                if (entry.getValue() != "" && iterator.hasNext()) {
             maps.add(entry.getValue());
                 }
         }
@@ -184,6 +172,7 @@ public class Account_Fragment extends Fragment {
                 public void on_get_sanphams(ArrayList<Sanpham> sanphams) {
                     adapter_sp_account recyclerViewAdapter = new adapter_sp_account(getContext(), sanphams);
 //                    Toast.makeText(getContext(), recyclerViewAdapter.getItemCount() + "", Toast.LENGTH_SHORT).show();
+                    if (sanphams.size() != 0 && sanphams != null) {
                         if(Continue == 0) {
                     recycle_sp_account.setAdapter(recyclerViewAdapter);
                         Continue = 1;} else {
@@ -191,7 +180,8 @@ public class Account_Fragment extends Fragment {
                         }
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
                     recycle_sp_account.setLayoutManager(linearLayoutManager);
-                }
+//                    pb_account.setVisibility(View.INVISIBLE);
+                }}
             });
 
     }
@@ -202,6 +192,7 @@ public class Account_Fragment extends Fragment {
     }
 
     public void get_khachhang_from_firebase() {
+        pb_account.setVisibility(View.VISIBLE);
         get_set_Khachhang get_set_khachhang = new get_set_Khachhang(getContext());
         get_set_khachhang.get_khachhang(firebaseAuth.getCurrentUser().getUid());
         get_set_khachhang.set_on_get_khachhang(new get_set_Khachhang.get_khachhang() {
