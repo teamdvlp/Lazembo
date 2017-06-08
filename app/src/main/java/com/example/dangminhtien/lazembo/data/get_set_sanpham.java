@@ -3,6 +3,7 @@ package com.example.dangminhtien.lazembo.data;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ StorageReference storageReference;
     get_set_Khachhang get_set_khachhang;
     get_sanpham get_sanpham;
     get_sanphams get_sanphams;
+    upload_image upload_image;
     public get_set_sanpham(Context context) {
         this.context = context;
         database = FirebaseDatabase.getInstance();
@@ -62,11 +64,13 @@ StorageReference storageReference;
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    @SuppressWarnings("VisibleForTests")Uri url = taskSnapshot.getDownloadUrl();
+                    upload_image.on_upload_image(url.toString());
                     Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
                 }
             });
 
-        return storageReference2.getPath();
+        return storageReference2.getDownloadUrl().getResult().toString();
     }
 
     public void getSanpham (final String masp) {
@@ -164,6 +168,10 @@ StorageReference storageReference;
         databaseReference.child(path).setValue(path);
     }
 
+    public void set_on_upload_image (upload_image upload_image) {
+        this.upload_image = upload_image;
+    }
+
     public void on_get_image (get_image get_image) {
         this.get_image = get_image;
     }
@@ -182,5 +190,9 @@ StorageReference storageReference;
 
     public interface get_sanphams {
         public void on_get_sanphams (ArrayList<Sanpham> sanphams);
+    }
+
+    public interface upload_image {
+        public void on_upload_image (String url);
     }
 }

@@ -16,9 +16,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dangminhtien.lazembo.Model.login_and_register;
 import com.example.dangminhtien.lazembo.R;
 import com.example.dangminhtien.lazembo.data.Khachhang;
 import com.example.dangminhtien.lazembo.data.get_set_Khachhang;
+import com.example.dangminhtien.lazembo.helper.check_error;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -29,29 +31,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class activity_register extends AppCompatActivity {
-    FirebaseAuth firebaseAuth;
-    // UI references.
+    private login_and_register register;
+    private check_error check_error;
+
     private AutoCompleteTextView txt_email_register;
     private EditText txt_password_register, txt_password_again_register, txt_HovaTen_register, txt_sdt_register, txt_displayname_register;
     private View mProgressView;
     private Button btn_register, btn_signin_register;
-
+    private String email, password, sdt, display_name, password_again, ho_ten;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        firebaseAuth = FirebaseAuth.getInstance();
+        addClass();
         addControls();
+        addEvents();
+
     }
 
-    private void addControls() {
-        txt_displayname_register = (EditText) findViewById(R.id.txt_display_name_register);
-        txt_password_again_register = (EditText) findViewById(R.id.txt_password_again_register);
-        txt_email_register = (AutoCompleteTextView) findViewById(R.id.txt_email_register);
-        btn_signin_register = (Button) findViewById(R.id.btn_Singin_register);
-        txt_password_register = (EditText) findViewById(R.id.txt_password_register);
-        txt_HovaTen_register = (EditText) findViewById(R.id.txt_HovaTen_register);
-        txt_sdt_register = (EditText) findViewById(R.id.txt_sdt_register);
+    private void addClass() {
+        check_error = new check_error();
+        register = new login_and_register(getApplicationContext());
+    }
+
+    private void addEvents() {
         txt_password_register.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -65,7 +68,7 @@ public class activity_register extends AppCompatActivity {
         btn_signin_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(activity_register.this, activity_Login_Register.class));
+                startActivity(new Intent(activity_register.this, activity_login.class));
             }
         });
         btn_register = (Button) findViewById(R.id.btn_register_register);
@@ -76,121 +79,99 @@ public class activity_register extends AppCompatActivity {
             }
         });
 
+        register.set_on_register(new login_and_register.register() {
+            @Override
+            public void on_register(boolean is_success) {
+                showProgress(false);
+            }
+        });
+    }
+
+    private void addControls() {
+        txt_displayname_register = (EditText) findViewById(R.id.txt_display_name_register);
+        txt_password_again_register = (EditText) findViewById(R.id.txt_password_again_register);
+        txt_email_register = (AutoCompleteTextView) findViewById(R.id.txt_email_register);
+        btn_signin_register = (Button) findViewById(R.id.btn_Singin_register);
+        txt_password_register = (EditText) findViewById(R.id.txt_password_register);
+        txt_HovaTen_register = (EditText) findViewById(R.id.txt_HovaTen_register);
+        txt_sdt_register = (EditText) findViewById(R.id.txt_sdt_register);
         mProgressView = findViewById(R.id.register_progress);
+
+    }
+
+    private void get_text_from_edit_text () {
+        display_name = txt_displayname_register.getText().toString();
+        sdt = txt_sdt_register.getText().toString();
+        ho_ten = txt_HovaTen_register.getText().toString();
+        email = txt_email_register.getText().toString();
+        password = txt_password_register.getText().toString();
+        password_again = txt_password_again_register.getText().toString();
     }
 
     private void attemptLogin() {
+           reset_error();
+           get_text_from_edit_text();
+        boolean check_result = check_error();
 
-        // Reset errors.
+        if (check_result)
+            showProgress(true);
+            register.register(email, password, display_name, ho_ten, sdt);
+    }
+
+    private boolean check_error () {
+            boolean check_result = true;
+            View focus_view = null;
+        if (check_result && check_error.check_email(email)) {
+            txt_email_register.setError("Email phải chứa các ký tự: '@', '.', và có trên 5 ký tự");
+            focus_view = txt_email_register;
+            check_result =  false;
+        }
+
+        if (check_result && !check_error.check_password(password)) {
+            txt_password_register.setError("Mật khẩu phải chứa ký tự số, và từ 6 ký tự đổ lên");
+            focus_view = txt_password_register;
+            check_result =  false;
+        }
+
+        if (check_result && !password_again.equals(password)) {
+            txt_password_again_register.setError("Không trùng khớp với mật khẩu bạn đã nhập ở trên");
+            focus_view = txt_password_again_register;
+            check_result =  false;
+        }
+
+        if (check_result && !check_error.check_ho_ten(ho_ten)) {
+            txt_HovaTen_register.setError("Họ và tên không hợp lệ");
+            focus_view = txt_HovaTen_register;
+            check_result =  false;
+        }
+
+        if (check_result && !check_error.check_sdt(sdt)) {
+            txt_sdt_register.setError("Số điện thoại phải từ 9 ký tự đổ lên");
+            focus_view = txt_sdt_register;
+            check_result =  false;
+        }
+
+        if (check_result && !check_error.check_display_name(display_name)) {
+            txt_displayname_register.setError("Tên hiển thị phải từ 6 ký tự đổ lên");
+            focus_view = txt_displayname_register;
+            check_result =  false;
+        }
+            focus_view.requestFocus();
+        return check_result;
+    }
+
+    private void reset_error () {
         txt_email_register.setError(null);
         txt_password_register.setError(null);
         txt_password_again_register.setError(null);
         txt_sdt_register.setError(null);
         txt_HovaTen_register.setError(null);
-        // Store values at the time of the login attempt.
-
-        boolean Continue = true;
-        View focusView = null;
-
-        // Check for a valid password, if the user entered one.
-        if (TextUtils.isEmpty(txt_password_register.getText().toString()) || !isPasswordValid(txt_password_again_register.getText().toString())) {
-            txt_password_register.setError("Your password is empty");
-            focusView = txt_password_register;
-            Continue = !true;
-        }
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(txt_email_register.getText().toString())) {
-            txt_email_register.setError("Your email is empty");
-            focusView = txt_email_register;
-            Continue = !true;
-        } else if (!isEmailValid(txt_email_register.getText().toString())) {
-            txt_email_register.setError("Your email is invalid");
-            focusView = txt_email_register;
-            Continue = !true;
-        }
-
-        // check password again
-        if (!txt_password_again_register.getText().toString().equals(txt_password_register.getText().toString())) {
-            txt_password_again_register.setError("Your password is not match");
-            Continue = !true;
-        }
-
-        if (TextUtils.isEmpty(txt_HovaTen_register.getText().toString())) {
-            txt_HovaTen_register.setError("Your text is empty");
-            Continue = !true;
-        }
-
-        if (TextUtils.isEmpty(txt_sdt_register.getText())) {
-            txt_sdt_register.setError("Your text is empty");
-        }
-
-        if (TextUtils.isEmpty(txt_displayname_register.getText())) {
-            txt_displayname_register.setError("Your text is empty");
-        }
-
-        if (Continue == false) {
-//            focusView.requestFocus();
-        } else {
-            process_Register();
-            showProgress(true);
-        }
-    }
-
-    private void process_Register() {
-        firebaseAuth.createUserWithEmailAndPassword(txt_email_register.getText().toString(), txt_password_register.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                // do somethings
-                UserProfileChangeRequest changeRequest = new UserProfileChangeRequest.Builder().setDisplayName(txt_displayname_register.getText().toString()).build();
-                authResult.getUser().updateProfile(changeRequest);
-                String uid = authResult.getUser().getUid();
-                HashMap<String,String> strings = new HashMap<String, String>();
-                strings.put("safe_ket", "0");
-                Khachhang khachhang = new Khachhang(txt_HovaTen_register.getText().toString(), txt_email_register.getText().toString(), txt_sdt_register.getText().toString(), false,strings, uid);
-                get_set_Khachhang get_set_khachhang = new get_set_Khachhang(activity_register.this);
-                get_set_khachhang.set_khachhang(khachhang);
-                mProgressView.setVisibility(View.INVISIBLE);
-                Toast.makeText(getApplicationContext(), "Đăng ký thành công", Toast.LENGTH_LONG).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                mProgressView.setVisibility(View.INVISIBLE);
-                Toast.makeText(getApplicationContext(), "Đăng ký thất bại", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-    private boolean check_contain_digit(String str) {
-        char[] chars = str.toCharArray();
-        for (int i = 0; i < chars.length; i++) {
-            if (TextUtils.isDigitsOnly(Character.toString(chars[i]))) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-
-        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        // The ViewPropertyAnimator APIs are not available, so simply show
-        // and hide the relevant UI components.
         mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@") && email.contains(".");
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() >= 6;
-    }
 
 }

@@ -38,6 +38,7 @@ public class get_set_Khachhang {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 khachhang[0] = dataSnapshot.getValue(Khachhang.class);
                 get_khachhang.on_get_khachhang(khachhang[0]);
+
             }
 
             @Override

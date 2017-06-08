@@ -4,8 +4,6 @@ import android.app.Activity;
 import com.example.dangminhtien.lazembo.adapter.adapter_sp_account;
 
 import android.content.Intent;
-import com.example.dangminhtien.lazembo.activity.activity_Login_Register;
-
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;

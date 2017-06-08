@@ -108,7 +108,7 @@ public class Account_Fragment extends Fragment {
         btn_sign_in_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), activity_Login_Register.class));
+                startActivity(new Intent(getActivity(), activity_login.class));
             }
         });
         btn_sign_out_account.setOnClickListener(new View.OnClickListener() {
