@@ -1,21 +1,29 @@
 package com.example.dangminhtien.lazembo.Fragment;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
+import com.example.dangminhtien.lazembo.Model.xu_ly_bottom_sheet;
 import com.example.dangminhtien.lazembo.activity.*;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.TintContextWrapper;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +34,7 @@ import com.example.dangminhtien.lazembo.data.Khachhang;
 import com.example.dangminhtien.lazembo.data.Sanpham;
 import com.example.dangminhtien.lazembo.data.get_set_Khachhang;
 import com.example.dangminhtien.lazembo.data.get_set_sanpham;
+import com.example.dangminhtien.lazembo.helper.helper;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -60,7 +69,8 @@ public class Account_Fragment extends Fragment {
     private ArrayList<String> paths;
     private RecyclerView recycle_sp_account;
     private adapter_product adapter_product;
-    private static int Continue = 0;
+    // true: chưa set adapter, false: đã set adapter
+    private static boolean is_setAdapter = false;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,10 +88,8 @@ public class Account_Fragment extends Fragment {
     }
         private void get_data() {
         if (firebaseAuth.getCurrentUser() != null) {
-            visible_layout_when_not_sign_in(true);
-//            pb_account.setVisibility(View.VISIBLE);
+            show_progressbar(true);
             get_khachhang_from_firebase();
-            get_sanpham_from_firebase();
         } else {
             visible_layout_when_not_sign_in(false);
         }
@@ -121,22 +129,21 @@ public class Account_Fragment extends Fragment {
                     intent.putExtra("uid", firebaseAuth.getCurrentUser().getUid());
                 startActivity(intent);
             }
-
             }
         });
     }
 
     private void visible_layout_when_not_sign_in (boolean invisible) {
         if (invisible) {
-            txt_hidden_account.setVisibility(View.GONE);
             btn_sign_in_account.setVisibility(View.GONE);
-            pb_account.setVisibility(View.VISIBLE);
-            layout_parent_account.setVisibility(View.VISIBLE);
-
+            txt_hidden_account.setVisibility(View.GONE);
         } else {
-            txt_hidden_account.setVisibility(View.VISIBLE);
+            for (int i = 0; i < layout_parent_account.getChildCount(); i++) {
+                View view = layout_parent_account.getChildAt(i);
+                view.setVisibility(View.GONE);
+            }
             btn_sign_in_account.setVisibility(View.VISIBLE);
-            layout_parent_account.setVisibility(View.INVISIBLE);
+            txt_hidden_account.setVisibility(View.VISIBLE);
         }
     }
 
@@ -160,29 +167,73 @@ public class Account_Fragment extends Fragment {
         Iterator iterator = set.iterator();
         ArrayList<String> maps = new ArrayList<>();
         get_set_sanpham get_set_sanpham = new get_set_sanpham(getContext());
+
         while (iterator.hasNext()) {
             Map.Entry<String,String> entry = (Map.Entry<String, String>) iterator.next();
                 if (entry.getValue() != "" && iterator.hasNext()) {
-            maps.add(entry.getValue());
+                    maps.add(entry.getValue());
                 }
         }
-            get_set_sanpham.get_sanphams(maps);
-            get_set_sanpham.on_getsanphams(new get_set_sanpham.get_sanphams() {
-                @Override
-                public void on_get_sanphams(ArrayList<Sanpham> sanphams) {
-                    adapter_sp_account recyclerViewAdapter = new adapter_sp_account(getContext(), sanphams);
-//                    Toast.makeText(getContext(), recyclerViewAdapter.getItemCount() + "", Toast.LENGTH_SHORT).show();
-                    if (sanphams.size() != 0 && sanphams != null) {
-                        if(Continue == 0) {
-                    recycle_sp_account.setAdapter(recyclerViewAdapter);
-                        Continue = 1;} else {
-                            recyclerViewAdapter.notifyDataSetChanged();
-                        }
+        get_set_sanpham.get_sanphams(maps);
+        get_set_sanpham.on_getsanphams(new get_set_sanpham.get_sanphams() {
+            @Override
+            public void on_get_sanphams(ArrayList<Sanpham> sanphams) {
+                adapter_sp_account recyclerViewAdapter = new adapter_sp_account(getContext(), sanphams);
+                if (sanphams.size() != 0 && sanphams != null) {
+                    if (!is_setAdapter) {
+                        recycle_sp_account.setAdapter(recyclerViewAdapter);
+                        is_setAdapter = true;
+                    } else {
+                        recyclerViewAdapter.notifyDataSetChanged();
+                    }
+
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
                     recycle_sp_account.setLayoutManager(linearLayoutManager);
-//                    pb_account.setVisibility(View.INVISIBLE);
+                    show_progressbar(false);
+                    recycle_sp_account.setOnTouchListener(new View.OnTouchListener() {
+                        @TargetApi(Build.VERSION_CODES.N)
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                                switch (event.getAction()) {
+                                    case MotionEvent.ACTION_DOWN:
+                                    xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 450));
+                                            break;
+                                    case MotionEvent.ACTION_UP:
+                                        xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 40));
+                                        xu_ly_bottom_sheet.bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                                        break;
+                                    case MotionEvent.ACTION_MOVE:
+                                        xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 450));
+                                        break;
+                                    case MotionEvent.ACTION_SCROLL:
+                                            xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 450));
+                                        break;
+                                }
+                                    return false;
+                        }
+                    });
                 }}
             });
+    }
+
+    public void show_progressbar (boolean visible) {
+            if (visible) {
+                for (int i = 0; i < layout_parent_account.getChildCount(); i++) {
+                    View view = layout_parent_account.getChildAt(i);
+
+                        view.setVisibility(View.GONE);
+                }
+                pb_account.setVisibility(View.VISIBLE);
+            } else {
+                    for (int i = 0; i < layout_parent_account.getChildCount(); i++) {
+                        View view = layout_parent_account.getChildAt(i);
+
+                        view.setVisibility(View.VISIBLE);
+                    }
+                    pb_account.setVisibility(View.GONE);
+
+    }
+        visible_layout_when_not_sign_in(true);
 
     }
 
@@ -192,7 +243,6 @@ public class Account_Fragment extends Fragment {
     }
 
     public void get_khachhang_from_firebase() {
-        pb_account.setVisibility(View.VISIBLE);
         get_set_Khachhang get_set_khachhang = new get_set_Khachhang(getContext());
         get_set_khachhang.get_khachhang(firebaseAuth.getCurrentUser().getUid());
         get_set_khachhang.set_on_get_khachhang(new get_set_Khachhang.get_khachhang() {
@@ -207,7 +257,5 @@ public class Account_Fragment extends Fragment {
         });
     }
 
-    public void get_sanpham_from_firebase() {
-        get_set_sanpham get_set_sanpham = new get_set_sanpham(getContext());
-    }
+
 }

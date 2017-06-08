@@ -35,17 +35,14 @@ public class SecondMainAcitivty extends MainActivity {
     NestedScrollView bottomSheet;
     BottomSheetBehavior bottomSheetBehavior;
 
+    @TargetApi(Build.VERSION_CODES.N)
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_second_main_acitivty,null,false);
         drawer_container.addView(contentView,0);
-
-
 
         overridePendingTransition(R.anim.appear,R.anim.disappear);
         addControlss();
@@ -54,6 +51,7 @@ public class SecondMainAcitivty extends MainActivity {
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void addEventss() {
         explv_list.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
@@ -88,19 +86,7 @@ public class SecondMainAcitivty extends MainActivity {
         vpg_container.setAdapter(adapter);
         tbl_list.setupWithViewPager(vpg_container);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
-//        View view = layoutInflater.inflate(R.layout.layout_bottom_sheet, null);
-//        vpg_bottom_sheet = (ViewPager) findViewById(R.id.vpg_bottom_sheet);
-//        tbl_bottom_sheet = (TabLayout) findViewById(R.id.tbl_bottom_sheet);
-//        tbl_bottom_sheet.getOverlay();
-//        FragmentManager fragmentManager2 = getSupportFragmentManager();
-//        adapter_bottom_sheet = new ViewPagerBottomSheetAdapter(fragmentManager2);
-//        vpg_bottom_sheet.setAdapter(adapter_bottom_sheet);
-//        tbl_bottom_sheet.setupWithViewPager(vpg_bottom_sheet);
-//
-//        TabLayout.Tab tab = tbl_bottom_sheet.getTabAt(0);
-//        tab.setCustomView(getView(0));
-//        TabLayout.Tab tab2 = tbl_bottom_sheet.getTabAt(1);
-//        tab2.setCustomView(getView(1));
+
 
     }
 

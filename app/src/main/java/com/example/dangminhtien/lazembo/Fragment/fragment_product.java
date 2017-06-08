@@ -32,6 +32,7 @@ import com.example.dangminhtien.lazembo.activity.activity_phan_loai_sp;
 import com.example.dangminhtien.lazembo.adapter.AdapterHinhSp;
 import com.example.dangminhtien.lazembo.data.Sanpham;
 import com.example.dangminhtien.lazembo.data.get_set_sanpham;
+import com.example.dangminhtien.lazembo.helper.helper;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.FileNotFoundException;
@@ -191,8 +192,7 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
 
     private void xacnhanUptoFirebase() {
         boolean contiue = false;
-
-//        contiue = check_txt_gia_truoc_khi_giam();
+        contiue = check_txt_gia_truoc_khi_giam();
 //        if (contiue) {
 //            contiue = check_txt_gia_sp();
 //        }

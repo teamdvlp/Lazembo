@@ -205,7 +205,7 @@
                 android:layout_marginTop="112dp"
                 android:background="@android:color/background_light"
                 android:focusable="true"
-                android:hint="Giá trước khi giảm"
+                android:hint="Giá sau khi giảm"
                 android:inputType="number"
                 android:minWidth="150dp"
                 android:textSize="26sp"
