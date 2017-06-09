@@ -66,7 +66,6 @@ StorageReference storageReference;
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     @SuppressWarnings("VisibleForTests")Uri url = taskSnapshot.getDownloadUrl();
                     upload_image.on_upload_image(url.toString());
-                    Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
                 }
             });
 

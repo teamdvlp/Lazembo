@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.UUID;
 
 public class fragment_product extends Fragment implements get_set_sanpham.get_sanpham {
@@ -223,25 +224,30 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
     }
 
     private void transfer_and_move_phanloai_sp() {
-        get_set_sanpham uploadSanpham = new get_set_sanpham(getContext());
-        UUID uuid = new UUID(100000,1);
-        String masp = uuid.toString();
-        String path_image = uploadSanpham.upLoadImage(bitmaps_hinh_sp.get(0), "Sản phẩm/" + get_date_and_time());
-        path_hinh_sp.add(path_image);
+        add_path_image_to_arr();
         trasnfer_motasp fragment_motasp = new fragment_motasp();
         String text = fragment_motasp.transfer_text();
+        create_sanpham(text);
+        Intent intent = new Intent(getActivity(), activity_phan_loai_sp.class);
+        startActivity(intent);
+    }
+
+    private void create_sanpham(String text) {
         Sanpham.getInstance().setGiasp(Double.parseDouble(txt_gia.getText().toString()));
         Sanpham.getInstance().setGiaTruocKhiGiam(Double.parseDouble(txt_giap_truoc_khi_giam.getText().toString()));
         Sanpham.getInstance().setHinh(path_hinh_sp);
-
         Sanpham.getInstance().setIdsp(getActivity().getIntent().getStringExtra("uid")+ "+" + new Date().getTime());
         Sanpham.getInstance().setKichco(source_kichthuoc);
         Sanpham.getInstance().setMausac(source_mausac);
         Sanpham.getInstance().setMotachitietsp(text);
         Sanpham.getInstance().setRating(rb_rating.getRating());
         Sanpham.getInstance().setTensp(txt_ten_sp.getText().toString());
-        Intent intent = new Intent(getActivity(), activity_phan_loai_sp.class);
-        startActivity(intent);
+    }
+
+    private void add_path_image_to_arr () {
+        for (int i = 0; i < bitmaps_hinh_sp.size(); i ++) {
+            path_hinh_sp.add( "Sản phẩm/" +txt_ten_sp.getText().toString()+"/"+ get_date_and_time());
+        }
     }
 
     private ArrayList<String> get_array_dialog () {

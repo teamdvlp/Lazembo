@@ -13,10 +13,6 @@ import com.example.dangminhtien.lazembo.adapter.RecyclerViewAdapter;
 
 import java.util.ArrayList;
 
-/**
- * Created by phamf on 30-May-17.
- */
-
 public class Cart extends AppCompatActivity {
     Button btn_pay;
     TextView txt_total_money;

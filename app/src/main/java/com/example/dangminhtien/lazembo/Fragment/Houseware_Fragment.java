@@ -9,11 +9,6 @@ import android.view.ViewGroup;
 
 import com.example.dangminhtien.lazembo.R;
 
-
-/**
- * Created by phamf on 23-May-17.
- */
-
 public class Houseware_Fragment extends Fragment {
     View view;
 

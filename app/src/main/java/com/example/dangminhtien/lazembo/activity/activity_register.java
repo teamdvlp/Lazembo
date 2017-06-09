@@ -71,7 +71,6 @@ public class activity_register extends AppCompatActivity {
                 startActivity(new Intent(activity_register.this, activity_login.class));
             }
         });
-        btn_register = (Button) findViewById(R.id.btn_register_register);
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,7 +95,7 @@ public class activity_register extends AppCompatActivity {
         txt_HovaTen_register = (EditText) findViewById(R.id.txt_HovaTen_register);
         txt_sdt_register = (EditText) findViewById(R.id.txt_sdt_register);
         mProgressView = findViewById(R.id.register_progress);
-
+        btn_register = (Button) findViewById(R.id.btn_register_register);
     }
 
     private void get_text_from_edit_text () {
@@ -119,9 +118,10 @@ public class activity_register extends AppCompatActivity {
     }
 
     private boolean check_error () {
+
             boolean check_result = true;
             View focus_view = null;
-        if (check_result && check_error.check_email(email)) {
+        if (check_result && !check_error.check_email(email)) {
             txt_email_register.setError("Email phải chứa các ký tự: '@', '.', và có trên 5 ký tự");
             focus_view = txt_email_register;
             check_result =  false;
@@ -172,6 +172,5 @@ public class activity_register extends AppCompatActivity {
     private void showProgress(final boolean show) {
         mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
     }
-
 
 }

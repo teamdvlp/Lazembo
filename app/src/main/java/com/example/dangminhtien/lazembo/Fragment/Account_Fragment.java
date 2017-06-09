@@ -178,6 +178,7 @@ public class Account_Fragment extends Fragment {
         get_set_sanpham.on_getsanphams(new get_set_sanpham.get_sanphams() {
             @Override
             public void on_get_sanphams(ArrayList<Sanpham> sanphams) {
+                show_progressbar(true);
                 adapter_sp_account recyclerViewAdapter = new adapter_sp_account(getContext(), sanphams);
                 if (sanphams.size() != 0 && sanphams != null) {
                     if (!is_setAdapter) {
@@ -197,7 +198,7 @@ public class Account_Fragment extends Fragment {
                                 switch (event.getAction()) {
                                     case MotionEvent.ACTION_DOWN:
                                     xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 450));
-                                            break;
+                                        break;
                                     case MotionEvent.ACTION_UP:
                                         xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 40));
                                         xu_ly_bottom_sheet.bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -243,16 +244,18 @@ public class Account_Fragment extends Fragment {
     }
 
     public void get_khachhang_from_firebase() {
-        get_set_Khachhang get_set_khachhang = new get_set_Khachhang(getContext());
-        get_set_khachhang.get_khachhang(firebaseAuth.getCurrentUser().getUid());
-        get_set_khachhang.set_on_get_khachhang(new get_set_Khachhang.get_khachhang() {
-            @Override
-            public void on_get_khachhang(Khachhang khachhang) {
-                Account_Fragment.this.khachhang = khachhang;
-                txt_ten_account.setText(khachhang.getHOVATEN());
-                txt_sdt_account.setText(khachhang.getSdt());
-                txt_email_account.setText(khachhang.getEmail());
-                add_adapter_to_recycle_sp_account();
+                    get_set_Khachhang get_set_khachhang = new get_set_Khachhang(getContext());
+                    get_set_khachhang.get_khachhang(firebaseAuth.getCurrentUser().getUid());
+                    get_set_khachhang.set_on_get_khachhang(new get_set_Khachhang.get_khachhang() {
+                        @Override
+                        public void on_get_khachhang(Khachhang khachhang) {
+                            Account_Fragment.this.khachhang = khachhang;
+                            txt_ten_account.setText(khachhang.getHOVATEN());
+                            txt_sdt_account.setText(khachhang.getSdt());
+                            txt_email_account.setText(khachhang.getEmail());
+                            add_adapter_to_recycle_sp_account();
+                            show_progressbar(false);
+
             }
         });
     }

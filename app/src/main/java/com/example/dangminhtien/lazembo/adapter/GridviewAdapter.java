@@ -12,10 +12,6 @@ import com.example.dangminhtien.lazembo.R;
 
 import java.util.ArrayList;
 
-/**
- * Created by phamf on 28-May-17.
- */
-
 public class GridviewAdapter extends BaseAdapter {
     ArrayList<com.example.dangminhtien.lazembo.Model.ProductInformationModel> list;
     Activity activity;
