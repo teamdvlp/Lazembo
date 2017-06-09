@@ -49,12 +49,20 @@ public class adapter_sp_account extends RecyclerView.Adapter<adapter_sp_account.
     }
 
     @Override
-    public void onBindViewHolder(view_holder holder, int position) {
+    public void onBindViewHolder(final view_holder holder, int position) {
             holder.txt_ten_sp_account.setText(sanphams.get(position).getTensp());
         DecimalFormat decimalFormat = new DecimalFormat("###################.###################");
             holder.txt_gia_sp_account.setText(decimalFormat.format(sanphams.get(position).getGiasp()));
         try {
-            Bitmap bitmap = xuly_hinhanh(position);
+            get_set_sanpham get_set_sanpham = new get_set_sanpham(context);
+            get_set_sanpham.getImage(sanphams.get(position).getHinh().get(0));
+            get_set_sanpham.on_get_image(new get_set_sanpham.get_image() {
+                @Override
+                public void on_get_image(Bitmap bitmap) {
+                    holder.img_hinhsp_account.setImageBitmap(bitmap);
+                }
+            });
+            Bitmap bitmap = get_set_sanpham.getImage(sanphams.get(position).getHinh().get(0));
             holder.img_hinhsp_account.setImageBitmap(bitmap);
         } catch (MalformedURLException e) {
             e.printStackTrace();

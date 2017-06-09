@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.dangminhtien.lazembo.Fragment.fragment_product;
@@ -50,13 +51,16 @@ StorageReference storageReference;
             databaseReference.child(masp).setValue(sanpham);
         }
 
-    public String upLoadImage (Bitmap bitmap, String path) {
-            StorageReference storageReference2 = storageReference.child(path);
+    public String upLoadImage (final ArrayList<Bitmap> bitmap, ArrayList<String> path) {
+        for (int i = 0; i < bitmap.size(); i ++) {
+            StorageReference storageReference2 = storageReference.child(path.get(i));
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            bitmap.get(i).compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
             byte[] bytes = byteArrayOutputStream.toByteArray();
+            final ArrayList<String> urls = new ArrayList<String>();
             UploadTask uploadTask = storageReference2.putBytes(bytes);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
+                    final int finalI = i;
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Toast.makeText(context, "Failed  " + e.toString(), Toast.LENGTH_SHORT).show();
@@ -65,11 +69,14 @@ StorageReference storageReference;
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     @SuppressWarnings("VisibleForTests")Uri url = taskSnapshot.getDownloadUrl();
-                    upload_image.on_upload_image(url.toString());
+                        urls.add(url.toString());
+                    if (finalI == bitmap.size()) {
+                        upload_image.on_upload_image(urls);
+                    }
                 }
-            });
+            });}
 
-        return storageReference2.getDownloadUrl().getResult().toString();
+        return null;
     }
 
     public void getSanpham (final String masp) {
@@ -139,7 +146,7 @@ StorageReference storageReference;
     public Bitmap getImage (String path) throws IOException {
         final File localFile = File.createTempFile("images", "jpg");
         final Bitmap[] bitmap = new Bitmap[1];
-        storageReference.child("Sản phẩm/0127171496284064999").getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+        storageReference.child(path).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                 // Local temp file has been created
@@ -192,6 +199,6 @@ StorageReference storageReference;
     }
 
     public interface upload_image {
-        public void on_upload_image (String url);
+        public void on_upload_image (ArrayList<String> url);
     }
 }

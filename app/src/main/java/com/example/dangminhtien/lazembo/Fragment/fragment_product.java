@@ -225,17 +225,24 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
 
     private void transfer_and_move_phanloai_sp() {
         add_path_image_to_arr();
-        trasnfer_motasp fragment_motasp = new fragment_motasp();
-        String text = fragment_motasp.transfer_text();
-        create_sanpham(text);
-        Intent intent = new Intent(getActivity(), activity_phan_loai_sp.class);
-        startActivity(intent);
+        get_set_sanpham get_set_sanpham = new get_set_sanpham(getContext());
+        get_set_sanpham.upLoadImage(bitmaps_hinh_sp, path_hinh_sp);
+        get_set_sanpham.set_on_upload_image(new get_set_sanpham.upload_image() {
+            @Override
+            public void on_upload_image(ArrayList<String> urls) {
+                trasnfer_motasp fragment_motasp = new fragment_motasp();
+                String text = fragment_motasp.transfer_text();
+                create_sanpham(text, urls);
+                Intent intent = new Intent(getActivity(), activity_phan_loai_sp.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    private void create_sanpham(String text) {
+    private void create_sanpham(String text, ArrayList<String> urls) {
         Sanpham.getInstance().setGiasp(Double.parseDouble(txt_gia.getText().toString()));
         Sanpham.getInstance().setGiaTruocKhiGiam(Double.parseDouble(txt_giap_truoc_khi_giam.getText().toString()));
-        Sanpham.getInstance().setHinh(path_hinh_sp);
+        Sanpham.getInstance().setHinh(urls);
         Sanpham.getInstance().setIdsp(getActivity().getIntent().getStringExtra("uid")+ "+" + new Date().getTime());
         Sanpham.getInstance().setKichco(source_kichthuoc);
         Sanpham.getInstance().setMausac(source_mausac);
