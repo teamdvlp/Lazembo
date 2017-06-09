@@ -24,7 +24,7 @@ public class check_error {
             }
         }
         return false;
-
+//l
     }
 
     public boolean check_ho_ten (String ho_ten) {
