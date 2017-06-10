@@ -72,16 +72,13 @@ public class get_set_Khachhang {
         return sanphams;
     }
 
-    public void set_on_get_khachhang (get_khachhang get_khachhang) {
+    public void set_on_get_khachhang_listener (get_khachhang get_khachhang) {
         this.get_khachhang = get_khachhang;
     }
+
+
 
     public interface get_khachhang {
         public void on_get_khachhang(Khachhang khachhang);
     }
-
-    public interface up_sp_to_khachhang {
-        public void on_up_sp_to_khachhang ();
-    }
-
 }

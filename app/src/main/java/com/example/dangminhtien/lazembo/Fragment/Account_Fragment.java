@@ -36,6 +36,8 @@ import com.example.dangminhtien.lazembo.data.Sanpham;
 import com.example.dangminhtien.lazembo.data.get_set_Khachhang;
 import com.example.dangminhtien.lazembo.data.get_set_sanpham;
 import com.example.dangminhtien.lazembo.helper.helper;
+import com.example.dangminhtien.lazembo.helper.helper_account_fragment;
+import com.example.dangminhtien.lazembo.helper.helper_phanloai_sp;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -70,6 +72,9 @@ public class Account_Fragment extends Fragment {
     private ArrayList<String> paths;
     private RecyclerView recycle_sp_account;
     private adapter_product adapter_product;
+    private get_set_sanpham get_set_sanpham;
+    private get_set_Khachhang get_set_khachhang;
+    private helper_account_fragment helper_account_fragment;
     // true: chưa set adapter, false: đã set adapter
     private static boolean is_setAdapter = false;
     adapter_sp_account recyclerViewAdapter;
@@ -78,7 +83,11 @@ public class Account_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         firebaseAuth = FirebaseAuth.getInstance();
         view = inflater.inflate(R.layout.fragment_account,container,false);
+        get_set_khachhang = new get_set_Khachhang(getContext());
+        get_set_sanpham = new get_set_sanpham(getContext());
+        helper_account_fragment = new helper_account_fragment(getContext());
         return view;
+
     }
 
     @Override
@@ -163,70 +172,64 @@ public class Account_Fragment extends Fragment {
 
     }
 
+
     private void add_adapter_to_recycle_sp_account() {
         show_progressbar(false);
-        HashMap hashMap = Account_Fragment.this.khachhang.getSanphams();
-        Set set = hashMap.entrySet();
-        Iterator iterator = set.iterator();
-        ArrayList<String> maps = new ArrayList<>();
-        final get_set_sanpham get_set_sanpham = new get_set_sanpham(getContext());
-
-        while (iterator.hasNext()) {
-            Map.Entry<String,String> entry = (Map.Entry<String, String>) iterator.next();
-                if (entry.getValue() != "" && iterator.hasNext()) {
-                    maps.add(entry.getValue());
-                }
-        }
-        get_set_sanpham.get_sanphams(maps);
-        get_set_sanpham.on_getsanphams(new get_set_sanpham.get_sanphams() {
+        ArrayList<String> masp = helper_account_fragment.get_masp(khachhang);
+        get_set_sanpham.get_sanphams(masp);
+        get_set_sanpham.set_on_get_sanphams_listener(new get_set_sanpham.get_sanphams() {
             @Override
             public void on_get_sanphams(final ArrayList<Sanpham> sanphams) {
-                Toast.makeText(getContext(), sanphams.size()+"", Toast.LENGTH_SHORT).show();
                 if (sanphams.size() != 0 && sanphams != null ) {
-                        get_set_sanpham get_set_sanpham = new get_set_sanpham(getContext());
-                        get_set_sanpham.getImages(get_paths(sanphams));
-                        get_set_sanpham.set_on_get_images(new get_set_sanpham.get_images() {
-                            @Override
-                            public void on_get_images(ArrayList<Bitmap> bitmaps) {
-                                Toast.makeText(getContext(), "Load Bitmap " + bitmaps.size(), Toast.LENGTH_SHORT).show();
-                                if (!is_setAdapter) {
-                                    recyclerViewAdapter = new adapter_sp_account(getContext(), sanphams, bitmaps);
-                                    recycle_sp_account.setAdapter(recyclerViewAdapter);
-                                    is_setAdapter = true;
-                                } else {
-                                    recyclerViewAdapter.notifyDataSetChanged();
-                                }
 
-                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-                                recycle_sp_account.setLayoutManager(linearLayoutManager);
-                                recycle_sp_account.setOnTouchListener(new View.OnTouchListener() {
-                                    @TargetApi(Build.VERSION_CODES.N)
-                                    @Override
-                                    public boolean onTouch(View v, MotionEvent event) {
-                                        switch (event.getAction()) {
-                                            case MotionEvent.ACTION_DOWN:
-                                                xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 450));
-                                                break;
-                                            case MotionEvent.ACTION_UP:
-                                                xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 40));
-                                                xu_ly_bottom_sheet.bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                                                break;
-                                            case MotionEvent.ACTION_MOVE:
-                                                xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 450));
-                                                break;
-                                            case MotionEvent.ACTION_SCROLL:
-                                                xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 450));
-                                                break;
-                                        }
-                                        return false;
-                                    }
-                                });
-                            }
-                        });
-                }}
+
+
+                    get_set_sanpham.getImages(get_paths(sanphams));
+                get_set_sanpham.set_on_get_images_listener(new get_set_sanpham.get_images() {
+                    @Override
+                    public void on_get_images(ArrayList<Bitmap> bitmaps) {
+                        set_adapter(bitmaps);
+                    }
+                });
+            }}
             });
     }
-        public ArrayList<String> get_paths (ArrayList<Sanpham> sanphams) {
+        public void set_adapter(ArrayList<Bitmap> bitmaps) {
+            if (!is_setAdapter) {
+                recyclerViewAdapter = new adapter_sp_account(getContext(), sanphams, bitmaps);
+                recycle_sp_account.setAdapter(recyclerViewAdapter);
+                is_setAdapter = true;
+            } else {
+                recyclerViewAdapter.notifyDataSetChanged();
+            }
+
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+            recycle_sp_account.setLayoutManager(linearLayoutManager);
+            recycle_sp_account.setOnTouchListener(new View.OnTouchListener() {
+                @TargetApi(Build.VERSION_CODES.N)
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 450));
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 40));
+                            xu_ly_bottom_sheet.bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 450));
+                            break;
+                        case MotionEvent.ACTION_SCROLL:
+                            xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 450));
+                            break;
+                    }
+                    return false;
+                }
+            });
+        }
+
+    public ArrayList<String> get_paths (ArrayList<Sanpham> sanphams) {
             Iterator<Sanpham> sanpham = sanphams.iterator();
             ArrayList<String> paths = new ArrayList<String>();
                 abc:
@@ -242,7 +245,6 @@ public class Account_Fragment extends Fragment {
                     paths.add(path);
                         break;
                         }}}}}
-            Toast.makeText(getContext(), "paths.size " + paths.size(), Toast.LENGTH_SHORT).show();
             return paths;
         }
     public void show_progressbar (boolean visible) {
@@ -272,9 +274,8 @@ public class Account_Fragment extends Fragment {
     }
 
     public void get_khachhang_from_firebase() {
-                    get_set_Khachhang get_set_khachhang = new get_set_Khachhang(getContext());
                     get_set_khachhang.get_khachhang(firebaseAuth.getCurrentUser().getUid());
-                    get_set_khachhang.set_on_get_khachhang(new get_set_Khachhang.get_khachhang() {
+                    get_set_khachhang.set_on_get_khachhang_listener(new get_set_Khachhang.get_khachhang() {
                         @Override
                         public void on_get_khachhang(Khachhang khachhang) {
                             Account_Fragment.this.khachhang = khachhang;

@@ -83,7 +83,7 @@ public class get_set_sanpham {
         final Iterator<Bitmap> bitmap = bitmaps.iterator();
             while (bitmap.hasNext()) {
                 upLoadImage(bitmap.next(), path.next());
-                set_on_upload_image(new upload_image() {
+                set_on_upload_image_listener(new upload_image() {
                     @Override
                     public void on_upload_image(String url) {
                         if (!bitmap.hasNext()) {
@@ -138,7 +138,7 @@ public class get_set_sanpham {
         while (path.hasNext()) {
                 try {
                     getImage(path.next());
-                    on_get_image(new get_image() {
+                    set_on_get_image_listener(new get_image() {
                         @Override
                         public void on_get_image(Bitmap bitmap) {
                             count[0]++;
@@ -193,23 +193,23 @@ public class get_set_sanpham {
         databaseReference.child(path).setValue(path);
     }
 
-    public void set_on_get_images (get_images get_images) {
+    public void set_on_get_images_listener (get_images get_images) {
         this.get_images = get_images;
     }
 
-    public void set_on_upoad_images (upload_images on_upoad_images) {
+    public void set_on_upoad_images_listener (upload_images on_upoad_images) {
         upload_images = on_upoad_images;
     }
 
-    public void set_on_upload_image (upload_image upload_image) {
+    public void set_on_upload_image_listener (upload_image upload_image) {
         this.upload_image = upload_image;
     }
 
-    public void on_get_image (get_image get_image) {
+    public void set_on_get_image_listener (get_image get_image) {
         this.get_image = get_image;
     }
 
-    public void on_getsanphams (get_sanphams get_sanphams) {
+    public void set_on_get_sanphams_listener (get_sanphams get_sanphams) {
         this.get_sanphams = get_sanphams;
     }
 

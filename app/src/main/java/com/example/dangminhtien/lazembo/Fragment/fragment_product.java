@@ -225,7 +225,7 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
             }
 //        path_hinh_sp.add(path_image);
         uploadSanpham.Upload_images(bitmaps_hinh_sp, path_hinh_sp);
-        uploadSanpham.set_on_upoad_images(new get_set_sanpham.upload_images() {
+        uploadSanpham.set_on_upoad_images_listener(new get_set_sanpham.upload_images() {
             @Override
             public void on_upload_images() {
                 trasnfer_motasp fragment_motasp = new fragment_motasp();
