@@ -5,6 +5,10 @@ import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class helper {
     int  a;
 
@@ -28,4 +32,11 @@ public class helper {
         return Integer.valueOf(format.format(px));
     }
 
+    public String getDateAndTime () {
+        Calendar calendar = Calendar.getInstance();
+        String dateFormat = "ddmmyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
+        Date date = calendar.getTime();
+        return simpleDateFormat.format(date) + date.getTime();
+    }
 }

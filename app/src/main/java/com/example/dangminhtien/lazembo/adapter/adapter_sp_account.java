@@ -25,22 +25,18 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-/**
- * Created by tiend on 6/5/2017.
- */
-
 public class adapter_sp_account extends RecyclerView.Adapter<adapter_sp_account.view_holder> {
     private ArrayList<String> path_sp;
     private Context context;
+    private ArrayList<Bitmap> bitmaps;
     private ArrayList<Sanpham> sanphams;
 
-    public adapter_sp_account(Context context, ArrayList<Sanpham> sanphams) {
+    public adapter_sp_account(Context context, ArrayList<Sanpham> sanphams, ArrayList<Bitmap> bitmaps) {
         this.context = context;
         this.sanphams = sanphams;
+        this.bitmaps = bitmaps;
 
     }
-
-
 
     @Override
     public view_holder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -50,32 +46,10 @@ public class adapter_sp_account extends RecyclerView.Adapter<adapter_sp_account.
 
     @Override
     public void onBindViewHolder(final view_holder holder, int position) {
-            holder.txt_ten_sp_account.setText(sanphams.get(position).getTensp());
+        holder.txt_ten_sp_account.setText(sanphams.get(position).getTensp());
         DecimalFormat decimalFormat = new DecimalFormat("###################.###################");
-            holder.txt_gia_sp_account.setText(decimalFormat.format(sanphams.get(position).getGiasp()));
-        try {
-            get_set_sanpham get_set_sanpham = new get_set_sanpham(context);
-            get_set_sanpham.getImage(sanphams.get(position).getHinh().get(0));
-            get_set_sanpham.on_get_image(new get_set_sanpham.get_image() {
-                @Override
-                public void on_get_image(Bitmap bitmap) {
-                    holder.img_hinhsp_account.setImageBitmap(bitmap);
-                }
-            });
-            Bitmap bitmap = get_set_sanpham.getImage(sanphams.get(position).getHinh().get(0));
-            holder.img_hinhsp_account.setImageBitmap(bitmap);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private Bitmap xuly_hinhanh(int position) throws IOException {
-        URL url = new URL(sanphams.get(position).getHinh().get(0));
-        InputStream read_image_from_firebase = url.openStream();
-        Bitmap bitmap = BitmapFactory.decodeStream(read_image_from_firebase);
-        return bitmap;
+        holder.txt_gia_sp_account.setText(decimalFormat.format(sanphams.get(position).getGiasp()));
+        holder.img_hinhsp_account.setImageBitmap(bitmaps.get(position));
     }
 
     @Override

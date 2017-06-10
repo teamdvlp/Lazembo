@@ -13,10 +13,6 @@ import com.example.dangminhtien.lazembo.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by phamf on 25-May-17.
- */
-
 public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
     Context context;

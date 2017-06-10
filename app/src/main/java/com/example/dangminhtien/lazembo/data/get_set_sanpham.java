@@ -5,10 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.dangminhtien.lazembo.Fragment.fragment_product;
+import com.example.dangminhtien.lazembo.helper.helper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
@@ -27,75 +29,88 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-
 public class get_set_sanpham {
-Context context;
-FirebaseDatabase database;
-DatabaseReference databaseReference;
-FirebaseStorage firebaseStorage;
-StorageReference storageReference;
+    Context context;
+    FirebaseDatabase database;
+    DatabaseReference databaseReference;
+    FirebaseStorage firebaseStorage;
+    StorageReference storageReference;
     get_image get_image;
     get_set_Khachhang get_set_khachhang;
     get_sanpham get_sanpham;
     get_sanphams get_sanphams;
     upload_image upload_image;
+    upload_images upload_images;
+    helper helper;
+    get_images get_images;
     public get_set_sanpham(Context context) {
         this.context = context;
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Sản phẩm");
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
+        helper = new helper();
     }
 
     public void upLoadSanpham(Sanpham sanpham, String masp) {
-            databaseReference.child(masp).setValue(sanpham);
-        }
+        databaseReference.child(masp).setValue(sanpham);
+    }
 
-    public String upLoadImage (final ArrayList<Bitmap> bitmap, ArrayList<String> path) {
-        for (int i = 0; i < bitmap.size(); i ++) {
-            StorageReference storageReference2 = storageReference.child(path.get(i));
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.get(i).compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-            byte[] bytes = byteArrayOutputStream.toByteArray();
-            final ArrayList<String> urls = new ArrayList<String>();
-            UploadTask uploadTask = storageReference2.putBytes(bytes);
-                    final int finalI = i;
-                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(context, "Failed  " + e.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    @SuppressWarnings("VisibleForTests")Uri url = taskSnapshot.getDownloadUrl();
-                        urls.add(url.toString());
-                    if (finalI == bitmap.size()) {
-                        upload_image.on_upload_image(urls);
+    public void upLoadImage (Bitmap bitmap, String path) {
+        StorageReference storageReference2 = storageReference.child(path);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+        UploadTask uploadTask = storageReference2.putBytes(bytes);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, "Failed  " + e.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                @SuppressWarnings("VisibleForTests")Uri url = taskSnapshot.getDownloadUrl();
+                upload_image.on_upload_image(url.toString());
+                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    public void Upload_images (ArrayList<Bitmap> bitmaps, ArrayList<String> paths) {
+        final Iterator<String> path = paths.iterator();
+        final Iterator<Bitmap> bitmap = bitmaps.iterator();
+            while (bitmap.hasNext()) {
+                upLoadImage(bitmap.next(), path.next());
+                set_on_upload_image(new upload_image() {
+                    @Override
+                    public void on_upload_image(String url) {
+                        if (!bitmap.hasNext()) {
+                            upload_images.on_upload_images();
+                        }
                     }
-                }
-            });}
-
-        return null;
+                });
+            }
     }
 
     public void getSanpham (final String masp) {
 
         final Sanpham[] sanpham = new Sanpham[1];
         if (masp != "") {
-        databaseReference.child(masp).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            databaseReference.child(masp).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
                     sanpham[0] = dataSnapshot.getValue(Sanpham.class);
                     get_sanpham.on_get_sanpham(sanpham[0]);
-            }
+                }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });}
+                }
+            });}
 
     }
 
@@ -104,37 +119,41 @@ StorageReference storageReference;
         final int[] count = {0};
         final ArrayList <Sanpham> sanphams = new ArrayList<Sanpham>();
         while (iterator.hasNext()) {
-        getSanpham(iterator.next());
+            getSanpham(iterator.next());
             set_on_get_sanpham(new get_sanpham() {
                 @Override
                 public void on_get_sanpham(Sanpham sanpham) {
                     count[0]++;
                     sanphams.add(sanpham);
-                        if (count[0] == masp.size()) {
-                    get_sanphams.on_get_sanphams(sanphams);
-                }}
+                    if (count[0] == masp.size()) {
+                        get_sanphams.on_get_sanphams(sanphams);
+                    }}
             });
         }}
 
-    public ArrayList<Bitmap> getImages (String[] path) {
+    public ArrayList<Bitmap> getImages (final ArrayList<String> paths) {
         final ArrayList<Bitmap> bitmaps = new ArrayList<Bitmap>();
-        for (int i = 0; i < path.length; i ++) {
-            storageReference.child(path[i]).getBytes(2048).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                @Override
-                public void onSuccess(byte[] bytes) {
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    bitmaps.add(bitmap);
-                    fragment_product fragment_layout_sp = new fragment_product();
-//                    fragment_layout_sp.add(bitmaps);
+        final Iterator<String> path = paths.iterator();
+        final int[] count = {0};
+        while (path.hasNext()) {
+                try {
+                    getImage(path.next());
+                    on_get_image(new get_image() {
+                        @Override
+                        public void on_get_image(Bitmap bitmap) {
+                            count[0]++;
+                            bitmaps.add(bitmap);
+                            Toast.makeText(context, "Bitmap.size2 " + paths.size(), Toast.LENGTH_SHORT).show();
+                            if (count[0] == paths.size()) {
+                                get_images.on_get_images(bitmaps);
+                            }
+                        }
+                    });
+                } catch (IOException e) {
+                    Log.e("Tien dep trai", e.toString());
+                    e.printStackTrace();
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(context, e.toString(),Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-        Toast.makeText(context, "aa", Toast.LENGTH_SHORT).show();
+            }
 
         return bitmaps;
     }
@@ -174,6 +193,14 @@ StorageReference storageReference;
         databaseReference.child(path).setValue(path);
     }
 
+    public void set_on_get_images (get_images get_images) {
+        this.get_images = get_images;
+    }
+
+    public void set_on_upoad_images (upload_images on_upoad_images) {
+        upload_images = on_upoad_images;
+    }
+
     public void set_on_upload_image (upload_image upload_image) {
         this.upload_image = upload_image;
     }
@@ -187,7 +214,7 @@ StorageReference storageReference;
     }
 
     public interface get_image {
-       public void on_get_image (Bitmap bitmap);
+        public void on_get_image (Bitmap bitmap);
     }
 
     public interface get_sanpham {
@@ -199,6 +226,14 @@ StorageReference storageReference;
     }
 
     public interface upload_image {
-        public void on_upload_image (ArrayList<String> url);
+        public void on_upload_image (String url);
+    }
+
+    public interface upload_images {
+        public void on_upload_images();
+    }
+
+    public interface get_images {
+        void on_get_images (ArrayList<Bitmap> bitmaps);
     }
 }

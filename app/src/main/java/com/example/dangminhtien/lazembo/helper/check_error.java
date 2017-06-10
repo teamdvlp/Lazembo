@@ -36,7 +36,7 @@ public class check_error {
     }
 
     public boolean check_display_name (String display_name) {
-        return TextUtils.isEmpty(display_name) && display_name.length() >= 6;
+        return !TextUtils.isEmpty(display_name) && display_name.length() >= 6;
     }
 
 

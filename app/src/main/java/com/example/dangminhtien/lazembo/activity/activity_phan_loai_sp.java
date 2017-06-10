@@ -15,6 +15,7 @@ import com.example.dangminhtien.lazembo.data.Danhmucsp;
 import com.example.dangminhtien.lazembo.data.Sanpham;
 import com.example.dangminhtien.lazembo.data.get_set_Khachhang;
 import com.example.dangminhtien.lazembo.data.get_set_sanpham;
+import com.example.dangminhtien.lazembo.helper.helper_phanloai_sp;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -25,47 +26,28 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
     private Spinner sp1st, sp2nd, sp3th, sp4th;
     private ImageButton btn_submit;
     private FirebaseAuth firebaseAuth;
-
+    private helper_phanloai_sp helper_phanloai_sp;
+    private Sanpham sanpham;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phan_loai_sp);
         firebaseAuth = FirebaseAuth.getInstance();
+        helper_phanloai_sp = new helper_phanloai_sp(getApplicationContext());
+        this.sanpham = helper_phanloai_sp.get_sanpham();
         addControls();
         addEvents();
     }
 
     private void addEvents() {
         process_spinner();
-
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                get_path_up_to_firebase();
+                helper_phanloai_sp.get_path_up_to_firebase(cache);
                 Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void get_path_up_to_firebase() {
-        Sanpham sanpham = Sanpham.getInstance();
-        // vì sản phầm được ghi trong mục idsp nằm bên trong mục sản phẩm nên cần phải add vô thêm
-        int count = 0;
-        for (int i = 0; i < cache.length; i++) {
-            if (null == cache[i]) {
-                cache[i] = "Sản phẩm";
-                cache[i + 1] = sanpham.getIdsp();
-                count = i + 1;
-                break;
-            }
-        }
-
-        get_set_sanpham get_set_sanpham = new get_set_sanpham(activity_phan_loai_sp.this);
-        get_set_sanpham.upLoadSanpham(sanpham, sanpham.getIdsp());
-        get_set_sanpham.write_path_by_path(sanpham.getIdsp(), cache, count);
-        get_set_Khachhang get_set_khachhang = new get_set_Khachhang(getApplicationContext());
-        get_set_khachhang.up_sp_to_khachhang(sanpham.getIdsp(),firebaseAuth.getCurrentUser().getUid());
-
     }
 
     private void process_spinner() {
@@ -160,7 +142,7 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
         danhmucsp.getChild(new String[]{});
     }
 
-    private void xulySp(ArrayList<String> arrayList, Context context, Spinner sp) {
+    private void xuly_sp(ArrayList<String> arrayList, Context context, Spinner sp) {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(activity_phan_loai_sp.this, android.R.layout.simple_spinner_item, arrayList);
         sp.setAdapter(arrayAdapter);
     }
@@ -168,6 +150,6 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
     // bắt sự kiện khi lấy xong dữ liệu
     @Override
     public void onDatachanged(ArrayList<String> arr, Context context, Spinner sp) {
-        xulySp(arr, context, sp);
+        xuly_sp(arr, context, sp);
     }
 }

@@ -2,6 +2,7 @@ package com.example.dangminhtien.lazembo.Fragment;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -71,6 +72,7 @@ public class Account_Fragment extends Fragment {
     private adapter_product adapter_product;
     // true: chưa set adapter, false: đã set adapter
     private static boolean is_setAdapter = false;
+    adapter_sp_account recyclerViewAdapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -162,11 +164,12 @@ public class Account_Fragment extends Fragment {
     }
 
     private void add_adapter_to_recycle_sp_account() {
+        show_progressbar(false);
         HashMap hashMap = Account_Fragment.this.khachhang.getSanphams();
         Set set = hashMap.entrySet();
         Iterator iterator = set.iterator();
         ArrayList<String> maps = new ArrayList<>();
-        get_set_sanpham get_set_sanpham = new get_set_sanpham(getContext());
+        final get_set_sanpham get_set_sanpham = new get_set_sanpham(getContext());
 
         while (iterator.hasNext()) {
             Map.Entry<String,String> entry = (Map.Entry<String, String>) iterator.next();
@@ -177,46 +180,71 @@ public class Account_Fragment extends Fragment {
         get_set_sanpham.get_sanphams(maps);
         get_set_sanpham.on_getsanphams(new get_set_sanpham.get_sanphams() {
             @Override
-            public void on_get_sanphams(ArrayList<Sanpham> sanphams) {
-                show_progressbar(true);
-                adapter_sp_account recyclerViewAdapter = new adapter_sp_account(getContext(), sanphams);
-                if (sanphams.size() != 0 && sanphams != null) {
-                    if (!is_setAdapter) {
-                        recycle_sp_account.setAdapter(recyclerViewAdapter);
-                        is_setAdapter = true;
-                    } else {
-                        recyclerViewAdapter.notifyDataSetChanged();
-                    }
-
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-                    recycle_sp_account.setLayoutManager(linearLayoutManager);
-                    show_progressbar(false);
-                    recycle_sp_account.setOnTouchListener(new View.OnTouchListener() {
-                        @TargetApi(Build.VERSION_CODES.N)
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                                switch (event.getAction()) {
-                                    case MotionEvent.ACTION_DOWN:
-                                    xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 450));
-                                        break;
-                                    case MotionEvent.ACTION_UP:
-                                        xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 40));
-                                        xu_ly_bottom_sheet.bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                                        break;
-                                    case MotionEvent.ACTION_MOVE:
-                                        xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 450));
-                                        break;
-                                    case MotionEvent.ACTION_SCROLL:
-                                            xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 450));
-                                        break;
+            public void on_get_sanphams(final ArrayList<Sanpham> sanphams) {
+                Toast.makeText(getContext(), sanphams.size()+"", Toast.LENGTH_SHORT).show();
+                if (sanphams.size() != 0 && sanphams != null ) {
+                        get_set_sanpham get_set_sanpham = new get_set_sanpham(getContext());
+                        get_set_sanpham.getImages(get_paths(sanphams));
+                        get_set_sanpham.set_on_get_images(new get_set_sanpham.get_images() {
+                            @Override
+                            public void on_get_images(ArrayList<Bitmap> bitmaps) {
+                                Toast.makeText(getContext(), "Load Bitmap " + bitmaps.size(), Toast.LENGTH_SHORT).show();
+                                if (!is_setAdapter) {
+                                    recyclerViewAdapter = new adapter_sp_account(getContext(), sanphams, bitmaps);
+                                    recycle_sp_account.setAdapter(recyclerViewAdapter);
+                                    is_setAdapter = true;
+                                } else {
+                                    recyclerViewAdapter.notifyDataSetChanged();
                                 }
-                                    return false;
-                        }
-                    });
+
+                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                                recycle_sp_account.setLayoutManager(linearLayoutManager);
+                                recycle_sp_account.setOnTouchListener(new View.OnTouchListener() {
+                                    @TargetApi(Build.VERSION_CODES.N)
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        switch (event.getAction()) {
+                                            case MotionEvent.ACTION_DOWN:
+                                                xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 450));
+                                                break;
+                                            case MotionEvent.ACTION_UP:
+                                                xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 40));
+                                                xu_ly_bottom_sheet.bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                                                break;
+                                            case MotionEvent.ACTION_MOVE:
+                                                xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 450));
+                                                break;
+                                            case MotionEvent.ACTION_SCROLL:
+                                                xu_ly_bottom_sheet.bottomSheetBehavior.setPeekHeight(new helper().convert_dp_to_px(getResources(), 450));
+                                                break;
+                                        }
+                                        return false;
+                                    }
+                                });
+                            }
+                        });
                 }}
             });
     }
-
+        public ArrayList<String> get_paths (ArrayList<Sanpham> sanphams) {
+            Iterator<Sanpham> sanpham = sanphams.iterator();
+            ArrayList<String> paths = new ArrayList<String>();
+                abc:
+                while (sanpham.hasNext()) {
+                    Sanpham sanpham1 = sanpham.next();
+                        if (sanpham1 != null) {
+                    ArrayList<String> paths2 = new ArrayList<String>();
+                         if (sanpham1.getHinh() != null) {
+                    paths2.addAll(sanpham1.getHinh());
+                    for (int i = 0; i < paths2.size(); i ++) {
+                    String path = sanpham1.getHinh().get(i);
+                        if (path != "") {
+                    paths.add(path);
+                        break;
+                        }}}}}
+            Toast.makeText(getContext(), "paths.size " + paths.size(), Toast.LENGTH_SHORT).show();
+            return paths;
+        }
     public void show_progressbar (boolean visible) {
             if (visible) {
                 for (int i = 0; i < layout_parent_account.getChildCount(); i++) {
@@ -253,8 +281,8 @@ public class Account_Fragment extends Fragment {
                             txt_ten_account.setText(khachhang.getHOVATEN());
                             txt_sdt_account.setText(khachhang.getSdt());
                             txt_email_account.setText(khachhang.getEmail());
+                            Toast.makeText(getContext(), "cc", Toast.LENGTH_SHORT).show();
                             add_adapter_to_recycle_sp_account();
-                            show_progressbar(false);
 
             }
         });

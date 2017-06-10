@@ -46,6 +46,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.UUID;
 
+
 public class fragment_product extends Fragment implements get_set_sanpham.get_sanpham {
     private static final String KEY_AUTHENTICATION = "authentication";
     private final static int RESULT_GALLARY = 69;
@@ -118,12 +119,6 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
         source_mausac = new ArrayList<>();
         txt_ten_sp = (EditText) view.findViewById(R.id.txt_ten_sp);
         bitmaps_hinh_sp = new ArrayList<>();
-        get_set_sanpham get_set_sanpham = new get_set_sanpham(getContext());
-        try {
-            get_set_sanpham.getImage("");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         adapter_hinh_sp = new AdapterHinhSp(getActivity().getSupportFragmentManager(), getContext(), bitmaps_hinh_sp);
         pager_hinh_sp.setAdapter(adapter_hinh_sp);
         btn_submit = (ImageButton) view.findViewById(R.id.btn_submit);
@@ -224,37 +219,32 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
     }
 
     private void transfer_and_move_phanloai_sp() {
-        add_path_image_to_arr();
-        get_set_sanpham get_set_sanpham = new get_set_sanpham(getContext());
-        get_set_sanpham.upLoadImage(bitmaps_hinh_sp, path_hinh_sp);
-        get_set_sanpham.set_on_upload_image(new get_set_sanpham.upload_image() {
+        get_set_sanpham uploadSanpham = new get_set_sanpham(getContext());
+            for (int i = 0; i < bitmaps_hinh_sp.size(); i ++) {
+                path_hinh_sp.add("/Sản phẩm/" + get_date_and_time());
+            }
+//        path_hinh_sp.add(path_image);
+        uploadSanpham.Upload_images(bitmaps_hinh_sp, path_hinh_sp);
+        uploadSanpham.set_on_upoad_images(new get_set_sanpham.upload_images() {
             @Override
-            public void on_upload_image(ArrayList<String> urls) {
+            public void on_upload_images() {
                 trasnfer_motasp fragment_motasp = new fragment_motasp();
                 String text = fragment_motasp.transfer_text();
-                create_sanpham(text, urls);
+                Sanpham.getInstance().setGiasp(Double.parseDouble(txt_gia.getText().toString()));
+                Sanpham.getInstance().setGiaTruocKhiGiam(Double.parseDouble(txt_giap_truoc_khi_giam.getText().toString()));
+                Sanpham.getInstance().setHinh(path_hinh_sp);
+
+                Sanpham.getInstance().setIdsp(getActivity().getIntent().getStringExtra("uid")+ "+" + new Date().getTime());
+                Sanpham.getInstance().setKichco(source_kichthuoc);
+                Sanpham.getInstance().setMausac(source_mausac);
+                Sanpham.getInstance().setMotachitietsp(text);
+                Sanpham.getInstance().setRating(rb_rating.getRating());
+                Sanpham.getInstance().setTensp(txt_ten_sp.getText().toString());
                 Intent intent = new Intent(getActivity(), activity_phan_loai_sp.class);
                 startActivity(intent);
             }
         });
-    }
 
-    private void create_sanpham(String text, ArrayList<String> urls) {
-        Sanpham.getInstance().setGiasp(Double.parseDouble(txt_gia.getText().toString()));
-        Sanpham.getInstance().setGiaTruocKhiGiam(Double.parseDouble(txt_giap_truoc_khi_giam.getText().toString()));
-        Sanpham.getInstance().setHinh(urls);
-        Sanpham.getInstance().setIdsp(getActivity().getIntent().getStringExtra("uid")+ "+" + new Date().getTime());
-        Sanpham.getInstance().setKichco(source_kichthuoc);
-        Sanpham.getInstance().setMausac(source_mausac);
-        Sanpham.getInstance().setMotachitietsp(text);
-        Sanpham.getInstance().setRating(rb_rating.getRating());
-        Sanpham.getInstance().setTensp(txt_ten_sp.getText().toString());
-    }
-
-    private void add_path_image_to_arr () {
-        for (int i = 0; i < bitmaps_hinh_sp.size(); i ++) {
-            path_hinh_sp.add( "Sản phẩm/" +txt_ten_sp.getText().toString()+"/"+ get_date_and_time());
-        }
     }
 
     private ArrayList<String> get_array_dialog () {
@@ -341,8 +331,8 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
     }
 
     private void xuly_hienthi_pager_hinh_sp () {
-            Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(galleryIntent, RESULT_GALLARY);
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(galleryIntent, RESULT_GALLARY);
     }
 
     @Override
