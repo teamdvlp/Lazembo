@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     ExpandableListView explv_list;
     ExpandableListViewAdapter adapter;
     ArrayList<String> list_group_title;
-    HashMap<String, ArrayList<String>> list_sub_title;
+    HashMap<String, ArrayList<String>>  list_sub_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
