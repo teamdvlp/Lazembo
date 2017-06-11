@@ -46,13 +46,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Created by phamf on 04-Jun-17.
- */
-
 public class Account_Fragment extends Fragment {
     private View view;
-    private ArrayList<String> urls;
     // 0: not refresh 1: refresh
     public static int refresh = 0;
     private ArrayList<String> giasp;
@@ -77,7 +72,7 @@ public class Account_Fragment extends Fragment {
     private helper_account_fragment helper_account_fragment;
     // true: chưa set adapter, false: đã set adapter
     private static boolean is_setAdapter = false;
-    adapter_sp_account recyclerViewAdapter;
+    private adapter_sp_account recyclerViewAdapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -172,26 +167,25 @@ public class Account_Fragment extends Fragment {
 
     }
 
-
     private void add_adapter_to_recycle_sp_account() {
         ArrayList<String> masp = helper_account_fragment.get_masp(khachhang);
         get_set_sanpham.get_sanphams(masp);
+        show_progressbar(false);
         get_set_sanpham.set_on_get_sanphams_listener(new get_set_sanpham.get_sanphams() {
             @Override
             public void on_get_sanphams(final ArrayList<Sanpham> sanphams) {
                 show_progressbar(true);
                 Account_Fragment.this.sanphams =  sanphams;
                 if (sanphams.size() != 0 && sanphams != null ) {
-                    get_set_sanpham.getImages(get_paths(sanphams));
+                    get_set_sanpham.getImages(helper_account_fragment.get_paths(sanphams));
                     get_set_sanpham.set_on_get_images_listener(new get_set_sanpham.get_images() {
                         @Override
                         public void on_get_images(ArrayList<Bitmap> bitmaps) {
                             set_adapter(bitmaps);
-
                         }
                     });
-                }}
-
+                }
+            }
             });
     }
         public void set_adapter(ArrayList<Bitmap> bitmaps) {
@@ -230,24 +224,6 @@ public class Account_Fragment extends Fragment {
             show_progressbar(false);
         }
 
-    public ArrayList<String> get_paths (ArrayList<Sanpham> sanphams) {
-            Iterator<Sanpham> sanpham = sanphams.iterator();
-            ArrayList<String> paths = new ArrayList<String>();
-                abc:
-                while (sanpham.hasNext()) {
-                    Sanpham sanpham1 = sanpham.next();
-                        if (sanpham1 != null) {
-                    ArrayList<String> paths2 = new ArrayList<String>();
-                         if (sanpham1.getHinh() != null) {
-                    paths2.addAll(sanpham1.getHinh());
-                    for (int i = 0; i < paths2.size(); i ++) {
-                    String path = sanpham1.getHinh().get(i);
-                        if (path != "") {
-                    paths.add(path);
-                        break;
-                        }}}}}
-            return paths;
-        }
     public void show_progressbar (boolean visible) {
             if (visible) {
                 for (int i = 0; i < layout_parent_account.getChildCount(); i++) {
@@ -283,6 +259,11 @@ public class Account_Fragment extends Fragment {
                             txt_ten_account.setText(khachhang.getHOVATEN());
                             txt_sdt_account.setText(khachhang.getSdt());
                             txt_email_account.setText(khachhang.getEmail());
+                                // reset recycle view
+                            if (recyclerViewAdapter != null) {
+                                sanphams.clear();
+                                recyclerViewAdapter.notifyDataSetChanged();
+                            }
                             add_adapter_to_recycle_sp_account();
 
             }

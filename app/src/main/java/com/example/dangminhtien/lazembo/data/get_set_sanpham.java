@@ -143,15 +143,12 @@ public class get_set_sanpham {
                         public void on_get_image(Bitmap bitmap) {
                             count[0]++;
                             bitmaps.add(bitmap);
-                            Toast.makeText(context, "Bitmap.size2 " + paths.size(), Toast.LENGTH_SHORT).show();
                             if (count[0] == paths.size()) {
                                 get_images.on_get_images(bitmaps);
                             }
                         }
                     });
                 } catch (IOException e) {
-                    Log.e("Tien dep trai", e.toString());
-                    e.printStackTrace();
                 }
             }
 
@@ -168,9 +165,7 @@ public class get_set_sanpham {
         storageReference.child(path).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                // Local temp file has been created
                 bitmap[0] = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                Toast.makeText(context, "Success", Toast.LENGTH_LONG).show();
                 localFile.delete();
                 get_image.on_get_image(bitmap[0]);
             }

@@ -40,6 +40,7 @@ public class SecondMainAcitivty extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_second_main_acitivty,null,false);
         drawer_container.addView(contentView,0);
@@ -48,7 +49,6 @@ public class SecondMainAcitivty extends MainActivity {
         addControlss();
         addEventss();
     }
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -69,7 +69,6 @@ public class SecondMainAcitivty extends MainActivity {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-
 
     }
 

@@ -46,9 +46,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             img_introView.setVisibility(View.GONE);
+    }
 
-
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
     }
 
     private void addEvents() {

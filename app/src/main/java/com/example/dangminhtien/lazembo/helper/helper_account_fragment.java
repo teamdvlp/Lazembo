@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.dangminhtien.lazembo.Fragment.Account_Fragment;
 import com.example.dangminhtien.lazembo.data.Khachhang;
+import com.example.dangminhtien.lazembo.data.Sanpham;
 import com.example.dangminhtien.lazembo.data.get_set_sanpham;
 
 import java.util.ArrayList;
@@ -11,10 +12,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
-/**
- * Created by dangminhtien on 6/10/17.
- */
 
 public class helper_account_fragment {
     Context context;
@@ -36,6 +33,22 @@ public class helper_account_fragment {
             }
         }
         return masp;
+    }
+
+    public ArrayList<String> get_paths (ArrayList<Sanpham> sanphams) {
+        Iterator<Sanpham> sanpham_iterator = sanphams.iterator();
+        ArrayList<String> paths = new ArrayList<String>();
+        while (sanpham_iterator.hasNext()) {
+            Sanpham sanpham = sanpham_iterator.next();
+            if (sanpham != null) {
+                if (sanpham.getHinh() != null) {
+                    paths.addAll(sanpham.getHinh());
+                    for (int i = 0; i < paths.size(); i ++) {
+                        String path = sanpham.getHinh().get(i);
+                        paths.add(path);
+                        break;
+                    }}}}
+        return paths;
     }
 
 }
