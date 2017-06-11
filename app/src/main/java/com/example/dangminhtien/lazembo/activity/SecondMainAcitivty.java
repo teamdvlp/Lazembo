@@ -27,10 +27,9 @@ import com.example.dangminhtien.lazembo.adapter.ViewpagerAdapter;
 import java.net.MalformedURLException;
 
 public class SecondMainAcitivty extends MainActivity {
-    ViewPager vpg_container,vpg_bottom_sheet;
-    TabLayout tbl_list,tbl_bottom_sheet;
+    ViewPager vpg_container;
+    TabLayout tbl_list;
     ViewpagerAdapter adapter;
-    ViewPagerBottomSheetAdapter adapter_bottom_sheet;
 
     NestedScrollView bottomSheet;
     BottomSheetBehavior bottomSheetBehavior;
@@ -50,6 +49,11 @@ public class SecondMainAcitivty extends MainActivity {
         addEventss();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MainActivity.back_finish =  true;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void addEventss() {
@@ -72,6 +76,11 @@ public class SecondMainAcitivty extends MainActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void addControlss() {
@@ -84,19 +93,5 @@ public class SecondMainAcitivty extends MainActivity {
         adapter = new ViewpagerAdapter(fragmentManager);
         vpg_container.setAdapter(adapter);
         tbl_list.setupWithViewPager(vpg_container);
-        LayoutInflater layoutInflater = LayoutInflater.from(this);
-
-
-    }
-
-    private View getView(int position){
-        View view = getLayoutInflater().inflate(R.layout.tab_custom,null);
-        ImageView img_icon = (ImageView) view.findViewById(R.id.imgv_icon);
-        if(position == 0){
-            img_icon.setImageResource(R.drawable.icon_cart_2);
-        } else if( position == 1){
-            img_icon.setImageResource(R.drawable.icon_account_2);
-        }
-        return view;
     }
 }

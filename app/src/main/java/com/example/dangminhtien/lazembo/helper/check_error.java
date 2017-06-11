@@ -13,7 +13,7 @@ public class check_error {
     }
 
     public boolean check_password(String password) {
-        return password.length() >= 6;
+        return password.length() >= 6 && check_contain_digit(password);
     }
 
     public boolean check_contain_digit(String str) {

@@ -59,7 +59,7 @@ public class activity_register extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    attempt_register();
                     return true;
                 }
                 return false;
@@ -74,7 +74,7 @@ public class activity_register extends AppCompatActivity {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                attempt_register();
             }
         });
 
@@ -107,15 +107,15 @@ public class activity_register extends AppCompatActivity {
         password_again = txt_password_again_register.getText().toString();
     }
 
-    private void attemptLogin() {
+    private void attempt_register() {
            reset_error();
            get_text_from_edit_text();
         boolean check_result = check_error();
 
-        if (check_result)
+        if (check_result) {
             showProgress(true);
             register.register(email, password, display_name, ho_ten, sdt);
-    }
+    }}
 
     private boolean check_error () {
 
@@ -156,7 +156,8 @@ public class activity_register extends AppCompatActivity {
             focus_view = txt_displayname_register;
             check_result =  false;
         }
-            focus_view.requestFocus();
+            if (focus_view != null) {
+            focus_view.requestFocus();}
         return check_result;
     }
 

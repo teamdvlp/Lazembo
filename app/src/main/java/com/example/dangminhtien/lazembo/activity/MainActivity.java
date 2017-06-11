@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
     static boolean continues = true;
-
+    static boolean back_finish = false;
     ImageView img_introView;
     Toolbar toolbar;
     DrawerLayout drawer_container;
@@ -40,11 +40,10 @@ public class MainActivity extends AppCompatActivity {
             addControls();
             addEvents();
 
-            if(continues){
+        if(continues){
             changes(MainActivity.this, SecondMainAcitivty.class);
             continues = false;
-            }
-
+        }
             img_introView.setVisibility(View.GONE);
     }
 
@@ -52,6 +51,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(back_finish){
+            changes(MainActivity.this, SecondMainAcitivty.class);
+            back_finish = false;
+        }
     }
 
     private void addEvents() {
