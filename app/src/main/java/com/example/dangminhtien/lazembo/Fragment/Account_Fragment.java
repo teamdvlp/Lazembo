@@ -174,24 +174,24 @@ public class Account_Fragment extends Fragment {
 
 
     private void add_adapter_to_recycle_sp_account() {
-        show_progressbar(false);
         ArrayList<String> masp = helper_account_fragment.get_masp(khachhang);
         get_set_sanpham.get_sanphams(masp);
         get_set_sanpham.set_on_get_sanphams_listener(new get_set_sanpham.get_sanphams() {
             @Override
             public void on_get_sanphams(final ArrayList<Sanpham> sanphams) {
+                show_progressbar(true);
+                Account_Fragment.this.sanphams =  sanphams;
                 if (sanphams.size() != 0 && sanphams != null ) {
-
-
-
                     get_set_sanpham.getImages(get_paths(sanphams));
-                get_set_sanpham.set_on_get_images_listener(new get_set_sanpham.get_images() {
-                    @Override
-                    public void on_get_images(ArrayList<Bitmap> bitmaps) {
-                        set_adapter(bitmaps);
-                    }
-                });
-            }}
+                    get_set_sanpham.set_on_get_images_listener(new get_set_sanpham.get_images() {
+                        @Override
+                        public void on_get_images(ArrayList<Bitmap> bitmaps) {
+                            set_adapter(bitmaps);
+
+                        }
+                    });
+                }}
+
             });
     }
         public void set_adapter(ArrayList<Bitmap> bitmaps) {
@@ -227,6 +227,7 @@ public class Account_Fragment extends Fragment {
                     return false;
                 }
             });
+            show_progressbar(false);
         }
 
     public ArrayList<String> get_paths (ArrayList<Sanpham> sanphams) {
@@ -282,7 +283,6 @@ public class Account_Fragment extends Fragment {
                             txt_ten_account.setText(khachhang.getHOVATEN());
                             txt_sdt_account.setText(khachhang.getSdt());
                             txt_email_account.setText(khachhang.getEmail());
-                            Toast.makeText(getContext(), "cc", Toast.LENGTH_SHORT).show();
                             add_adapter_to_recycle_sp_account();
 
             }
