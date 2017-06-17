@@ -25,15 +25,12 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true">
-
-    <ExpandableListView
-        android:id="@+id/explv_list_goods"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:listSelector="@color/colorPrimary"
-        >
-
-    </ExpandableListView>
+        android:layout_height="match_parent"
+        android:id="@+id/linear_parent_nav">
+    </LinearLayout>
 
     </android.support.design.widget.NavigationView>
 

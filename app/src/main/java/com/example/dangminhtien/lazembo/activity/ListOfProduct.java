@@ -69,14 +69,7 @@ public class ListOfProduct extends MainActivity{
     }
 
     private void addEsvents() {
-        explv_list.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                drawer_container.closeDrawer(nav_list_goods);
-                txt_type_of_goods.setText(list_sub_title.get(list_group_title.get(groupPosition)).get(childPosition));
-                return false;
-            }
-        });
+
 
         gridv_list_goods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

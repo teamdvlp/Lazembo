@@ -33,7 +33,7 @@ public class SecondMainAcitivty extends MainActivity {
 
     NestedScrollView bottomSheet;
     BottomSheetBehavior bottomSheetBehavior;
-
+    public static boolean is_SecondMainActivity = false;
     @TargetApi(Build.VERSION_CODES.N)
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
@@ -43,7 +43,6 @@ public class SecondMainAcitivty extends MainActivity {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_second_main_acitivty,null,false);
         drawer_container.addView(contentView,0);
-
         overridePendingTransition(R.anim.appear,R.anim.disappear);
         addControlss();
         addEventss();
@@ -52,21 +51,11 @@ public class SecondMainAcitivty extends MainActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        MainActivity.back_finish =  true;
+        is_SecondMainActivity = true;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void addEventss() {
-        explv_list.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                drawer_container.closeDrawer(nav_list_goods);
-                Intent intent = new Intent(SecondMainAcitivty.this,ListOfProduct.class);
-                intent.putExtra("LoaiMatHang", list_sub_title.get(list_group_title.get(groupPosition)).get(childPosition));
-                startActivity(intent);
-                return false;
-            }
-        });
         xu_ly_bottom_sheet xu_ly_bottom_sheet = new xu_ly_bottom_sheet( bottomSheet, getSupportFragmentManager(),SecondMainAcitivty.this );
         try {
             xu_ly_bottom_sheet.xuly();

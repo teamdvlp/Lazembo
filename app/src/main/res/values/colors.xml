@@ -12,4 +12,7 @@
     <color name="TEXT_COLOR">#424242</color>
     <color name="Recycler">#616161</color>
     <color name="editcolor">#e7e5e5</color>
+    <color name="color_parent_selected">#F38F20</color>
+    <color name="color_child_when_parent_selected">#FAFAFA</color>
+    <color name="color_when_not_selected">#ECECEC</color>
 </resources>
