@@ -15,6 +15,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import com.example.dangminhtien.lazembo.R;
+import com.unnamed.b.atv.model.TreeNode;
+
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +54,7 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
         this.activity = activity;
         containers.put("/", parent);
     }
+
 
     public void hide_all () {
         for (int i=0; parent.getChildCount()>i; i++) {
@@ -106,6 +109,8 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
     }
 
     public void add_tree_node (tree_node item) {
+        // không trừ một vì lúc này arraylist vẫn chưa add thằng item này vào nên mặc định nó đã -1 rồi
+        item.setPosition(tree_nodes.size() + "");
         tree_nodes.add(item);
     }
 
@@ -131,6 +136,8 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
         LinearLayout container = get_or_add_container(tree_node.getNode_path());
         View row = LayoutInflater.from(getContext()).inflate(R.layout.row_custom_view, container, false);
         TextView txt_title_row = (TextView) row.findViewById(R.id.txt_title_row);
+        TextView txt_save_positon_of_tree_node = (TextView) row.findViewById(R.id.txt_save_position_of_tree_node);
+        txt_save_positon_of_tree_node.setText(tree_node.getPosition());
         txt_title_row.setText(tree_node.getTitle());
         return row;
     }
@@ -148,6 +155,7 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
                         ((TextView) view_selected_before.findViewById(R.id.txt_title_row)).setTextColor(Color.parseColor("#444444"));
                     }
                     TextView txt_title = (TextView) v.findViewById(R.id.txt_title_row);
+                    TextView txt_save_position_of_tree_node = (TextView) v.findViewById(R.id.txt_save_position_of_tree_node);
                     view_selected_before = v;
                     if (child.getVisibility() == View.VISIBLE) {
                         hide_view(((LinearLayout) v.getParent()));
@@ -159,7 +167,7 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
                     }
                     // chạy sự kiện khi click vào
                     if (null != on_tree_node_click) {
-                        on_tree_node_click.on_click(txt_title.getText().toString(), is_hide);
+                        on_tree_node_click.on_click(tree_nodes.get(Integer.parseInt(txt_save_position_of_tree_node.getText().toString())), is_hide);
                     }
                     // nếu không return false sẽ bị vòng lặp
                     break;
@@ -253,6 +261,6 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
     }
 
     public interface on_tree_node_click {
-        public void on_click(String txt_title, boolean is_hide);
+        public void on_click(tree_node tree_node, boolean is_hide);
     }
 }

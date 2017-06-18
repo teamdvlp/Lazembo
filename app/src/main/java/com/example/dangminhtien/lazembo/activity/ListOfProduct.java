@@ -18,7 +18,6 @@ import com.example.dangminhtien.lazembo.adapter.GridviewAdapter;
 
 import java.util.ArrayList;
 
-
 public class ListOfProduct extends MainActivity{
     TextView txt_type_of_goods;
 
@@ -128,6 +127,5 @@ public class ListOfProduct extends MainActivity{
             finish();
         }
         return super.onKeyDown(keyCode, event);
-
     }
 }

@@ -43,6 +43,8 @@ public class get_set_sanpham {
     upload_images upload_images;
     helper helper;
     get_images get_images;
+    get_all_ma_sanpham get_all_ma_sanpham;
+
     public get_set_sanpham(Context context) {
         this.context = context;
         database = FirebaseDatabase.getInstance();
@@ -101,7 +103,6 @@ public class get_set_sanpham {
             databaseReference.child(masp).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-
                     sanpham[0] = dataSnapshot.getValue(Sanpham.class);
                     get_sanpham.on_get_sanpham(sanpham[0]);
                 }
@@ -112,6 +113,26 @@ public class get_set_sanpham {
                 }
             });}
 
+    }
+
+    public void get_all_ma_sanpham () {
+       final ArrayList<String> ma_sanpham_storage = new ArrayList<String>();
+       databaseReference.addValueEventListener(new ValueEventListener() {
+           @Override
+           public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> data_snap_of_child = dataSnapshot.getChildren();
+                Iterator<DataSnapshot> ma_sanphams = data_snap_of_child.iterator();
+                while (ma_sanphams.hasNext()) {
+                    ma_sanpham_storage.add(ma_sanphams.next().getKey().toString());
+                }
+                get_all_ma_sanpham.on_get_all_ma_sanpham(ma_sanpham_storage);
+           }
+
+           @Override
+           public void onCancelled(DatabaseError databaseError) {
+
+           }
+       });
     }
 
     public void get_sanphams (final ArrayList<String> masp) {
@@ -188,6 +209,10 @@ public class get_set_sanpham {
         databaseReference.child(path).setValue(path);
     }
 
+    public void set_on_get_all_ma_sanpham (get_all_ma_sanpham get_all_ma_sanpham) {
+        this.get_all_ma_sanpham = get_all_ma_sanpham;
+    }
+
     public void set_on_get_images_listener (get_images get_images) {
         this.get_images = get_images;
     }
@@ -230,5 +255,9 @@ public class get_set_sanpham {
 
     public interface get_images {
         void on_get_images (ArrayList<Bitmap> bitmaps);
+    }
+
+    public interface get_all_ma_sanpham {
+        void on_get_all_ma_sanpham(ArrayList<String> ma_sanpham_storage);
     }
 }

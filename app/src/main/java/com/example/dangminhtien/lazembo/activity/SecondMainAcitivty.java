@@ -23,14 +23,18 @@ import com.example.dangminhtien.lazembo.Model.xu_ly_bottom_sheet;
 import com.example.dangminhtien.lazembo.R;
 import com.example.dangminhtien.lazembo.adapter.ViewPagerBottomSheetAdapter;
 import com.example.dangminhtien.lazembo.adapter.ViewpagerAdapter;
+import com.example.dangminhtien.lazembo.data.Sanpham;
+import com.example.dangminhtien.lazembo.data.get_set_sanpham;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class SecondMainAcitivty extends MainActivity {
     ViewPager vpg_container;
     TabLayout tbl_list;
     ViewpagerAdapter adapter;
-
+    get_set_sanpham get_set_sanpham;
     NestedScrollView bottomSheet;
     BottomSheetBehavior bottomSheetBehavior;
 
@@ -43,12 +47,29 @@ public class SecondMainAcitivty extends MainActivity {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_second_main_acitivty,null,false);
         drawer_container.addView(contentView,0);
-
+        get_sanphams();
         overridePendingTransition(R.anim.appear,R.anim.disappear);
         addControlss();
         addEventss();
     }
-
+    private void get_sanphams () {
+        get_set_sanpham = new get_set_sanpham(SecondMainAcitivty.this);
+        get_set_sanpham.get_all_ma_sanpham();
+        get_set_sanpham.set_on_get_all_ma_sanpham(new get_set_sanpham.get_all_ma_sanpham() {
+            @Override
+            public void on_get_all_ma_sanpham(ArrayList<String> ma_sanpham_storage) {
+                get_set_sanpham.get_sanphams(ma_sanpham_storage);
+                get_set_sanpham.set_on_get_sanphams_listener(new get_set_sanpham.get_sanphams() {
+                    @Override
+                    public void on_get_sanphams(ArrayList<Sanpham> sanphams) {
+                        Iterator<Sanpham> sanphamIterator = sanphams.iterator();
+                        while (sanphamIterator.hasNext()) {
+                            Toast.makeText(SecondMainAcitivty.this, sanphamIterator.next().getTensp(), Toast.LENGTH_SHORT).show();
+                        }}
+                });
+            }
+        });
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -62,7 +83,6 @@ public class SecondMainAcitivty extends MainActivity {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
