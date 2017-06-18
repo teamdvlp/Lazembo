@@ -17,19 +17,20 @@ import android.widget.LinearLayout;
 import com.example.dangminhtien.lazembo.R;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnTouchListener{
-
     private ArrayList<tree_node> tree_nodes = new ArrayList<tree_node>();
     private HashMap<String,LinearLayout> containers = new HashMap<String, LinearLayout>();
     private LinearLayout parent;
     private boolean has_container;
     private boolean is_hide = false;
     private Activity activity;
+    private boolean is_scroll = true;
     private on_tree_node_click on_tree_node_click;
     private static View view_selected_before = null;
 
@@ -41,8 +42,21 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
         parent.setOrientation(LinearLayout.VERTICAL);
         parent.setBackgroundColor(getResources().getColor(R.color.color_when_not_selected));
         this.addView(parent);
+        parent.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                return true;
+            }
+        });
         this.activity = activity;
         containers.put("/", parent);
+    }
+
+    public void hide_all () {
+        for (int i=0; parent.getChildCount()>i; i++) {
+            hide_view((ViewGroup) parent.getChildAt(i));
+        }
     }
 
     @Override
@@ -124,24 +138,33 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (null != view_selected_before) {
-            ((TextView)view_selected_before.findViewById(R.id.txt_title_row)).setTextColor(Color.parseColor("#444444"));
-        }
-        TextView txt_title = (TextView) v.findViewById(R.id.txt_title_row);
-        view_selected_before = v;
-        if (!is_hide) {
-            hide_view(((LinearLayout)v.getParent()));
-            is_hide = true;
-        } else {
-            show_view(((LinearLayout)v.getParent()));
-            ((TextView)v.findViewById(R.id.txt_title_row)).setTextColor(Color.parseColor("#F38F20"));
-            is_hide = false;
-       }
-       // chạy sự kiện khi click vào
-            if (null != on_tree_node_click) {
-                on_tree_node_click.on_click(txt_title.getText().toString(), is_hide);
+        ViewGroup viewGroup = (ViewGroup) v.getParent();
+        // chỉ cần xác định thằng đầu tiên có mở hay không là được.
+        View child = viewGroup.getChildAt(1);
+        if (child != null) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    if (null != view_selected_before) {
+                        ((TextView) view_selected_before.findViewById(R.id.txt_title_row)).setTextColor(Color.parseColor("#444444"));
+                    }
+                    TextView txt_title = (TextView) v.findViewById(R.id.txt_title_row);
+                    view_selected_before = v;
+                    if (child.getVisibility() == View.VISIBLE) {
+                        hide_view(((LinearLayout) v.getParent()));
+                        is_hide = true;
+                    } else {
+                        show_view(((LinearLayout) v.getParent()));
+                        ((TextView) v.findViewById(R.id.txt_title_row)).setTextColor(Color.parseColor("#F38F20"));
+                        is_hide = false;
+                    }
+                    // chạy sự kiện khi click vào
+                    if (null != on_tree_node_click) {
+                        on_tree_node_click.on_click(txt_title.getText().toString(), is_hide);
+                    }
+                    // nếu không return false sẽ bị vòng lặp
+                    break;
             }
-       // nếu không return false sẽ bị vòng lặp
+        }
         return false;
     }
 

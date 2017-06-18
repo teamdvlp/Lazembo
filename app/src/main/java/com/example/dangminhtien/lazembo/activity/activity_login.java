@@ -105,7 +105,6 @@ public class activity_login extends AppCompatActivity {
             login.login(email, password);
     }
 
-
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
         mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);

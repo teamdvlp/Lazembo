@@ -33,7 +33,7 @@ public class SecondMainAcitivty extends MainActivity {
 
     NestedScrollView bottomSheet;
     BottomSheetBehavior bottomSheetBehavior;
-    public static boolean is_SecondMainActivity = false;
+
     @TargetApi(Build.VERSION_CODES.N)
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
@@ -43,6 +43,7 @@ public class SecondMainAcitivty extends MainActivity {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_second_main_acitivty,null,false);
         drawer_container.addView(contentView,0);
+
         overridePendingTransition(R.anim.appear,R.anim.disappear);
         addControlss();
         addEventss();
@@ -51,7 +52,6 @@ public class SecondMainAcitivty extends MainActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        is_SecondMainActivity = true;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -75,7 +75,6 @@ public class SecondMainAcitivty extends MainActivity {
     private void addControlss() {
         bottomSheet = (NestedScrollView) findViewById(R.id.nestedSrollView);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
-
         vpg_container = (ViewPager) findViewById(R.id.vpg_container);
         tbl_list = (TabLayout) findViewById(R.id.tbl_list_fragment);
         FragmentManager fragmentManager = getSupportFragmentManager();

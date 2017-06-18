@@ -36,7 +36,7 @@ public class ListOfProduct extends MainActivity{
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_list_of_product,null,false);
-        drawer_container.addView(contentView,0);
+//        drawer_container.addView(contentView,0);
         overridePendingTransition(R.anim.appear,R.anim.disappear);
         addsControls();
         addEsvents();
