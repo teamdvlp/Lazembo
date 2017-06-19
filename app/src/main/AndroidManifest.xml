@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.SecondMainAcitivty">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,7 +26,7 @@
         </activity>
         <activity android:name=".activity.activity_login" />
         <activity android:name=".activity.Cart" />
-        <activity android:name=".activity.SecondMainAcitivty"/>
+        <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.ListOfProduct" />
         <activity android:name=".activity.activity_product" />
         <activity

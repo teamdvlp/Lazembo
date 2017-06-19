@@ -78,18 +78,13 @@ public class SecondMainAcitivty extends MainActivity {
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void addControlss() {
         bottomSheet = (NestedScrollView) findViewById(R.id.nestedSrollView);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         vpg_container = (ViewPager) findViewById(R.id.vpg_container);
-        tbl_list = (TabLayout) findViewById(R.id.tbl_list_fragment);
+        tbl_list = (TabLayout) findViewById(R.id.tbl_list_fragment_second);
         FragmentManager fragmentManager = getSupportFragmentManager();
         adapter = new ViewpagerAdapter(fragmentManager);
         vpg_container.setAdapter(adapter);

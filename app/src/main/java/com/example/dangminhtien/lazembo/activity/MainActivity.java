@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -54,11 +55,6 @@ public class MainActivity extends AppCompatActivity {
             addControls();
             addEvents();
 
-        if(continues){
-            changes(MainActivity.this, SecondMainAcitivty.class);
-            finish();
-            continues = false;
-        }
             img_introView.setVisibility(View.GONE);
     }
 
@@ -113,9 +109,19 @@ public class MainActivity extends AppCompatActivity {
 //                            Toast.makeText(getApplicationContext(), arr.get(i), Toast.LENGTH_SHORT).show();
                             tiendvlp_expan_tree_listview.add_tree_node(new tree_node(treeNode.getNode_path() + "/" + arr.get(i), arr.get(i)));
                         }
-                        tiendvlp_expan_tree_listview.init();
+                        if (null != arr && 0 != arr.size()) {
+                            tiendvlp_expan_tree_listview.init();
+                        } else {
+                            on_child_last_click(treeNode);
+                        }
+
                     }
                 });
+            }
+
+            @Override
+            public void on_child_last_click(tree_node tree_node) {
+                Toast.makeText(getApplicationContext(), tree_node.getTitle(), Toast.LENGTH_SHORT).show();
             }
         });
     }
