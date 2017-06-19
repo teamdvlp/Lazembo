@@ -13,10 +13,10 @@ import com.example.dangminhtien.lazembo.R;
 import java.util.ArrayList;
 
 public class GridviewAdapter extends BaseAdapter {
-    ArrayList<com.example.dangminhtien.lazembo.Model.ProductInformationModel> list;
+    ArrayList<ProductInformationModel> list;
     Activity activity;
 
-    public GridviewAdapter(ArrayList<com.example.dangminhtien.lazembo.Model.ProductInformationModel> list, Activity activity) {
+    public GridviewAdapter(ArrayList<ProductInformationModel> list, Activity activity) {
         this.list = list;
         this.activity = activity;
     }

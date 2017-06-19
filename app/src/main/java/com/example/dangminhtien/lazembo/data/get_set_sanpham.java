@@ -234,19 +234,19 @@ public class get_set_sanpham {
     }
 
     public interface get_image {
-        public void on_get_image (Bitmap bitmap);
+        public void on_get_image(Bitmap bitmap);
     }
 
     public interface get_sanpham {
-        public void on_get_sanpham (Sanpham sanpham);
+        public void on_get_sanpham(Sanpham sanpham);
     }
 
     public interface get_sanphams {
-        public void on_get_sanphams (ArrayList<Sanpham> sanphams);
+        public void on_get_sanphams(ArrayList<Sanpham> sanphams);
     }
 
     public interface upload_image {
-        public void on_upload_image (String url);
+        public void on_upload_image(String url);
     }
 
     public interface upload_images {
@@ -254,7 +254,7 @@ public class get_set_sanpham {
     }
 
     public interface get_images {
-        void on_get_images (ArrayList<Bitmap> bitmaps);
+        void on_get_images(ArrayList<Bitmap> bitmaps);
     }
 
     public interface get_all_ma_sanpham {

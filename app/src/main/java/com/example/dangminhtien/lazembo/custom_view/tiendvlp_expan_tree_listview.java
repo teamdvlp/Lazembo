@@ -24,6 +24,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnTouchListener{
     private ArrayList<tree_node> tree_nodes = new ArrayList<tree_node>();
@@ -33,6 +34,7 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
     private boolean is_hide = false;
     private Activity activity;
     private boolean is_scroll = true;
+    private ReentrantLock reentrantLock;
     private on_tree_node_click on_tree_node_click;
     private static View view_selected_before = null;
 
@@ -42,15 +44,9 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
         parent = new LinearLayout(getContext());
         parent.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         parent.setOrientation(LinearLayout.VERTICAL);
+        reentrantLock = new ReentrantLock();
         parent.setBackgroundColor(getResources().getColor(R.color.color_when_not_selected));
         this.addView(parent);
-        parent.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                return true;
-            }
-        });
         this.activity = activity;
         containers.put("/", parent);
     }
@@ -147,32 +143,31 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
     public boolean onTouch(View v, MotionEvent event) {
         ViewGroup viewGroup = (ViewGroup) v.getParent();
         // chỉ cần xác định thằng đầu tiên có mở hay không là được.
+        ((TextView) v.findViewById(R.id.txt_title_row)).setTextColor(Color.parseColor("#F38F20"));
         View child = viewGroup.getChildAt(1);
-        if (child != null) {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
+        reentrantLock.lock();
+        ViewGroup view_target=(LinearLayout) v.getParent();
+        reentrantLock.unlock();
                     if (null != view_selected_before) {
                         ((TextView) view_selected_before.findViewById(R.id.txt_title_row)).setTextColor(Color.parseColor("#444444"));
                     }
                     TextView txt_title = (TextView) v.findViewById(R.id.txt_title_row);
                     TextView txt_save_position_of_tree_node = (TextView) v.findViewById(R.id.txt_save_position_of_tree_node);
                     view_selected_before = v;
+                    if (child != null) {
                     if (child.getVisibility() == View.VISIBLE) {
-                        hide_view(((LinearLayout) v.getParent()));
+                        hide_view(view_target);
                         is_hide = true;
                     } else {
-                        show_view(((LinearLayout) v.getParent()));
-                        ((TextView) v.findViewById(R.id.txt_title_row)).setTextColor(Color.parseColor("#F38F20"));
+                        show_view(view_target);
                         is_hide = false;
-                    }
+                    }}
                     // chạy sự kiện khi click vào
                     if (null != on_tree_node_click) {
                         on_tree_node_click.on_click(tree_nodes.get(Integer.parseInt(txt_save_position_of_tree_node.getText().toString())), is_hide);
                     }
                     // nếu không return false sẽ bị vòng lặp
-                    break;
-            }
-        }
+
         return false;
     }
 
@@ -219,7 +214,7 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
     private void show_view (final ViewGroup container) {
         int count = container.getChildCount();
         final int[] i = {1};
-        CountDownTimer countDownTimer = new CountDownTimer(500*count, 500) {
+        CountDownTimer countDownTimer = new CountDownTimer(300*count, 300) {
             @Override
             public void onTick(long millisUntilFinished) {
                 final View view = container.getChildAt(i[0]++);
