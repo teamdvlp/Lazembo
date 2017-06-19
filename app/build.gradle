@@ -26,6 +26,7 @@ dependencies {
     // thư viện text editor
     // thư viện color picker
     compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.github.bmelnychuk:atv:1.2.+'
     compile 'com.google.firebase:firebase-storage:10.2.6'
     compile 'com.google.firebase:firebase-auth:10.2.6'
     compile 'com.android.support:design:26.0.0-alpha1'

@@ -98,7 +98,7 @@ public class activity_register extends AppCompatActivity {
         btn_register = (Button) findViewById(R.id.btn_register_register);
     }
 
-    private void get_text_from_edit_text () {
+    private void get_text_from_edit_text() {
         display_name = txt_displayname_register.getText().toString();
         sdt = txt_sdt_register.getText().toString();
         ho_ten = txt_HovaTen_register.getText().toString();

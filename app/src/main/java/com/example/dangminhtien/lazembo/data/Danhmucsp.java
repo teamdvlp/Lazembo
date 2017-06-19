@@ -14,7 +14,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
 public class Danhmucsp {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;

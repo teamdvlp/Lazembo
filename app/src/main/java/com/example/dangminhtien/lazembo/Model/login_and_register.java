@@ -81,11 +81,11 @@ public class login_and_register {
     }
 
     public interface login {
-        public void on_login (boolean is_success);
+        public void on_login(boolean is_success);
     }
 
     public interface register {
-        public void on_register (boolean is_success);
+        public void on_register(boolean is_success);
     }
 
 }

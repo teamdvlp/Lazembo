@@ -12,15 +12,15 @@ import java.util.ArrayList;
 
 public interface event_get_set_sanpham {
 
-        public void on_get_image (Bitmap bitmap);
+        public void on_get_image(Bitmap bitmap);
 
-        public void on_get_sanpham (Sanpham sanpham);
+        public void on_get_sanpham(Sanpham sanpham);
 
-        public void on_get_sanphams (ArrayList<Sanpham> sanphams);
+        public void on_get_sanphams(ArrayList<Sanpham> sanphams);
 
-        public void on_upload_image (String url);
+        public void on_upload_image(String url);
 
         public void on_upload_images();
 
-        public void on_get_images (ArrayList<Bitmap> bitmaps);
+        public void on_get_images(ArrayList<Bitmap> bitmaps);
 }

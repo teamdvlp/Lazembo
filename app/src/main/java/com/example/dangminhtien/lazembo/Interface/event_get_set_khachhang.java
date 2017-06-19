@@ -10,6 +10,6 @@ public interface event_get_set_khachhang {
 
         public void on_get_khachhang(Khachhang khachhang);
 
-        public void on_up_sp_to_khachhang ();
+        public void on_up_sp_to_khachhang();
 
 }
