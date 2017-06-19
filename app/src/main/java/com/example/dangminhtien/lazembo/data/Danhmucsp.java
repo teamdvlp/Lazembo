@@ -18,7 +18,7 @@ public class Danhmucsp {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private Context context;
-
+    private static datachanged datachanged;
     private Spinner sp;
     public Danhmucsp(Context context, Spinner sp) {
         this.context = context;
@@ -46,8 +46,7 @@ public class Danhmucsp {
                         strings.add(str);
                     }
                 }
-                datachanged mainLazembo = (activity_phan_loai_sp) context;
-                mainLazembo.onDatachanged(strings, context, sp);
+                datachanged.onDatachanged(strings, context, sp);
             }
 
             @Override
@@ -77,6 +76,10 @@ public class Danhmucsp {
                 }
             });
             return haschild[1];
+        }
+
+        public void set_on_datachanged_listener (datachanged datachanged) {
+            this.datachanged = datachanged;
         }
 
     public interface datachanged {

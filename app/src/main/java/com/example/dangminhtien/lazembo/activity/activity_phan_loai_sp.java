@@ -139,6 +139,7 @@ public class activity_phan_loai_sp extends AppCompatActivity implements Danhmucs
         sp4th = (Spinner) findViewById(R.id.sp4th);
         btn_submit = (ImageButton) findViewById(R.id.btn_submit);
         danhmucsp = new Danhmucsp(activity_phan_loai_sp.this, sp1st);
+        danhmucsp.set_on_datachanged_listener(this);
         danhmucsp.getChild(new String[]{});
     }
 
