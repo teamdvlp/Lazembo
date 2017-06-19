@@ -1,23 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_container_second"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.dangminhtien.lazembo.activity.SecondMainAcitivty">
 
+    <!--DRAWERLAYOUT BỎ COORDINATOR DÔ, COOR GỒM CÓ BOTTOM SHEET, VIEW PAGER, TABLAYOUT-->
+    <!-- Coordinator-->
+    <android.support.design.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <android.support.v4.view.ViewPager
         android:id="@+id/vpg_container"
         android:layout_width="match_parent"
         android:layout_height="250dp"
+        android:layout_marginTop="99dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.941">
+
     </android.support.v4.view.ViewPager>
 
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tbl_list_fragment_second"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:layout_marginTop="58dp"
+            android:background="@color/colorPrimary"
+            app:tabBackground="@drawable/tab_selected_mode"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="scrollable"
+            app:tabTextColor="#FFFFFF">
+
+        </android.support.design.widget.TabLayout>
+
+<!--Bottomsheet-->
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nestedSrollView"
         android:layout_width="match_parent"
@@ -33,16 +56,34 @@
             />
     </android.support.v4.widget.NestedScrollView>
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tbl_list_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="41dp"
-        android:background="@color/colorPrimary"
-        app:tabBackground="@drawable/tab_selected_mode"
-        app:tabIndicatorHeight="0dp"
-        app:tabMode="scrollable"
-        app:tabTextColor="#FFFFFF">
-
-    </android.support.design.widget.TabLayout>
-
 </android.support.design.widget.CoordinatorLayout>
+
+
+
+<!--Content_main là có cái toolbar với searchview-->
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_main_activity"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"/>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_list_goods_second"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true">
+
+        <ExpandableListView
+            android:id="@+id/explv_list_goods_second"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:listSelector="@color/colorPrimary"
+            >
+
+        </ExpandableListView>
+
+    </android.support.design.widget.NavigationView>
+
+
+</android.support.v4.widget.DrawerLayout>

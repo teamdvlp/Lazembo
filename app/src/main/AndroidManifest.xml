@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.SecondMainAcitivty">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,12 +27,13 @@
         <activity android:name=".activity.activity_login" />
         <activity android:name=".activity.Cart" />
         <activity android:name=".activity.ListOfProduct" />
-        <activity android:name=".activity.SecondMainAcitivty" />
         <activity android:name=".activity.activity_product" />
         <activity
             android:name=".activity.activity_phan_loai_sp"
             android:label="@string/title_activity__login__register" />
-        <activity android:name=".activity.activity_register"></activity>
+        <activity android:name=".activity.activity_register">
+
+        </activity>
     </application>
 
 </manifest>
