@@ -14,9 +14,12 @@ import com.example.dangminhtien.lazembo.custom_view.*;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.dangminhtien.lazembo.R;
+import com.example.dangminhtien.lazembo.data.Danhmucsp;
+import com.example.dangminhtien.lazembo.data.get_set_sanpham;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -33,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     NavigationView nav_list_goods;
     ArrayList<String> list_group_title;
     private ScrollView expan_custom;
+    private get_set_sanpham get_set_sanpham;
+    private Danhmucsp danhmucsp;
+    tiendvlp_expan_tree_listview tiendvlp_expan_tree_listview;
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
     HashMap<String, ArrayList<String>>  list_sub_title;
@@ -43,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.activity_main);
             setTheme(R.style.Theme_AppCompat_Light_NoActionBar);
             firebaseDatabase = FirebaseDatabase.getInstance();
+            danhmucsp = new Danhmucsp(MainActivity.this, null);
             databaseReference = firebaseDatabase.getReference();
             addControls();
             addEvents();
@@ -53,17 +60,6 @@ public class MainActivity extends AppCompatActivity {
             continues = false;
         }
             img_introView.setVisibility(View.GONE);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
     }
 
     private void addEvents() {
@@ -79,28 +75,47 @@ public class MainActivity extends AppCompatActivity {
                 drawer_container,
                 toolbar,
                 R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
+                R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                // khi vừa mở nav drawer thì sẽ lấy những danh mục đầu tiên trước
+                // vì thằng getChild đã bắt đầu từ danh mục sản phẩm nên điền là ""
+                danhmucsp.getChild(new String[]{""});
+                danhmucsp.set_on_datachanged_listener(new Danhmucsp.datachanged() {
+                    @Override
+                    public void onDatachanged(ArrayList<String> arr, Context context, Spinner sp) {
+                        for (int i = 0; i < arr.size(); i++) {
+                            tiendvlp_expan_tree_listview.add_tree_node(new tree_node("/" + arr.get(i),arr.get(i) ));
+                        }
+                        tiendvlp_expan_tree_listview.init();
+                    }
+                });
+            }
+        };
         drawer_container.setDrawerListener(toggle);
         toggle.syncState();
-
         list_group_title = new ArrayList<>();
         list_sub_title = new HashMap<>();
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linear_parent_nav);
-        tiendvlp_expan_tree_listview tiendvlp_expan_tree_listview = new tiendvlp_expan_tree_listview(MainActivity.this, MainActivity.this);
-        tiendvlp_expan_tree_listview.add_tree_node(new tree_node("/Thời trang", "Thời trang"));
-        tiendvlp_expan_tree_listview.add_tree_node(new tree_node("/Thời trang/Nam/", "Nam"));
-        tiendvlp_expan_tree_listview.add_tree_node(new tree_node("/Thời trang/Nam/Quần", "Quần"));
-        tiendvlp_expan_tree_listview.add_tree_node(new tree_node("/Thời trang/Nam/Quần/Quần Kaki", "Quần Kaki"));
-        tiendvlp_expan_tree_listview.add_tree_node(new tree_node("/Thời trang/Nam/Quần/Quần Jean", "Quần Jean"));
-        tiendvlp_expan_tree_listview.add_tree_node(new tree_node("/Thời trang/Nam/Áo", "Áo"));
-        tiendvlp_expan_tree_listview.add_tree_node(new tree_node("/Thời trang/Nam/Áo/Áo tay dài", "Áo tay dài"));
-        tiendvlp_expan_tree_listview.init();;
+        tiendvlp_expan_tree_listview = new tiendvlp_expan_tree_listview(MainActivity.this, MainActivity.this);
         linearLayout.addView(tiendvlp_expan_tree_listview);
         tiendvlp_expan_tree_listview.hide_all();
+
         tiendvlp_expan_tree_listview.set_on_tree_node_click_listener(new tiendvlp_expan_tree_listview.on_tree_node_click() {
             @Override
-            public void on_click(tree_node treeNode, boolean is_hide) {
-                Toast.makeText(getApplicationContext(), treeNode.getTitle(), Toast.LENGTH_SHORT).show();
+            public void on_click(final tree_node treeNode, boolean is_hide) {
+                danhmucsp.getChild(new String[]{treeNode.getNode_path()});
+                danhmucsp.set_on_datachanged_listener(new Danhmucsp.datachanged() {
+                    @Override
+                    public void onDatachanged(ArrayList<String> arr, Context context, Spinner sp) {
+                        for (int i = 0; i < arr.size(); i++) {
+//                            Toast.makeText(getApplicationContext(), arr.get(i), Toast.LENGTH_SHORT).show();
+                            tiendvlp_expan_tree_listview.add_tree_node(new tree_node(treeNode.getNode_path() + "/" + arr.get(i), arr.get(i)));
+                        }
+                        tiendvlp_expan_tree_listview.init();
+                    }
+                });
             }
         });
     }

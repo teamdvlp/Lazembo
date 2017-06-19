@@ -63,16 +63,9 @@ public class SecondMainAcitivty extends MainActivity {
                     @Override
                     public void on_get_sanphams(ArrayList<Sanpham> sanphams) {
                         Iterator<Sanpham> sanphamIterator = sanphams.iterator();
-                        while (sanphamIterator.hasNext()) {
-                            Toast.makeText(SecondMainAcitivty.this, sanphamIterator.next().getTensp(), Toast.LENGTH_SHORT).show();
-                        }}
-                });
+                    }                });
             }
         });
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

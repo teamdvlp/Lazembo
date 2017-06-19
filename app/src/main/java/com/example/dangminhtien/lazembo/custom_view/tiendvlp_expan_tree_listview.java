@@ -80,10 +80,16 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
                         if (!has_container) {
                     container_parent.addView(container);
                 }}
+                // check xem nếu như container đã có row rồi thì không add nữa
+                    if (container.getChildAt(0) == null) {
                 View row = create_row(tree_node);
                 row.setOnTouchListener(this);
-                container.addView(row);
+                container.addView(row);}
             }
+    }
+
+    public void clear_all_tree_node () {
+        tree_nodes.removeAll(tree_nodes);
     }
 
     private ArrayList<String> split_path_node (String node_path) {
@@ -145,9 +151,7 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
         // chỉ cần xác định thằng đầu tiên có mở hay không là được.
         ((TextView) v.findViewById(R.id.txt_title_row)).setTextColor(Color.parseColor("#F38F20"));
         View child = viewGroup.getChildAt(1);
-        reentrantLock.lock();
         ViewGroup view_target=(LinearLayout) v.getParent();
-        reentrantLock.unlock();
                     if (null != view_selected_before) {
                         ((TextView) view_selected_before.findViewById(R.id.txt_title_row)).setTextColor(Color.parseColor("#444444"));
                     }
