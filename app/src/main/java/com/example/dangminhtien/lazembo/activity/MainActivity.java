@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             on_child_last_click(treeNode);
                         }
-
                     }
                 });
             }
@@ -125,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    protected void changes(Context context, Class classes){
+    protected void changes(Context context, Class classes) {
         startActivity(new Intent(context,classes));
     }
 
