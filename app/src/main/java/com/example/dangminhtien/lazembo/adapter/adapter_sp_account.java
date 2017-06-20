@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class adapter_sp_account extends RecyclerView.Adapter<adapter_sp_account.view_holder> {
-    private ArrayList<String> path_sp;
     private Context context;
     private ArrayList<Bitmap> bitmaps;
     private ArrayList<Sanpham> sanphams;

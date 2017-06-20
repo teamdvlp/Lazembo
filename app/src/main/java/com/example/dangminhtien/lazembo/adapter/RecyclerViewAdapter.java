@@ -1,8 +1,7 @@
 package com.example.dangminhtien.lazembo.adapter;
 
 import android.content.Context;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +9,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.dangminhtien.lazembo.Model.*;
 import com.example.dangminhtien.lazembo.R;
+import com.example.dangminhtien.lazembo.data.Sanpham;
+import com.example.dangminhtien.lazembo.data.get_set_sanpham;
 
 import java.util.ArrayList;
 
@@ -21,46 +21,46 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.DataViewHolder> {
 
-    Context context;
-    ArrayList<CartModel> list;
-    RecyclerView recyclerView;
+    private Context context;
+    private ArrayList<Sanpham> list;
+    private ArrayList<Bitmap> bitmaps;
+    //RecyclerView để set Sự kiện click item ? OK ?
+    private RecyclerView recyclerView;
+    private get_set_sanpham get_set_sanpham;
 
-    View.OnClickListener click = new View.OnClickListener() {
-        @RequiresApi(api = Build.VERSION_CODES.M)
-        @Override
-        public void onClick(View v) {
-            View view = (View) v.getTag();
-            setColor(view);
-        }
-    };
-    public RecyclerViewAdapter(Context context, ArrayList<CartModel> list, RecyclerView recyclerView) {
+
+    public RecyclerViewAdapter(Context context, ArrayList<Sanpham> list, RecyclerView recyclerView, com.example.dangminhtien.lazembo.data.get_set_sanpham get_set_sanpham) {
         this.context = context;
         this.list = list;
         this.recyclerView = recyclerView;
+        this.get_set_sanpham = get_set_sanpham;
     }
-
 
     @Override
     public DataViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.childview_item_recycler_view_cart,parent,false);
-        view.setOnClickListener(click);
         return new DataViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final DataViewHolder holder, int position) {
 
-        final CartModel model = list.get(position);
-        holder.txt_price_product.setText("   Giá: "+String.valueOf(Integer.parseInt(model.getPrice_product())*model.getCount_product()) +" vnđ");
-        holder.txt_name_product.setText("  " + model.getName_product());
-        holder.img_image_product.setImageResource(model.getImage_product());
-        holder.edt_count_product.setText(String.valueOf(model.getCount_product()));
+        final Sanpham model = list.get(position);
+        //TRUYỀN LIST URL dô Path để lấy list ? OK ?
+        bitmaps = get_set_sanpham.getImages(model.getHinh());
+        //SET thằng hình đầu tiên làm avatar cho sản phẩm
+        holder.img_image_product.setImageBitmap(bitmaps.get(0));
+        //GIÁ này nhân cho số lượng,
+        holder.txt_price_product.setText("   Giá: " + String.valueOf(model.getGiasp()*model.getSoluong()) +" vnđ");
+        holder.txt_name_product.setText("  " + model.getTensp());
+        holder.edt_count_product.setText(String.valueOf(model.getSoluong()));
+
+//        holder.txt_ten_sp_account.setText(sanphams.get(position).getTensp());
+//        DecimalFormat decimalFormat = new DecimalFormat("###################.###################");
+//        holder.txt_gia_sp_account.setText(decimalFormat.format(sanphams.get(position).getGiasp()));
+//        holder.img_hinhsp_account.setImageBitmap(bitmaps.get(position));
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void setColor(View view){
-        view.setBackgroundColor(context.getColor(R.color.colorPrimary));
-    }
 
     @Override
     public int getItemCount() {
@@ -82,7 +82,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             txt_price_product= (TextView) itemView.findViewById(R.id.child_txt_price_product);
             txt_choose = (TextView) itemView.findViewById(R.id.child_txt_choose);
             edt_count_product= (EditText) itemView.findViewById(R.id.child_edt_count_product);
-
             itemView.setTag(txt_choose);
         }
     }

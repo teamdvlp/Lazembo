@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Sanpham {
 
     private static Sanpham sanpham = new Sanpham();
+    private int soluong;
     private String tensp;
     private ArrayList<String> kichco;
     private ArrayList<String> mausac;
@@ -29,6 +30,14 @@ public class Sanpham {
 
     public Sanpham () {
 
+    }
+
+    public int getSoluong() {
+        return soluong;
+    }
+
+    public void setSoluong(int soluong) {
+        this.soluong = soluong;
     }
 
     public static Sanpham getInstance() {
@@ -84,6 +93,7 @@ public class Sanpham {
     }
 
     public ArrayList<String> getHinh() {
+
         return hinh;
     }
 

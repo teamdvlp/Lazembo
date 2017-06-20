@@ -109,13 +109,15 @@ public class MainActivity extends AppCompatActivity {
 //                            Toast.makeText(getApplicationContext(), arr.get(i), Toast.LENGTH_SHORT).show();
                             tiendvlp_expan_tree_listview.add_tree_node(new tree_node(treeNode.getNode_path() + "/" + arr.get(i), arr.get(i)));
                         }
-                        if (null != arr && 0 != arr.size()) {
+                        if (0 != arr.size()) {
                             tiendvlp_expan_tree_listview.init();
                         } else {
                             on_child_last_click(treeNode);
                         }
 
+
                     }
+
                 });
             }
 

@@ -101,7 +101,7 @@
 
     <TextView
         android:layout_width="0dp"
-        android:layout_height="400dp"
+        android:layout_height="450dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="52dp"
         android:background="@color/Test"
@@ -129,11 +129,11 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintHorizontal_bias="0.847"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7565" />
+        app:layout_constraintVertical_bias="0.813" />
 
     <TextView
         android:id="@+id/txt_total_amount_of_goods"
@@ -149,11 +149,11 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.65"
+        app:layout_constraintHorizontal_bias="0.644"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.815" />
+        app:layout_constraintVertical_bias="0.875" />
 
     <TextView
         android:id="@+id/txt_total_money"
@@ -173,7 +173,7 @@
         app:layout_constraintLeft_toRightOf="@+id/view_tong_tien"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.878" />
+        app:layout_constraintVertical_bias="0.939" />
 
     <Button
         android:id="@+id/btn_pay"
@@ -188,7 +188,7 @@
         android:background="@drawable/appearance_without_plugin"
         android:text="Mua hàng"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.973"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -211,7 +211,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.768" />
+        app:layout_constraintVertical_bias="0.827" />
 
     <TextView
         android:id="@+id/view_tong_tien"
@@ -226,7 +226,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.889"
+        app:layout_constraintVertical_bias="0.952"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -250,12 +250,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/txt_total_amount_kind_of_goods"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.825" />
+        app:layout_constraintVertical_bias="0.887" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcv_cart"
         android:layout_width="395dp"
-        android:layout_height="400dp"
+        android:layout_height="450dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"

@@ -101,6 +101,25 @@ public class Account_Fragment extends Fragment {
         }
         }
 
+    public void get_khachhang_from_firebase() {
+        get_set_khachhang.get_khachhang(firebaseAuth.getCurrentUser().getUid());
+        get_set_khachhang.set_on_get_khachhang_listener(new get_set_Khachhang.get_khachhang() {
+            @Override
+            public void on_get_khachhang(Khachhang khachhang) {
+                Account_Fragment.this.khachhang = khachhang;
+                txt_ten_account.setText(khachhang.getHOVATEN());
+                txt_sdt_account.setText(khachhang.getSdt());
+                txt_email_account.setText(khachhang.getEmail());
+                // reset recycle view
+                if (recyclerViewAdapter != null) {
+                    sanphams.clear();
+                    recyclerViewAdapter.notifyDataSetChanged();
+                }
+                add_adapter_to_recycle_sp_account();
+
+            }
+        });
+    }
     @Override
     public void onResume() {
         super.onResume();
@@ -250,25 +269,7 @@ public class Account_Fragment extends Fragment {
         return fragment;
     }
 
-    public void get_khachhang_from_firebase() {
-                    get_set_khachhang.get_khachhang(firebaseAuth.getCurrentUser().getUid());
-                    get_set_khachhang.set_on_get_khachhang_listener(new get_set_Khachhang.get_khachhang() {
-                        @Override
-                        public void on_get_khachhang(Khachhang khachhang) {
-                            Account_Fragment.this.khachhang = khachhang;
-                            txt_ten_account.setText(khachhang.getHOVATEN());
-                            txt_sdt_account.setText(khachhang.getSdt());
-                            txt_email_account.setText(khachhang.getEmail());
-                                // reset recycle view
-                            if (recyclerViewAdapter != null) {
-                                sanphams.clear();
-                                recyclerViewAdapter.notifyDataSetChanged();
-                            }
-                            add_adapter_to_recycle_sp_account();
 
-            }
-        });
-    }
 
 
 }

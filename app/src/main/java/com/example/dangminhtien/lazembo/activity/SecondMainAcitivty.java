@@ -47,26 +47,27 @@ public class SecondMainAcitivty extends MainActivity {
         View contentView = inflater.inflate(R.layout.activity_second_main_acitivty,null,false);
         drawer_container.addView(contentView,0);
 
-        get_sanphams();
+//        get_sanphams();
         overridePendingTransition(R.anim.appear,R.anim.disappear);
         addControlss();
         addEventss();
     }
-    private void get_sanphams () {
-        get_set_sanpham = new get_set_sanpham(SecondMainAcitivty.this);
-        get_set_sanpham.get_all_ma_sanpham();
-        get_set_sanpham.set_on_get_all_ma_sanpham(new get_set_sanpham.get_all_ma_sanpham() {
-            @Override
-            public void on_get_all_ma_sanpham(ArrayList<String> ma_sanpham_storage) {
-                get_set_sanpham.get_sanphams(ma_sanpham_storage);
-                get_set_sanpham.set_on_get_sanphams_listener(new get_set_sanpham.get_sanphams() {
-                    @Override
-                    public void on_get_sanphams(ArrayList<Sanpham> sanphams) {
-                        Iterator<Sanpham> sanphamIterator = sanphams.iterator();
-                    }                });
-            }
-        });
-    }
+//    private void get_sanphams () {
+//        get_set_sanpham = new get_set_sanpham(SecondMainAcitivty.this);
+//        get_set_sanpham.get_all_ma_sanpham();
+//        get_set_sanpham.set_on_get_all_ma_sanpham(new get_set_sanpham.get_all_ma_sanpham() {
+//            @Override
+//            public void on_get_all_ma_sanpham(ArrayList<String> ma_sanpham_storage) {
+//                get_set_sanpham.get_sanphams(ma_sanpham_storage);
+//                get_set_sanpham.set_on_get_sanphams_listener(new get_set_sanpham.get_sanphams() {
+//                    @Override
+//                    public void on_get_sanphams(ArrayList<Sanpham> sanphams) {
+//                        Iterator<Sanpham> sanphamIterator = sanphams.iterator();
+//                    }
+//                });
+//            }
+//        });
+//    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void addEventss() {
@@ -76,6 +77,24 @@ public class SecondMainAcitivty extends MainActivity {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+        //NÀY T SET XÀM CHƠI, lấy sự kiện để qua CartLayout test
+        tbl_list.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                startActivity(new Intent(SecondMainAcitivty.this,ListOfProduct.class));
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

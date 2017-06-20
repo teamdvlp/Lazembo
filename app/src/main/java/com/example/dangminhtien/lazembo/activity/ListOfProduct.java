@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.dangminhtien.lazembo.Model.ProductInformationModel;
 import com.example.dangminhtien.lazembo.R;
 import com.example.dangminhtien.lazembo.adapter.GridviewAdapter;
+import com.example.dangminhtien.lazembo.data.get_set_sanpham;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,7 @@ public class ListOfProduct extends MainActivity{
     ArrayList<String> list_tieu_chi,list_price;
     ArrayAdapter<String> adapter_tieu_chi,adapter_price;
 
+    get_set_sanpham get_set_sanpham;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,7 @@ public class ListOfProduct extends MainActivity{
 
     }
     private void addsControls() {
+        get_set_sanpham = new get_set_sanpham(this);
         txt_type_of_goods = (TextView) findViewById(R.id.txt_type_of_goods);
 
         gridv_arrayList_model = new ArrayList<>();

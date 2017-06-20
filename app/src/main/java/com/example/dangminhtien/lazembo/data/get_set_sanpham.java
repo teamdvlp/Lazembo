@@ -154,7 +154,7 @@ public class get_set_sanpham {
         }}
 
     public ArrayList<Bitmap> getImages (final ArrayList<String> paths) {
-        final ArrayList<Bitmap> bitmaps = new ArrayList<Bitmap>();
+        final ArrayList<Bitmap> bitmaps = new ArrayList<>();
         final Iterator<String> path = paths.iterator();
         final int[] count = {0};
         while (path.hasNext()) {
