@@ -35,14 +35,14 @@ public class ListOfProduct extends MainActivity{
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_list_of_product,null,false);
-//        drawer_container.addView(contentView,0);
+        drawer_container.addView(contentView,0);
         overridePendingTransition(R.anim.appear,R.anim.disappear);
         addsControls();
         addEsvents();
-
-        Bundle bundle = getIntent().getExtras();
-        String loaiMatHang = (String) bundle.get("LoaiMatHang");
-        txt_type_of_goods.setText(loaiMatHang);
+//
+//        Bundle bundle = getIntent().getExtras();
+//        String loaiMatHang = (String) bundle.get("LoaiMatHang");
+//        txt_type_of_goods.setText(loaiMatHang);
 
     }
     private void addsControls() {
@@ -58,7 +58,7 @@ public class ListOfProduct extends MainActivity{
         list_tieu_chi = new ArrayList<>();
         prepareDataforSpinner();
 
-//        sp_price = (Spinner) findViewById(R.id.sp);
+        sp_price = (Spinner) findViewById(R.id.sp_price);
         adapter_price = new ArrayAdapter<>(ListOfProduct.this,android.R.layout.simple_spinner_dropdown_item,list_price);
         sp_price.setAdapter(adapter_price);
 
@@ -69,13 +69,16 @@ public class ListOfProduct extends MainActivity{
 
     private void addEsvents() {
 
-
         gridv_list_goods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 changes(ListOfProduct.this,Cart.class);
             }
         });
+    }
+
+    private void getListOfProduct(){
+
     }
 
     private void prepareDataforGridview(){
@@ -120,12 +123,4 @@ public class ListOfProduct extends MainActivity{
 
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            changes(ListOfProduct.this,SecondMainAcitivty.class);
-            finish();
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 }

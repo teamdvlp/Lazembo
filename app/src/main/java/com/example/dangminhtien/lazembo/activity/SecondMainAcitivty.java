@@ -43,10 +43,10 @@ public class SecondMainAcitivty extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_second_main_acitivty,null,false);
         drawer_container.addView(contentView,0);
+
         get_sanphams();
         overridePendingTransition(R.anim.appear,R.anim.disappear);
         addControlss();

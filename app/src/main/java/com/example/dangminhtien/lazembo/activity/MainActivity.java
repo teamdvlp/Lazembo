@@ -22,10 +22,11 @@ import com.example.dangminhtien.lazembo.data.Danhmucsp;
 import com.example.dangminhtien.lazembo.data.get_set_sanpham;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.unnamed.b.atv.model.TreeNode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
+
 
 public class MainActivity extends AppCompatActivity {
     static boolean continues = true;
@@ -45,16 +46,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setTheme(R.style.Theme_AppCompat_Light_NoActionBar);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        danhmucsp = new Danhmucsp(MainActivity.this, null);
-        databaseReference = firebaseDatabase.getReference();
-        addControls();
-        addEvents();
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            setTheme(R.style.Theme_AppCompat_Light_NoActionBar);
+            firebaseDatabase = FirebaseDatabase.getInstance();
+            danhmucsp = new Danhmucsp(MainActivity.this, null);
+            databaseReference = firebaseDatabase.getReference();
+            addControls();
+            addEvents();
 
-        img_introView.setVisibility(View.GONE);
+            img_introView.setVisibility(View.GONE);
     }
 
     private void addEvents() {
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 //                            Toast.makeText(getApplicationContext(), arr.get(i), Toast.LENGTH_SHORT).show();
                             tiendvlp_expan_tree_listview.add_tree_node(new tree_node(treeNode.getNode_path() + "/" + arr.get(i), arr.get(i)));
                         }
-                        if (0 != arr.size()) {
+                        if (null != arr && 0 != arr.size()) {
                             tiendvlp_expan_tree_listview.init();
                         } else {
                             on_child_last_click(treeNode);
@@ -120,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void on_child_last_click(tree_node tree_node) {
-                Toast.makeText(getApplicationContext(), tree_node.getTitle() + "child last", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), tree_node.getTitle(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -130,4 +131,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+
+
+
 

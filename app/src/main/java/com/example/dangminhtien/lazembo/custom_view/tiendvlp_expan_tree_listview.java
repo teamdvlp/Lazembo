@@ -46,7 +46,7 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
         parent.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         parent.setOrientation(LinearLayout.VERTICAL);
         reentrantLock = new ReentrantLock();
-        parent.setBackgroundColor(getResources().getColor(R.color.color_when_not_selected));
+        parent.setBackgroundColor(getResources().getColor(R.color.color_child_when_parent_selected));
         this.addView(parent);
         this.activity = activity;
         containers.put("/", parent);
