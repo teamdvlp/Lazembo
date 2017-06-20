@@ -1,382 +1,178 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    tools:context="com.example.dangminhtien.lazembo.activity.Product">
-
+    tools:context="com.example.dangminhtien.lazembo.Fragment.fragment_product_customer">
 
     <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/background_light"
-        android:focusable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        android:layout_weight="1"
+        >
 
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <TextView
-                android:id="@+id/textView20"
-                android:layout_width="50dp"
-                android:layout_height="45dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginRight="159dp"
-                android:layout_marginTop="8dp"
-                android:background="@android:color/background_light"
-                android:focusable="true"
-                android:gravity="center"
-                android:text="VNĐ"
-                android:textColor="@color/TEXT_COLOR"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/rb_rating"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintLeft_toRightOf="@+id/txt_gia_truoc_khi_giam"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.835" />
-
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:focusable="true"
-                android:text="Kích thước"
-                android:textColor="@color/TEXT_COLOR"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/btn_submit"
-                app:layout_constraintHorizontal_bias="0.06"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.835" />
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/pager_hinh_sp"
-                android:layout_width="368dp"
-                android:layout_height="225dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="7dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="7dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:focusable="true"
-                app:layout_constraintBottom_toTopOf="@+id/sp_mau_sac"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.913"></android.support.v4.view.ViewPager>
-
-            <TextView
-                android:id="@+id/textView26"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:focusable="true"
-                android:text="Màu sắc"
-                android:textColor="@color/TEXT_COLOR"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/textView19"
-                app:layout_constraintHorizontal_bias="0.056"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.971" />
-
-            <TextView
-                android:id="@+id/textView24"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:focusable="true"
-                android:text="Ảnh sản phẩm"
-                android:textColor="@color/TEXT_COLOR"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/pager_hinh_sp"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.975" />
-
-            <TextView
-                android:id="@+id/textView23"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:focusable="true"
-                android:text="Đánh giá"
-                android:textColor="@color/TEXT_COLOR"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/rb_rating"
-                app:layout_constraintHorizontal_bias="0.057"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.984" />
-
-            <TextView
-                android:id="@+id/textView22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:focusable="true"
-                android:text="Giá"
-                android:textColor="@color/TEXT_COLOR"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/txt_gia_truoc_khi_giam"
-                app:layout_constraintHorizontal_bias="0.049"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.923" />
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="25dp"
                 android:focusable="true"
+                android:layout_marginTop="8dp"
                 android:text="Tên sản phẩm"
                 android:textColor="@color/TEXT_COLOR"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/txt_ten_sp"
-                app:layout_constraintHorizontal_bias="0.066"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
-                android:id="@+id/txt_gia"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="112dp"
-                android:background="@android:color/background_light"
-                android:focusable="true"
-                android:hint="Giá sau khi giảm"
-                android:inputType="number"
-                android:minWidth="150dp"
-                android:textSize="26sp"
-                app:layout_constraintBottom_toTopOf="@+id/txt_gia_truoc_khi_giam"
-                app:layout_constraintHorizontal_bias="0.036"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.555" />
-
-            <TextView
-                android:id="@+id/textView21"
-                android:layout_width="50dp"
-                android:layout_height="45dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="152dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="125dp"
-                android:background="@android:color/background_light"
-                android:focusable="true"
-                android:gravity="center"
-                android:text="VNĐ"
-                android:textColor="@color/TEXT_COLOR"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/textView20"
-                app:layout_constraintHorizontal_bias="0.006"
-                app:layout_constraintLeft_toRightOf="@+id/txt_gia"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/txt_ten_sp"
-                android:layout_width="397dp"
+                android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="7dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="7dp"
                 android:layout_marginTop="8dp"
                 android:background="@android:color/background_light"
                 android:focusable="true"
                 android:hint="    ..."
-                android:inputType="text"
-                app:layout_constraintBottom_toTopOf="@+id/textView22"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.554" />
+                android:inputType="text" />
 
-            <RatingBar
-                android:id="@+id/rb_rating"
-                android:layout_width="277dp"
-                android:layout_height="57dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
-                android:focusable="true"
-                app:layout_constraintBottom_toTopOf="@+id/textView24"
-                app:layout_constraintHorizontal_bias="0.087"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.966" />
-
-            <ImageButton
-                android:id="@+id/btn_browse_gallary"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="78dp"
-                android:background="@drawable/choose_picture"
-                android:focusable="true"
-                app:layout_constraintBottom_toTopOf="@+id/pager_hinh_sp"
-                app:layout_constraintHorizontal_bias="0.975"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/sp_kich_thuoc"
-                android:layout_width="200dp"
-                android:layout_height="30dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="502dp"
-                android:focusable="true"
-                app:layout_constraintBottom_toTopOf="@+id/btn_submit"
-                app:layout_constraintHorizontal_bias="0.952"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.563">
+                <EditText
+                    android:id="@+id/txt_gia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/background_light"
+                    android:focusable="true"
+                    android:hint="Giá sau khi giảm"
+                    android:inputType="number"
+                    android:minWidth="150dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
 
-            </Spinner>
-
-            <Spinner
-                android:id="@+id/sp_mau_sac"
-                android:layout_width="200dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:focusable="true"
-                app:layout_constraintBottom_toTopOf="@+id/sp_kich_thuoc"
-                app:layout_constraintHorizontal_bias="0.952"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.986">
-
-            </Spinner>
-
-            <ImageButton
-                android:id="@+id/btn_submit"
-                android:layout_width="81dp"
-                android:layout_height="76dp"
-                android:layout_marginBottom="0dp"
-                android:layout_marginTop="840dp"
-                android:background="@drawable/tick"
-                android:focusable="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.469"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/background_light"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:text="VNĐ"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
             <EditText
                 android:id="@+id/txt_gia_truoc_khi_giam"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:background="@android:color/background_light"
                 android:focusable="true"
-                android:hint="   Trước khi giảm"
+                android:hint="Trước khi giảm"
                 android:inputType="text"
                 android:minWidth="150dp"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toTopOf="@+id/textView23"
-                app:layout_constraintHorizontal_bias="0.036"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
-
-        </android.support.constraint.ConstraintLayout>
-
+                android:textSize="16sp" />
+    <TextView
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/background_light"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="VNĐ"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        />
+</LinearLayout>
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:text="Đánh giá"
+                android:textColor="@color/TEXT_COLOR"
+                android:textSize="18sp"
+                android:textStyle="bold"/>rb
+            <RatingBar
+                android:id="@+id/rb_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:focusable="true"/>
+            <ImageButton
+                android:id="@+id/btn_browse_gallary"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="right"
+                android:background="@drawable/choose_picture"
+                android:focusable="true"/>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager_hinh_sp"
+                android:layout_width="match_parent"
+                android:layout_height="225dp"
+                android:layout_marginTop="8dp"
+                android:focusable="true"/>
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:text="Màu sắc"
+                android:layout_gravity="right"
+                android:textColor="@color/TEXT_COLOR"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+            <Spinner
+                android:id="@+id/sp_mau_sac"
+                android:layout_width="200dp"
+                android:layout_gravity="right"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:focusable="true"/>
+            <TextView
+                android:id="@+id/textView27"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:text="Màu sắc"
+                android:layout_gravity="right"
+                android:textColor="@color/TEXT_COLOR"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+            <Spinner
+                android:id="@+id/sp_kich_thuoc"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="right"
+                android:focusable="true"/>
+            <ImageButton
+                android:id="@+id/btn_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/tick"
+                android:focusable="true"/>
+        </LinearLayout>
     </ScrollView>
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

@@ -59,6 +59,10 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
         }
     }
 
+    public ArrayList<tree_node> get_tree_node_source() {
+        return tree_nodes;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);

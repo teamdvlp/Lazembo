@@ -26,7 +26,7 @@ public class Danhmucsp {
         database =  FirebaseDatabase.getInstance();
     }
 
-    public ArrayList<String>  getChild (String[] link) {
+    public void  getChild (String[] link) {
         // Nối đường dẫn
         String nameDM = "Danh mục sản phẩm";
             for (int i = 0; i < link.length; i++) {
@@ -54,7 +54,6 @@ public class Danhmucsp {
 
             }
         });
-        return strings;
     }
         public boolean haschild (String[] link) {
             final boolean haschild[] = new boolean[2];

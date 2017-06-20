@@ -22,11 +22,10 @@ import com.example.dangminhtien.lazembo.data.Danhmucsp;
 import com.example.dangminhtien.lazembo.data.get_set_sanpham;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.unnamed.b.atv.model.TreeNode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Timer;
-
 
 public class MainActivity extends AppCompatActivity {
     static boolean continues = true;
@@ -46,16 +45,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-            setTheme(R.style.Theme_AppCompat_Light_NoActionBar);
-            firebaseDatabase = FirebaseDatabase.getInstance();
-            danhmucsp = new Danhmucsp(MainActivity.this, null);
-            databaseReference = firebaseDatabase.getReference();
-            addControls();
-            addEvents();
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        setTheme(R.style.Theme_AppCompat_Light_NoActionBar);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        danhmucsp = new Danhmucsp(MainActivity.this, null);
+        databaseReference = firebaseDatabase.getReference();
+        addControls();
+        addEvents();
 
-            img_introView.setVisibility(View.GONE);
+        img_introView.setVisibility(View.GONE);
     }
 
     private void addEvents() {
@@ -131,7 +130,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-
-
-
 

@@ -55,7 +55,7 @@ public class get_set_Khachhang {
             public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getKey() != "safe_key") {
                 get_set_sanpham.getSanpham((String) dataSnapshot.getKey());
-                get_set_sanpham.set_on_get_sanpham(new get_set_sanpham.get_sanpham() {
+                get_set_sanpham.set_on_get_sanpham_listener(new get_set_sanpham.get_sanpham() {
                     @Override
                     public void on_get_sanpham(Sanpham sanpham) {
                         sanphams.add(sanpham);

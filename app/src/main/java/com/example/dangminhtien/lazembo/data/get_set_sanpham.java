@@ -57,7 +57,7 @@ public class get_set_sanpham {
     public void upLoadSanpham(Sanpham sanpham, String masp) {
         databaseReference.child(masp).setValue(sanpham);
     }
-
+// upload 1 hình
     public void upLoadImage (Bitmap bitmap, String path) {
         StorageReference storageReference2 = storageReference.child(path);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -77,7 +77,6 @@ public class get_set_sanpham {
                 Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     public void Upload_images (ArrayList<Bitmap> bitmaps, ArrayList<String> paths) {
@@ -141,11 +140,13 @@ public class get_set_sanpham {
         final ArrayList <Sanpham> sanphams = new ArrayList<Sanpham>();
         while (iterator.hasNext()) {
             getSanpham(iterator.next());
-            set_on_get_sanpham(new get_sanpham() {
+            // bắt event của thằng get 1 sản phẩm
+            set_on_get_sanpham_listener(new get_sanpham() {
                 @Override
                 public void on_get_sanpham(Sanpham sanpham) {
                     count[0]++;
                     sanphams.add(sanpham);
+                    // dùng để check khi nào nó chạy xong thì sẽ chạy event
                     if (count[0] == masp.size()) {
                         get_sanphams.on_get_sanphams(sanphams);
                     }}
@@ -176,9 +177,9 @@ public class get_set_sanpham {
         return bitmaps;
     }
 
-    public void set_on_get_sanpham (get_sanpham get_sanpham) {
-        this.get_sanpham = get_sanpham;
-    }
+        public void set_on_get_sanpham_listener (get_sanpham get_sanpham) {
+            this.get_sanpham = get_sanpham;
+        }
 
     public Bitmap getImage (String path) throws IOException {
         final File localFile = File.createTempFile("images", "jpg");

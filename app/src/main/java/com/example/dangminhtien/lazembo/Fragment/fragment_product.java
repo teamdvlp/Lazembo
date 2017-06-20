@@ -32,19 +32,15 @@ import com.example.dangminhtien.lazembo.activity.activity_phan_loai_sp;
 import com.example.dangminhtien.lazembo.adapter.AdapterHinhSp;
 import com.example.dangminhtien.lazembo.data.Sanpham;
 import com.example.dangminhtien.lazembo.data.get_set_sanpham;
-import com.example.dangminhtien.lazembo.helper.helper;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.UUID;
 
 
 public class fragment_product extends Fragment implements get_set_sanpham.get_sanpham {
