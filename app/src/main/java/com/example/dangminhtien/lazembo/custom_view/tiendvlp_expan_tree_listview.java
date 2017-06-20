@@ -173,9 +173,6 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
                     // chạy sự kiện khi click vào
                     if (null != on_tree_node_click) {
                         on_tree_node_click.on_click(tree_nodes.get(Integer.parseInt(txt_save_position_of_tree_node.getText().toString())), is_hide);
-                        if(null == view_target.getChildAt(1)) {
-                            on_tree_node_click.on_child_last_click(tree_nodes.get(Integer.parseInt(txt_save_position_of_tree_node.getText().toString())));
-                        }
                     }
                     // nếu không return false sẽ bị vòng lặp
 
