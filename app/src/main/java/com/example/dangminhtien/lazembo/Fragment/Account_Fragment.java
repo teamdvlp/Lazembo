@@ -46,7 +46,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-public class Account_Fragment extends Fragment {
+public class Account_Fragment extends Fragment implements RecyclerView.OnItemTouchListener {
     private View view;
     // 0: not refresh 1: refresh
     public static int refresh = 0;
@@ -195,7 +195,7 @@ public class Account_Fragment extends Fragment {
             public void on_get_sanphams(final ArrayList<Sanpham> sanphams) {
                 show_progressbar(true);
                 Account_Fragment.this.sanphams =  sanphams;
-                if (sanphams.size() != 0 && sanphams != null ) {
+                if (sanphams.size() != 00 && sanphams != null ) {
                     get_set_sanpham.getImages(helper_account_fragment.get_paths(sanphams));
                     get_set_sanpham.set_on_get_images_listener(new get_set_sanpham.get_images() {
                         @Override
@@ -209,7 +209,7 @@ public class Account_Fragment extends Fragment {
     }
         public void set_adapter(ArrayList<Bitmap> bitmaps) {
             if (!is_setAdapter) {
-                recyclerViewAdapter = new adapter_sp_account(getContext(), sanphams, bitmaps);
+                recyclerViewAdapter = new adapter_sp_account(getContext(), sanphams, bitmaps, recycle_sp_account);
                 recycle_sp_account.setAdapter(recyclerViewAdapter);
                 is_setAdapter = true;
             } else {
@@ -272,4 +272,18 @@ public class Account_Fragment extends Fragment {
 
 
 
+    @Override
+    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+    }
+
+    @Override
+    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+    }
 }

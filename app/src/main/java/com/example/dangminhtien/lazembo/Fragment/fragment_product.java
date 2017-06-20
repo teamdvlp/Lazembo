@@ -23,26 +23,32 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.dangminhtien.lazembo.R;
 import com.example.dangminhtien.lazembo.activity.activity_phan_loai_sp;
 import com.example.dangminhtien.lazembo.adapter.AdapterHinhSp;
+import com.example.dangminhtien.lazembo.adapter.adapter_sp_account;
 import com.example.dangminhtien.lazembo.data.Sanpham;
 import com.example.dangminhtien.lazembo.data.get_set_sanpham;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
-
+// chỉ mới xử lý phần người bán click vào item bên trong bottom sheet thôi chứ chưa xử lý phần edit,
+// khi save lên nó sẽ save như một sp khác chứ ko replace sản phẩm cũ
+// chưa có phần check dữ liệu (tensp, hình sp,...) xem người dùng có điền đầy đủ thông tin chưa
 public class fragment_product extends Fragment implements get_set_sanpham.get_sanpham {
     private static final String KEY_AUTHENTICATION = "authentication";
     private final static int RESULT_GALLARY = 69;
@@ -64,10 +70,13 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
     private ArrayAdapter adapter_sp_mausac;
     private AdapterHinhSp adapter_hinh_sp;
     private FirebaseAuth firebaseAuth;
+    private ScrollView scr_fragment_product;
+    private ProgressBar pb_fragment_product;
     // 1: Người bán 0: Người mua
     private int AUTHENTICATION;
 
-    public fragment_product() {}
+    public fragment_product() {
+    }
 
     public static fragment_product newInstance(int AUTHENTICATION) {
         fragment_product fragment = new fragment_product();
@@ -85,7 +94,7 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
         }
     }
 
-    public void createDialog () {
+    public void createDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_size_color, null);
@@ -114,13 +123,43 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
         source_kichthuoc = new ArrayList<>();
         source_mausac = new ArrayList<>();
         txt_ten_sp = (EditText) view.findViewById(R.id.txt_ten_sp);
+        pb_fragment_product = (ProgressBar) view.findViewById(R.id.pb_fragment_product);
         bitmaps_hinh_sp = new ArrayList<>();
+        scr_fragment_product = (ScrollView) view.findViewById(R.id.scr_fragment_product);
         adapter_hinh_sp = new AdapterHinhSp(getActivity().getSupportFragmentManager(), getContext(), bitmaps_hinh_sp);
         pager_hinh_sp.setAdapter(adapter_hinh_sp);
         btn_submit = (ImageButton) view.findViewById(R.id.btn_submit);
         path_hinh_sp = new ArrayList<>();
+        setData();
         createDialog();
         addEvents();
+    }
+
+    private void setData() {
+        int position = getActivity().getIntent().getIntExtra("position_account", -1);
+        if (position != -1) {
+            pb_fragment_product.setVisibility(View.VISIBLE);
+            scr_fragment_product.setVisibility(View.GONE);
+            Sanpham sanpham = adapter_sp_account.sanphams.get(position);
+            txt_ten_sp.setText(sanpham.getTensp());
+            DecimalFormat decimalFormat = new DecimalFormat("###################,##################");
+            txt_gia.setText(decimalFormat.format(sanpham.getGiasp()));
+            txt_giap_truoc_khi_giam.setText(decimalFormat.format(sanpham.getGiaTruocKhiGiam()));
+            sp_kichthuoc.setAdapter(new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, sanpham.getKichco()));
+            sp_mausac.setAdapter(new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, sanpham.getMausac()));
+            rb_rating.setRating((float) sanpham.getRating());
+            final get_set_sanpham get_set_sanpham = new get_set_sanpham(getContext());
+            get_set_sanpham.getImages(sanpham.getHinh());
+            get_set_sanpham.set_on_get_images_listener(new get_set_sanpham.get_images() {
+                @Override
+                public void on_get_images(ArrayList<Bitmap> bitmaps) {
+                    bitmaps_hinh_sp.addAll(bitmaps);
+                    adapter_hinh_sp.notifyDataSetChanged();
+                    pb_fragment_product.setVisibility(View.INVISIBLE);
+                    scr_fragment_product.setVisibility(View.VISIBLE);
+                }
+            });
+        }
     }
 
     private void addEvents() {
@@ -204,7 +243,8 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
         transfer_and_move_phanloai_sp();
 //        }
     }
-    private boolean check_txt_ten_sp () {
+
+    private boolean check_txt_ten_sp() {
         if (!txt_ten_sp.getText().toString().equals("") && null != txt_ten_sp.toString()) {
             return true;
         } else {
@@ -216,21 +256,18 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
 
     private void transfer_and_move_phanloai_sp() {
         get_set_sanpham uploadSanpham = new get_set_sanpham(getContext());
-            for (int i = 0; i < bitmaps_hinh_sp.size(); i ++) {
-                path_hinh_sp.add("/Sản phẩm/" + get_date_and_time());
-            }
-//        path_hinh_sp.add(path_image);
+        for (int i = 0; i < bitmaps_hinh_sp.size(); i++) {
+            path_hinh_sp.add("/Sản phẩm/" + get_date_and_time());
+        }
         uploadSanpham.Upload_images(bitmaps_hinh_sp, path_hinh_sp);
         uploadSanpham.set_on_upoad_images_listener(new get_set_sanpham.upload_images() {
             @Override
             public void on_upload_images() {
-                trasnfer_motasp fragment_motasp = new fragment_motasp();
                 String text = fragment_motasp.transfer_text();
                 Sanpham.getInstance().setGiasp(Double.parseDouble(txt_gia.getText().toString()));
                 Sanpham.getInstance().setGiaTruocKhiGiam(Double.parseDouble(txt_giap_truoc_khi_giam.getText().toString()));
                 Sanpham.getInstance().setHinh(path_hinh_sp);
-
-                Sanpham.getInstance().setIdsp(getActivity().getIntent().getStringExtra("uid")+ "+" + new Date().getTime());
+                Sanpham.getInstance().setIdsp(getActivity().getIntent().getStringExtra("uid") + "+" + new Date().getTime());
                 Sanpham.getInstance().setKichco(source_kichthuoc);
                 Sanpham.getInstance().setMausac(source_mausac);
                 Sanpham.getInstance().setMotachitietsp(text);
@@ -243,14 +280,14 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
 
     }
 
-    private ArrayList<String> get_array_dialog () {
+    private ArrayList<String> get_array_dialog() {
         String[] size_color = txt_size_color.getText().toString().split("\n");
         ArrayList<String> size_colors = new ArrayList<>();
         size_colors.addAll(Arrays.asList(size_color));
         return size_colors;
     }
 
-    private boolean check_txt_gia_sp () {
+    private boolean check_txt_gia_sp() {
 
         if (!txt_gia.getText().toString().equals("") && null == txt_gia.toString()) {
             return true;
@@ -261,7 +298,7 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
         }
     }
 
-    private String get_date_and_time () {
+    private String get_date_and_time() {
         Calendar calendar = Calendar.getInstance();
         String dateFormat = "ddmmyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
@@ -269,7 +306,7 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
         return simpleDateFormat.format(date) + date.getTime();
     }
 
-    private boolean check_txt_gia_truoc_khi_giam () {
+    private boolean check_txt_gia_truoc_khi_giam() {
 
         if (!txt_giap_truoc_khi_giam.getText().toString().equals("") && null != txt_giap_truoc_khi_giam.toString()) {
             return true;
@@ -281,11 +318,11 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
 
     }
 
-    private void xulyHienthiTxtCamKet () {
+    private void xulyHienthiTxtCamKet() {
 
     }
 
-    private boolean check_sp_mausac () {
+    private boolean check_sp_mausac() {
         if (source_mausac.isEmpty()) {
             sp_mausac.requestFocus();
             return false;
@@ -294,8 +331,8 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
         }
     }
 
-    private boolean check_sp_kichthuoc () {
-        if (source_kichthuoc.isEmpty() ){
+    private boolean check_sp_kichthuoc() {
+        if (source_kichthuoc.isEmpty()) {
             sp_kichthuoc.requestFocus();
             return false;
         } else {
@@ -303,7 +340,7 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
         }
     }
 
-    private boolean check_pager_hinh_sp () {
+    private boolean check_pager_hinh_sp() {
         if (bitmaps_hinh_sp.isEmpty()) {
             pager_hinh_sp.requestFocus();
             return false;
@@ -312,21 +349,21 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
         }
     }
 
-    private void xuly_hienthi_sp_kichthuoc (ArrayList<String> SourceKichco) {
+    private void xuly_hienthi_sp_kichthuoc(ArrayList<String> SourceKichco) {
         this.source_kichthuoc = new ArrayList<>();
         this.source_kichthuoc.addAll(SourceKichco);
         adapter_sp_kichthuoc = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, this.source_kichthuoc);
         sp_kichthuoc.setAdapter(adapter_sp_kichthuoc);
     }
 
-    private void xuly_hienthi_sp_mausac (ArrayList<String> SourceMausac) {
+    private void xuly_hienthi_sp_mausac(ArrayList<String> SourceMausac) {
         this.source_mausac = new ArrayList<>();
         this.source_mausac.addAll(SourceMausac);
         adapter_sp_mausac = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, this.source_mausac);
         sp_mausac.setAdapter(adapter_sp_mausac);
     }
 
-    private void xuly_hienthi_pager_hinh_sp () {
+    private void xuly_hienthi_pager_hinh_sp() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, RESULT_GALLARY);
     }
@@ -343,10 +380,11 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
                 adapter_hinh_sp.notifyDataSetChanged();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-            }}
+            }
+        }
     }
 
-    private void setTextHinhthucgiaohang () {
+    private void setTextHinhthucgiaohang() {
 
         SpannableStringBuilder styledString
                 = new SpannableStringBuilder(
@@ -363,7 +401,7 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
 
         styledString.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, 22 - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        styledString.setSpan(new ForegroundColorSpan(Color.RED), 0, 22 - 1  ,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        styledString.setSpan(new ForegroundColorSpan(Color.RED), 0, 22 - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         styledString.setSpan(new ForegroundColorSpan(Color.BLUE), 22, 22 + 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -374,13 +412,8 @@ public class fragment_product extends Fragment implements get_set_sanpham.get_sa
     }
 
 
-
     @Override
     public void on_get_sanpham(Sanpham sanpham) {
 
-    }
-
-    public interface trasnfer_motasp {
-        String transfer_text();
     }
 }

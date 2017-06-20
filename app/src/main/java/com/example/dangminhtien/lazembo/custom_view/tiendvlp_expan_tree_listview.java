@@ -81,12 +81,13 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
                 for (int i = 1; i < paths.size(); i++) {
                     container_parent = get_or_add_container(paths.get(i - 1));
                     container = get_or_add_container(paths.get(i));
-                    // Nếu container đã tồn tại thì không cần tạo nữa
+                // Nếu container đã tồn tại thì không cần tạo nữa
                         if (!has_container) {
                     container_parent.addView(container);
                 }}
                 // check xem nếu như container đã có row rồi thì không add nữa
                     if (container.getChildAt(0) == null) {
+
                 View row = create_row(tree_node);
                 row.setOnTouchListener(this);
                 container.addView(row);}
@@ -170,13 +171,13 @@ public class tiendvlp_expan_tree_listview extends ScrollView implements View.OnT
                         show_view(view_target);
                         is_hide = false;
                     }}
+
                     // chạy sự kiện khi click vào
                     if (null != on_tree_node_click) {
                         on_tree_node_click.on_click(tree_nodes.get(Integer.parseInt(txt_save_position_of_tree_node.getText().toString())), is_hide);
                     }
                     // nếu không return false sẽ bị vòng lặp
-
-        return false;
+                    return false;
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
