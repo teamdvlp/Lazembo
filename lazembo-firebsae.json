@@ -1,0 +1,235 @@
+{
+  "Danh mục sản phẩm" : {
+    "Thời trang" : {
+      "Nam" : {
+        "Quần" : {
+          "Quần Jean" : {
+            "Sản phẩm" : {
+              "fyYEXgMErzYZ2S6qYFIxrATJyHv2+1497963898118" : "fyYEXgMErzYZ2S6qYFIxrATJyHv2+1497963898118",
+              "fyYEXgMErzYZ2S6qYFIxrATJyHv2+1497965095862" : "fyYEXgMErzYZ2S6qYFIxrATJyHv2+1497965095862",
+              "fyYEXgMErzYZ2S6qYFIxrATJyHv2+1497965371418" : "fyYEXgMErzYZ2S6qYFIxrATJyHv2+1497965371418",
+              "sp" : 0
+            }
+          },
+          "Quần Kaki" : {
+            "sp" : 0
+          },
+          "Quần cụt" : {
+            "sp" : 0
+          },
+          "Quần lót" : {
+            "sp" : 0
+          }
+        },
+        "Áo" : {
+          "Áo dài" : {
+            "sp" : 0
+          },
+          "Áo tay dài" : {
+            "sp" : 0
+          },
+          "Áo tay ngắn " : {
+            "sp" : 0
+          },
+          "Áo tắm" : {
+            "sp" : 0
+          }
+        }
+      },
+      "Nữ" : {
+        "Quần" : {
+          "Quần Jean" : {
+            "sp" : 0
+          },
+          "Quần Kaki" : {
+            "sp" : 0
+          },
+          "Quần cụt" : {
+            "sp" : 0
+          },
+          "Quần lót" : {
+            "sp" : 0
+          }
+        },
+        "Áo" : {
+          "Áo dài" : {
+            "sp" : 0
+          },
+          "Áo tay dài" : {
+            "sp" : 0
+          },
+          "Áo tay ngắn " : {
+            "sp" : 0
+          },
+          "Áo tắm" : {
+            "sp" : 0
+          }
+        }
+      },
+      "Quảng cáo" : 0
+    },
+    "khuyến mãi" : {
+      "deal of the day" : 0,
+      "quảng cáo" : {
+        "sp" : 0
+      },
+      "sản phẩm có quà tặng" : {
+        "sp" : 0
+      },
+      "sản phẩm giảm giá" : {
+        "sp" : 0
+      }
+    },
+    "Ô tô" : {
+      "Phụ kiện" : {
+        "sp" : 0
+      },
+      "Phụ tùng" : {
+        "sp" : 0
+      },
+      "Quảng cáo" : {
+        "sp" : 0
+      },
+      "Thương hiệu" : {
+        "BMW" : {
+          "sp" : 0
+        },
+        "Ford" : {
+          "sp" : 0
+        },
+        "Kia" : {
+          "sp" : 0
+        },
+        "Lexus" : {
+          "sp" : 0
+        },
+        "Mercedes" : {
+          "sp" : 0
+        },
+        "Toyota" : {
+          "sp" : 0
+        }
+      }
+    },
+    "Điện tử" : {
+      "Desktop" : {
+        "sp" : 0
+      },
+      "Laptop" : {
+        "sp" : 0
+      },
+      "Linh kiện" : {
+        "Bo mạch chủ" : {
+          "sp" : 0
+        },
+        "Bộ nguồn" : {
+          "sp" : 0
+        },
+        "Card đồ hoạ" : {
+          "sp" : 0
+        },
+        "Chíp xử lý" : {
+          "sp" : 0
+        },
+        "Ram" : {
+          "sp" : 0
+        },
+        "Tản nhiệt" : {
+          "khí" : {
+            "sp" : 0
+          },
+          "nước" : {
+            "sp" : 0
+          }
+        },
+        "Vỏ case" : {
+          "sp" : 0
+        },
+        "Ổ cứng gắn trong" : {
+          "sp" : 0
+        }
+      },
+      "Phụ kiện" : {
+        "Bàn phím" : {
+          "sp" : 0
+        },
+        "Chuột" : {
+          "sp" : 0
+        },
+        "Màn hình" : {
+          "sp" : 0
+        }
+      },
+      "Quảng cáo" : {
+        "sp" : 0
+      }
+    },
+    "Đồ gia dụng" : {
+      "Bếp" : {
+        "sp" : 0
+      },
+      "Chăn" : {
+        "sp" : 0
+      },
+      "Chảo" : {
+        "sp" : 0
+      },
+      "Gối" : {
+        "sp" : 0
+      },
+      "Nồi" : {
+        "sp" : 0
+      },
+      "Quảng cáo" : {
+        "sp" : 0
+      },
+      "Đệm" : {
+        "sp" : 0
+      }
+    },
+    "Đồ ăn" : {
+      "Chay" : {
+        "sp" : 0
+      },
+      "Mặn" : {
+        "sp" : 0
+      }
+    }
+  },
+  "Khách hàng" : {
+    "fyYEXgMErzYZ2S6qYFIxrATJyHv2" : {
+      "email" : "tiendvlp@gmail.com",
+      "hovaten" : "Dang Minh Tien",
+      "nguoiban" : false,
+      "sanphams" : {
+        "-Kn4t8dxnyUcWISWsrXD" : "fyYEXgMErzYZ2S6qYFIxrATJyHv2+1497963898118",
+        "-Kn4yoDBgCXigdFOGlvh" : "fyYEXgMErzYZ2S6qYFIxrATJyHv2+1497965371418",
+        "safe_ket" : "0"
+      },
+      "sdt" : "0969747887",
+      "uid" : "fyYEXgMErzYZ2S6qYFIxrATJyHv2"
+    }
+  },
+  "Sản phẩm" : {
+    "fyYEXgMErzYZ2S6qYFIxrATJyHv2+1497963898118" : {
+      "giaTruocKhiGiam" : 123123,
+      "giasp" : 112323,
+      "hinh" : [ "/Sản phẩm/2004171497963895234" ],
+      "idsp" : "fyYEXgMErzYZ2S6qYFIxrATJyHv2+1497963898118",
+      "rating" : 3.5,
+      "tensp" : "tiendvlp@gmail.com"
+    },
+    "fyYEXgMErzYZ2S6qYFIxrATJyHv2+1497965371418" : {
+      "giaTruocKhiGiam" : 123213,
+      "giasp" : 112,
+      "hinh" : [ "/Sản phẩm/2029171497965369366" ],
+      "idsp" : "fyYEXgMErzYZ2S6qYFIxrATJyHv2+1497965371418",
+      "kichco" : [ "adasdad" ],
+      "mausac" : [ "adasdad" ],
+      "motachitietsp" : "asdasdasda as das dasas<img src=\"https://raw.githubusercontent.com/wasabeef/art/master/twitter.png\" alt=\"twitter\">",
+      "rating" : 3.5,
+      "tensp" : "asdasd"
+    },
+    "sp" : 0
+  }
+}
