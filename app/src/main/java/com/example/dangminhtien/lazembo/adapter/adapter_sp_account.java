@@ -1,6 +1,7 @@
 package com.example.dangminhtien.lazembo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dangminhtien.lazembo.R;
+import com.example.dangminhtien.lazembo.activity.activity_product;
 import com.example.dangminhtien.lazembo.data.Sanpham;
 import com.example.dangminhtien.lazembo.data.get_set_sanpham;
 
@@ -25,22 +27,25 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class adapter_sp_account extends RecyclerView.Adapter<adapter_sp_account.view_holder> {
-    private ArrayList<String> path_sp;
+
+public class adapter_sp_account extends RecyclerView.Adapter<adapter_sp_account.view_holder> implements View.OnClickListener{
     private Context context;
     private ArrayList<Bitmap> bitmaps;
-    private ArrayList<Sanpham> sanphams;
+    public static ArrayList<Sanpham> sanphams;
+    RecyclerView recyclerView;
 
-    public adapter_sp_account(Context context, ArrayList<Sanpham> sanphams, ArrayList<Bitmap> bitmaps) {
+    // chỉ cần truyền vào recycler view mà ta đã findviewbyid
+    public adapter_sp_account(Context context, ArrayList<Sanpham> sanphams, ArrayList<Bitmap> bitmaps, RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
         this.context = context;
         this.sanphams = sanphams;
         this.bitmaps = bitmaps;
-
     }
 
     @Override
     public view_holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.childview_item_recycle_account, parent, false);
+        view.setOnClickListener(this);
         return new view_holder(view);
     }
 
@@ -57,6 +62,12 @@ public class adapter_sp_account extends RecyclerView.Adapter<adapter_sp_account.
         return sanphams.size() ;
     }
 
+    @Override
+    public void onClick(View v) {
+        int position = recyclerView.getChildLayoutPosition(v);
+        context.startActivity(new Intent(context, activity_product.class).putExtra("position_account",position));
+    }
+
     class view_holder extends RecyclerView.ViewHolder {
         ImageView img_hinhsp_account;
         Button btn_popup_menu_account;
@@ -69,4 +80,5 @@ public class adapter_sp_account extends RecyclerView.Adapter<adapter_sp_account.
             txt_ten_sp_account = (TextView) itemView.findViewById(R.id.txt_ten_sp_account);
         }
     }
+
 }

@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onDatachanged(ArrayList<String> arr, Context context, Spinner sp) {
                         for (int i = 0; i < arr.size(); i++) {
-//                            Toast.makeText(getApplicationContext(), arr.get(i), Toast.LENGTH_SHORT).show();
                             tiendvlp_expan_tree_listview.add_tree_node(new tree_node(treeNode.getNode_path() + "/" + arr.get(i), arr.get(i)));
                         }
                         if (0 != arr.size()) {
@@ -120,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void on_child_last_click(tree_node tree_node) {
-                Toast.makeText(getApplicationContext(), tree_node.getTitle() + "child last", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this,ListOfProduct.class));
             }
         });
     }
